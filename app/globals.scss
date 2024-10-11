@@ -1,0 +1,1704 @@
+@font-face {
+  font-family: 'yangjin';
+  src: url(/font/yangjin.otf);
+}
+
+@font-face {
+  font-family: 'GmarketSansBold';
+  src: url(/font/GmarketSansBold.otf);
+}
+
+@font-face {
+  font-family: 'GmarketSansLight';
+  src: url(/font/GmarketSansLight.otf);
+}
+
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url(/font/GmarketSansMedium.otf);
+}
+
+@font-face {
+  font-family: 'Nanum';
+  src: url(/font/NanumSquareR.ttf);
+}
+
+$border-grey : #979797;
+$logo-color : rgb(54, 134, 171);
+
+%textOverflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// html {
+//     -ms-user-select: none;
+//     -moz-user-select: -moz-none;
+//     -webkit-user-select: none;
+//     -khtml-user-select: none;
+//     user-select: none;
+// }
+
+body {
+  margin: 0 auto;
+}
+
+* {
+  font-family: 'GmarketSansBold';
+  box-sizing: border-box;
+}
+
+%mt-20-wd-1200 {
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.header-container {
+  @extend %mt-20-wd-1200;
+  display: flex;
+
+  >div {
+    height: 60px;
+  }
+
+  div:nth-child(1) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 200px;
+
+    p {
+      font-family: 'yangjin';
+      font-size: 40px;
+      color: $logo-color;
+      margin: 0;
+    }
+  }
+
+  div:nth-child(2) {
+    width: 60px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      // object-fit: fill;
+    }
+  }
+
+
+}
+
+.category-container {
+  max-width: 1200px;
+  margin: auto;
+
+  ul {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    padding: 0;
+    gap: 70px;
+
+    li {
+      height: 30px;
+      // border-bottom: 2px solid black;
+      cursor: pointer;
+      font-family: 'Nanum';
+      font-weight: bold;
+      color: #515151;
+
+      &:hover {
+        color: #000;
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.header-bg-container {
+  width: 100%;
+  background: #ffd9d9;
+  margin-bottom: 100px;
+
+  .header-bg-area {
+    @extend %mt-20-wd-1200;
+
+    height: 550px;
+    display: flex;
+    flex-direction: row;
+    // justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+
+    >div {
+      height: 100%;
+      display: flex;
+      // flex-wrap: wrap;
+    }
+
+    .header-bg-left {
+      width: 35%;
+      flex-direction: column;
+      justify-content: center;
+      gap: 50px;
+
+      p {
+        color: rgb(17, 17, 17);
+        margin: 0;
+        font-size: 40px;
+        font-family: 'GmarketSansMedium';
+        font-weight: bold;
+      }
+
+      p:nth-child(2) {
+        font-size: 20px;
+      }
+    }
+
+    .header-bg-right {
+      align-items: center;
+      width: 55%;
+    }
+
+
+    .header-slide-container {
+      width: 100% !important;
+
+      .header-slide-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+
+        img {
+          width: 100%;
+          height: 450px;
+          object-fit: cover;
+          border-radius: 10px;
+          box-shadow: 0px 0px 7px #666;
+        }
+      }
+    }
+
+  }
+}
+
+.swiper-pagination-bullets {
+  position: relative !important;
+  top: 0px !important;
+  z-index: 5 !important;
+}
+
+
+
+
+
+.subCat-container {
+  @extend %mt-20-wd-1200;
+  margin: 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  div {
+    border: 1px solid rgb(49, 49, 49);
+    background: transparent;
+    border-radius: 50px;
+    padding: 7px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgb(244, 255, 240);
+      border: 1px solid rgb(71, 139, 71);
+    }
+
+    p {
+      margin: 0;
+      padding: 2px 20px;
+      font-family: 'Nanum';
+
+      // font-weight: ;
+      &::before {
+        content: '#';
+      }
+    }
+
+  }
+
+  .subCat-selected {
+    background: rgb(244, 255, 240);
+    border: 1px solid rgb(71, 139, 71);
+
+  }
+}
+
+.subCat-line {
+  @extend %mt-20-wd-1200;
+  border-bottom: 1px solid $border-grey;
+
+  hr {
+    border: 1px solid $border-grey;
+  }
+}
+
+.category-search-container {
+  @extend %mt-20-wd-1200;
+  margin: 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  select {
+    padding: 15px;
+    font-size: 15px;
+    width: 200px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid $border-grey;
+    font-family: 'Nanum';
+  }
+
+  option {
+    font-family: 'Nanum';
+  }
+
+  div {
+    position: relative;
+
+    input {
+      padding: 15px;
+      font-size: 20px;
+      margin-left: auto;
+      width: 400px;
+      outline: none;
+      border-radius: 5px;
+      border: 1px solid $border-grey;
+      font-family: 'Nanum';
+      font-size: 20px;
+
+      &:focus {
+        // box-shadow: 0px 0px 5px #444
+        border: 2px solid black;
+      }
+
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 20px;
+      right: 15px;
+      cursor: pointer;
+    }
+  }
+}
+
+.card-container {
+  @extend %mt-20-wd-1200;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  // grid-template-rows: 500px 500px;
+  // grid-template-rows: repeat(2,500px) ;
+  gap: 50px;
+
+
+  .card-layout {
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px #c9c8c8;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+      transform: translateY(-25px);
+    }
+
+    .card-area {
+      width: 100%;
+      height: 50%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        // object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+
+      @mixin card-item($fs, $pt) {
+        margin: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: $pt;
+        font-size: $fs;
+      }
+
+      .card-tag {
+        @include card-item(25px, 20px);
+        color: #5b86af;
+        font-family: 'GmarketSansBold';
+      }
+
+      .card-title {
+        @include card-item(25px, 10px);
+        height: 100px;
+        font-family: 'GmarketSansBold';
+
+      }
+
+      .card-addr {
+        @include card-item(15px, 40px);
+        font-family: 'GmarketSansLight';
+      }
+    }
+  }
+
+}
+
+.none {
+  display: none;
+}
+
+.card-btn {
+  @extend %mt-20-wd-1200;
+  text-align: center;
+
+  button {
+    padding: 20px;
+    width: 160px;
+    border-radius: 10px;
+    border: 1px solid $border-grey;
+    font-size: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    color: #8a8a8a;
+
+    &:active {
+      background-color: #c9c8c8
+    }
+  }
+}
+
+.no-item {
+  @extend %mt-20-wd-1200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
+
+  p {
+    font-size: 50px;
+  }
+}
+
+.footer-container {
+  margin-top: 100px;
+  width: 100%;
+  background-color: #eee;
+  height: 200px;
+
+  .footer-top {
+    padding-top: 50px;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+
+    div {
+      &:nth-child(1) {
+        font-size: 30px;
+        font-family: 'yangjin';
+      }
+
+      ul {
+        padding: 10px;
+        display: flex;
+        margin: 0;
+        gap: 10px;
+        list-style: none;
+        gap: 40px;
+
+        li {
+          font-family: 'GmarketSansLight';
+        }
+      }
+    }
+
+  }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 10px;
+
+    p {
+      font-family: 'GmarketSansLight';
+    }
+
+  }
+}
+
+.detail-container {
+  @extend %mt-20-wd-1200;
+
+  .detail-content {
+    margin: 40px 0;
+    text-align: center;
+
+    p {
+      font-size: 50px;
+    }
+
+    hr {
+      border: 1px solid black;
+    }
+  }
+
+  .detail-tag {
+    display: flex;
+
+    div {
+      background-color: rgb(149, 189, 138);
+      border-radius: 25px;
+      padding: 0px 15px;
+
+      p {
+        color: rgb(255, 255, 255);
+      }
+    }
+  }
+
+  .detail-title {
+    p {
+      margin: 20px 0 0 0;
+      font-size: 40px;
+    }
+
+    p:nth-child(2) {
+      margin: 20px 0 0 0;
+      font-size: 20px;
+      font-family: 'GmarketSansLight';
+    }
+
+    hr {
+      margin: 40px 0;
+    }
+  }
+
+  .detail-img {
+    width: 100%;
+    height: 700px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .detail-desc {
+    letter-spacing: 2.5px;
+    border-radius: 15px;
+    margin: 70px 0;
+
+    p {
+      font-family: 'GmarketSansLight';
+      line-height: 45px;
+      font-size: 25px;
+      margin: 0;
+    }
+  }
+
+  .detail-info {
+    .botton-info-title {
+      text-align: center;
+      margin: 200px 0 50px 0;
+      display: flex;
+      justify-content: center;
+
+      div {
+        width: 300px;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+
+        p {
+          margin: 30px 0;
+          font-size: 50px;
+          font-family: 'GmarketSansLight';
+        }
+      }
+    }
+
+    .botton-info-area {
+      background: #f7f6f6;
+      border-radius: 20px;
+      padding: 20px;
+
+      // gap: 10%;
+      .botton-info-flex {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        margin-bottom: 10px;
+
+        %flex-center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+        }
+
+        .botton-info-area-tag {
+          width: 27%;
+          background: #c29797;
+          color: white;
+          @extend %flex-center;
+
+          p {
+            margin: 0;
+            padding: 10px 10px;
+            font-size: 30px;
+          }
+
+        }
+
+        .botton-info-area-space {
+          width: 2%;
+        }
+
+        .botton-info-area-content {
+          background: white;
+          width: 71%;
+          word-break: break-all;
+          @extend %flex-center;
+
+          p {
+            margin: 0;
+            padding: 10px 10px;
+            font-family: 'GmarketSansLight';
+            font-size: 30px;
+          }
+        }
+      }
+
+    }
+  }
+
+  .detail-map {
+    margin: 100px 0;
+    border-radius: 50px;
+    width: 100%;
+    height: 400px;
+  }
+}
+
+.loc-container {
+  @extend %mt-20-wd-1200;
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+
+  >div {
+    // border: 1px solid rgb(221, 221, 221);
+    height: 800px;
+  }
+
+  .loc-list {
+    width: 45%; //지도크기
+    display: flex;
+    flex-direction: column;
+
+    .loc-list-search {
+      background: rgb(121, 122, 122);
+      color: #fcfcfc;
+      height: 15%; //자료-검색
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: center;
+      gap: 10px;
+
+      >div {
+        width: 100%;
+        text-align: center;
+
+      }
+
+      div:nth-child(2) {
+        background: #555455;
+        display: flex;
+        justify-content: center;
+      }
+
+      span {
+
+        font-size: 20px;
+      }
+
+      ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        gap: 20px;
+
+        li {
+          // border: 1px solid red;
+          font-family: 'GmarketSansMedium';
+          cursor: pointer;
+          padding: 10px;
+
+          &:hover {
+            background: #8a8a8a;
+          }
+        }
+      }
+    }
+
+    .loc-list-result {
+      height: 85%; //자료-결과
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #2f3542;
+        border-radius: 15px;
+        background-clip: padding-box;
+        border: 2px solid transparent;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: grey;
+        box-shadow: inset 0px 0px 5px white;
+      }
+
+      >div {
+        border-bottom: 1px solid rgb(216, 216, 216);
+        // flex: 0 0 200px;
+        display: flex;
+        height: 150px;
+
+        &:hover {
+          background: #f5f5f5;
+          cursor: pointer;
+        }
+
+        >div {
+          width: 100%;
+        }
+
+        .list-img {
+          width: 50%; //사진
+          padding: 10px;
+
+          >div {
+            width: 100%;
+            height: 100%;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 15px;
+            }
+          }
+        }
+
+        .list-item {
+          width: 50%; //목록
+
+          ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            line-height: 25px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            li:nth-child(1) {
+              color: black;
+              font-size: 20px;
+              padding-bottom: 10px;
+            }
+
+            li {
+              color: #5e5d5d;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-family: 'GmarketSansMedium';
+
+              >span {
+                position: relative;
+                top: 5px;
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .loc-map {
+    width: 55%; //지도크기
+  }
+}
+
+.overlay-container {
+  background: white;
+  position: absolute;
+  border: 1px solid rgb(226, 224, 224);
+  bottom: 30px;
+  left: -80px;
+  width: 300px;
+  height: 120px;
+
+
+  .overlay-title {
+    height: 30%;
+    background: #60b6f0;
+    text-align: center;
+    color: rgb(247, 247, 247);
+    display: flex;
+    align-items: center;
+
+    >p {
+      margin: 0;
+      padding-left: 7px;
+      @extend %textOverflow;
+    }
+
+    p:nth-child(1) {
+      width: 80%;
+
+    }
+
+    p:nth-child(2) {
+      width: 20%;
+      font-family: 'GmarketSansMedium';
+      text-align: center;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+  }
+
+  .overlay-content {
+    height: 70%;
+    display: flex;
+
+
+    .overlay-content-left {
+      width: 40%;
+      padding: 5px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .overlay-content-right {
+      width: 60%;
+
+      ul {
+        list-style: none;
+        padding: 0 0 0 5px;
+        line-height: 25px;
+
+        li {
+          font-size: 11px;
+          font-family: 'GmarketSansMedium';
+          @extend %textOverflow;
+        }
+      }
+    }
+  }
+}
+
+.recommand-wrap {
+  @extend %mt-20-wd-1200;
+
+  .comment {
+    margin: 0;
+    font-weight: bold;
+    font-family: 'Nanum';
+    font-size: 30px;
+  }
+
+  .recommand-tour-container {
+    margin: 20px 0 100px 0;
+    position: relative;
+
+    .recommand-tour-area {
+      padding: 5px;
+      height: 350px;
+      overflow: hidden;
+      border-radius: 15px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+        filter: brightness(80%);
+        // box-shadow: 0px 0px 7px #666;
+        transition: all 1s;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.5);
+        }
+      }
+
+      >div {
+        position: absolute;
+        top: 80%;
+        left: 10%;
+
+        >p {
+          margin: 0;
+          padding: 0;
+          color: white;
+          font-family: 'Nanum';
+
+        }
+
+        p:nth-child(1) {
+          font-size: 25px;
+
+          @extend %textOverflow;
+
+        }
+
+        p:nth-child(2) {
+          width: 200px;
+          font-size: 15px;
+
+          @extend %textOverflow;
+        }
+      }
+    }
+  }
+
+  .recommand-event-container {
+    margin: 20px 0 100px 0;
+
+    .recommand-event-area {
+      padding: 5px;
+      height: 500px;
+      width: 400px;
+      padding: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        object-fit: fill;
+      }
+
+    }
+  }
+
+  .recommand-common-container {
+    margin: 20px 0 50px 0;
+
+    .recommand-common-area {
+      padding: 5px;
+      height: 450px;
+      display: flex;
+      flex-direction: column;
+      // align-items: flex-start;
+      justify-content: flex-end;
+
+      >div:nth-child(1) {
+        height: 70%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 5px;
+          box-shadow: 0px 0px 7px #9e9e9e;
+          transition: all 0.3s;
+          object-fit: cover;
+          cursor: pointer;
+
+          &:hover {
+            transform: translateY(-20px);
+          }
+        }
+      }
+
+      >div:nth-child(2) {
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          width: 100%;
+          text-align: center;
+          font-family: 'Nanum';
+          margin: 0;
+          line-height: 30px;
+          @extend %textOverflow;
+        }
+
+        p:nth-child(1) {
+          font-size: 20px;
+        }
+
+        p:nth-child(2) {
+          color: #666;
+        }
+      }
+    }
+  }
+}
+
+.swiper-scrollbar {
+  position: relative !important;
+  top: 0px !important;
+  z-index: 5 !important;
+}
+
+@media all and (max-width:1024px) {
+
+  // ---메인 페이지---
+  .header-bg-container {
+    .header-bg-area {
+      height: 600px;
+      flex-direction: column;
+
+      .header-bg-left {
+        width: 80%;
+        flex-direction: column;
+        justify-content: center;
+        gap: 50px;
+      }
+
+      .header-bg-right {
+        width: 80%;
+      }
+
+      .header-slide-container {
+        .header-slide-area {
+          img {
+            height: 320px;
+          }
+        }
+      }
+    }
+  }
+
+  .header-container {
+    div:nth-child(1) {
+      margin-left: 10px;
+    }
+  }
+
+  .category-container {
+    ul {
+      margin-left: 20px;
+      gap: 40px;
+    }
+  }
+
+  .recommand-wrap {
+    .comment {
+      margin-left: 15px;
+      font-size: 20px;
+    }
+
+    .recommand-tour-container {
+      >div:first-child {
+        margin-left: 15px;
+      }
+
+      >div:last-child {
+        margin-right: 15px;
+      }
+
+      .recommand-tour-area {
+        height: 280px;
+
+        >div {
+          position: absolute;
+          top: 77%;
+          left: 15%;
+
+          p:nth-child(1) {
+            font-size: 15px;
+          }
+        }
+      }
+
+    }
+
+    .recommand-event-container {
+      .recommand-event-area {
+        padding: 5px;
+        height: 300px;
+        width: 200px;
+        padding: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 15px;
+          object-fit: fill;
+        }
+
+      }
+    }
+
+    .recommand-common-container {
+      margin-top: 0;
+
+      >div:first-child {
+        margin-left: 15px;
+      }
+
+      >div:last-child {
+        margin-right: 15px;
+      }
+
+      .recommand-common-area {
+        >div:nth-child(1) {
+          height: 65%;
+        }
+
+        >div:nth-child(2) {
+          height: 30%;
+
+          p:nth-child(1) {
+            font-size: 18px;
+          }
+
+          p:nth-child(2) {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+
+  // ---푸터---
+  .footer-container {
+    padding: 0 20px;
+    height: 150px;
+
+    .footer-top {
+      div {
+        &:nth-child(1) {
+          font-size: 25px;
+          font-family: 'yangjin';
+        }
+
+        ul {
+          li {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+
+    .footer-bottom {
+      p {
+        font-size: 11px;
+      }
+    }
+  }
+
+  // ---카테고리 검색---
+
+  .card-container {
+    padding: 15px;
+    gap: 15px;
+
+    .card-layout {
+      .card-area {
+        @mixin card-item($fs, $pt) {
+          margin: 0px;
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-top: $pt;
+          font-size: $fs;
+        }
+
+        .card-tag {
+          @include card-item(20px, 20px);
+          color: #5b86af;
+        }
+
+        .card-title {
+          @include card-item(15px, 10px);
+          height: 50px;
+
+        }
+
+        .card-addr {
+          @include card-item(10px, 20px);
+        }
+      }
+    }
+  }
+
+  .category-search-container {
+    padding: 15px;
+  }
+
+  .subCat-container {
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .loc-container {
+    padding: 0 15px;
+    flex-direction: column;
+    gap: 50px;
+
+    >div {
+      border: 1px solid rgb(201, 200, 200);
+    }
+
+    .loc-list {
+      width: 100%;
+      height: 600px;
+
+      .loc-list-result {
+        div {
+          .list-img {
+            width: 30%;
+          }
+        }
+      }
+    }
+
+    .loc-map {
+      width: 100%; //지도크기
+      height: 500px;
+    }
+  }
+
+  //---상세---
+  .detail-container {
+    padding: 0 50px;
+
+    .detail-img {
+      width: 100%;
+      height: 500px;
+    }
+
+    .detail-desc {
+      letter-spacing: 2.5px;
+      border-radius: 15px;
+      margin: 70px 0;
+
+      p {
+        font-family: 'GmarketSansLight';
+        line-height: 30px;
+        font-size: 20px;
+        margin: 0;
+      }
+    }
+
+    .detail-info {
+      .botton-info-area {
+        .botton-info-flex {
+          .botton-info-area-tag {
+            p {
+              font-size: 15px;
+            }
+          }
+
+          .botton-info-area-content {
+            p {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+
+    .detail-map {
+      margin: 50px 0;
+      height: 400px;
+    }
+  }
+}
+
+@media all and (max-width:480px) {
+
+  // ---메인 페이지---
+  .header-container {
+    div:nth-child(1) {
+      margin-left: 10px;
+      width: 130px;
+
+      p {
+        font-size: 25px;
+      }
+    }
+
+    div:nth-child(2) {
+      width: 60px;
+    }
+  }
+
+  .category-container {
+    ul {
+      margin-left: 20px;
+      gap: 20px;
+
+      li {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .header-bg-container {
+    margin-bottom: 50px;
+
+    .header-bg-area {
+      height: 270px;
+      flex-direction: column;
+
+      .header-bg-left {
+        width: 80%;
+        flex-direction: column;
+        justify-content: center;
+        gap: 15px;
+
+        p:nth-child(1) {
+          font-size: 14px;
+        }
+
+        p:nth-child(2) {
+          font-size: 10px;
+        }
+      }
+
+      .header-bg-right {
+        width: 80%;
+      }
+
+      .header-slide-container {
+        .header-slide-area {
+          img {
+            height: 140px;
+          }
+        }
+      }
+    }
+  }
+
+  .recommand-wrap {
+    .comment {
+      margin-left: 15px;
+      font-size: 10px;
+    }
+
+    .recommand-tour-container {
+      margin-bottom: 30px;
+
+      >div:first-child {
+        margin-left: 5px;
+      }
+
+      >div:last-child {
+        margin-right: 5px;
+      }
+
+      .recommand-tour-area {
+        height: 130px;
+
+        img {
+          border-radius: 5px;
+        }
+
+        >div {
+          position: absolute;
+          top: 70%;
+          left: 10%;
+
+          p:nth-child(1) {
+            font-size: 10px;
+          }
+
+          p:nth-child(2) {
+            font-size: 7px;
+          }
+        }
+      }
+
+    }
+
+    .recommand-event-container {
+      margin-bottom: 30px;
+
+      .recommand-event-area {
+        padding: 5px;
+        height: 200px;
+        width: 150px;
+        padding: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 15px;
+          object-fit: fill;
+        }
+
+      }
+    }
+
+    .recommand-common-container {
+      margin-top: 0;
+
+      >div:first-child {
+        margin-left: 5px;
+      }
+
+      >div:last-child {
+        margin-right: 5px;
+      }
+
+      .recommand-common-area {
+        height: 220px;
+
+        >div:nth-child(1) {
+          height: 65%;
+        }
+
+        >div:nth-child(2) {
+          height: 30%;
+
+          p {
+            line-height: 12px;
+          }
+
+          p:nth-child(1) {
+            font-size: 11px;
+          }
+
+          p:nth-child(2) {
+            font-size: 7px;
+          }
+        }
+      }
+    }
+  }
+
+  // ---푸터---
+  .footer-container {
+    padding: 0 20px;
+    height: 120px;
+
+    .footer-top {
+      padding-top: 25px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      div {
+        text-align: start;
+
+        &:nth-child(1) {
+
+          font-size: 20px;
+          font-family: 'yangjin';
+        }
+
+        ul {
+          padding: 0;
+          gap: 10px;
+
+          li {
+            font-size: 7px;
+          }
+        }
+      }
+    }
+
+    .footer-bottom {
+      p {
+        font-size: 7px;
+      }
+    }
+  }
+
+  // ---카테고리 검색---
+
+  .card-container {
+    padding: 15px;
+    gap: 15px;
+
+    .card-layout {
+      border-radius: 10px;
+
+      .card-area {
+        img {
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+
+        @mixin card-item($fs, $pt) {
+          padding-top: $pt;
+          font-size: $fs;
+        }
+
+        .card-tag {
+          @include card-item(7px, 8px);
+          color: #5b86af;
+        }
+
+        .card-title {
+          @include card-item(6px, 8px);
+          height: 10px;
+
+        }
+
+        .card-addr {
+          @include card-item(4px, 25px);
+        }
+      }
+    }
+  }
+
+  .card-btn {
+    button {
+      padding: 14px;
+      width: 80px;
+      border-radius: 10px;
+      font-size: 10px;
+    }
+  }
+
+  .category-search-container {
+    margin: 10px auto;
+
+    select {
+      padding: 7px;
+      width: 30%;
+      font-size: 10px;
+    }
+
+    div {
+      position: relative;
+
+      input {
+        padding: 7px;
+        width: 200px;
+        border: 1px solid $border-grey;
+        font-size: 10px;
+
+        &:focus {
+          // box-shadow: 0px 0px 5px #444
+          border: 1px solid black;
+        }
+
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        transform: scale(0.8);
+      }
+    }
+  }
+
+  .subCat-container {
+    margin: 10px auto;
+    gap: 5px;
+    padding: 15px;
+
+    div {
+      border: 1px solid rgb(167, 167, 167);
+      padding: 4px;
+
+      p {
+        padding: 3px 12px;
+        font-size: 7px;
+      }
+    }
+  }
+
+  .loc-container {
+    padding: 0 15px;
+    flex-direction: column;
+    gap: 50px;
+
+    >div {
+      border: 1px solid rgb(201, 200, 200);
+    }
+
+    .loc-list {
+      width: 100%;
+      height: 400px;
+
+      .loc-list-search {
+        >div:nth-child(1) {
+          span {
+            font-size: 10px;
+          }
+        }
+
+        ul {
+          li {
+            font-size: 10px;
+          }
+        }
+      }
+
+      .loc-list-result {
+        >div {
+          height: 150px;
+
+          .list-img {
+            width: 30%;
+          }
+
+          .list-item {
+            ul {
+              padding: 0;
+              margin: 0;
+              height: 100%;
+
+              li:nth-child(1) {
+                font-size: 15px;
+                padding: 0;
+                padding-top: 3px;
+              }
+
+              li {
+                font-size: 10px;
+
+                span {
+                  transform: scale(0.7);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .loc-map {
+      width: 100%; //지도크기
+      height: 250px;
+    }
+  }
+
+  //---상세---
+  .detail-container {
+    padding: 0 15px;
+
+    .detail-content {
+      margin: 20px 0;
+
+      p {
+        font-size: 20px;
+      }
+
+      hr {
+        border: 1px solid black;
+      }
+    }
+
+    .detail-tag {
+      div {
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .detail-title {
+      p {
+        margin-top: 10px;
+        font-size: 20px;
+      }
+
+      p:nth-child(2) {
+        margin-top: 10px;
+        font-size: 10px;
+      }
+
+      hr {
+        margin: 20px 0;
+      }
+    }
+
+    .detail-img {
+      width: 100%;
+      height: 200px;
+    }
+
+    .detail-desc {
+      margin: 70px 0;
+      letter-spacing: 0.8px;
+
+      p {
+        padding: 0 30px;
+        line-height: 18px;
+        font-size: 10px;
+        margin: 0;
+      }
+    }
+
+    .detail-info {
+      .botton-info-title {
+        margin: 0 0 50px 0;
+
+        div {
+          width: 150px;
+          border-bottom: 1px solid black;
+          border-top: 1px solid black;
+
+          p {
+            margin: 10px 0;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .botton-info-area {
+        padding: 10px;
+
+        .botton-info-flex {
+          .botton-info-area-tag {
+            p {
+              font-size: 10px;
+            }
+          }
+
+          .botton-info-area-content {
+            p {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    .detail-map {
+      margin: 50px 0;
+      height: 200px;
+    }
+  }
+}
