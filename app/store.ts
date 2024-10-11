@@ -1,11 +1,36 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './features/counterSlice'; // 예시 슬라이스
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+
+interface num {
+  value: number;
+}
+
+const initialState: num = {
+  value: 0,
+};
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+    decrement: (state) => {
+      state.value -= 1;
+    },
+  },
+});
+
+export let { increment, decrement } = counterSlice.actions
+
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    counter: counterSlice.reducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+
