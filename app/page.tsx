@@ -1,18 +1,17 @@
-import { connectDB } from "@/util/database"
+'use client';
 
-export default async function Home() {
-  interface User {
-    _id: string; // MongoDB에서 자동 생성되는 ID
-    test1: string;
-    test2: string;
-  }
+import { useAppDispatch, useAppSelector } from './hooks';
+import { increment, decrement, selectCount } from './features/counterSlice';
 
-  let client = await connectDB;
-  let db = client.db('trip');
-  let result = await db.collection<User>('post').find({}).toArray();
-  console.log('result', result)
+export default function Home() {
+  const count = useAppSelector(selectCount);
+  const dispatch = useAppDispatch();
 
   return (
-    <div>테스트</div>
+    <div>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
+    </div>
   );
 }
