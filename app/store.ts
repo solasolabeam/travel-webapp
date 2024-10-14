@@ -28,7 +28,7 @@ let sido = createSlice({
   name: 'sido', // state 이름
   initialState: initSidoState, // 초기 상태값
   reducers: {
-    changeSido(state, action:PayloadAction<SidoState>) {
+    changeSido(state, action: PayloadAction<SidoState>) {
       // Immer가 상태 불변성을 관리하므로 상태를 직접 수정해도 됨
       // 또는 state.push(...action.payload) 처럼 작성 가능
       return action.payload;
@@ -46,7 +46,7 @@ let sidoVal = createSlice({
   }
 })
 
-type GugunState = string[];
+type GugunState = { rnum: number, code: string, name: string }[];
 const initGugunState: GugunState = [];
 let gugun = createSlice({
   name: 'gugun', //state이름 ~
@@ -108,8 +108,30 @@ let cat3Val = createSlice({
   }
 })
 
-type HeaderSearch = string[];
-const initHeaderSearch: HeaderSearch = [];
+export interface HeaderSearch {
+  addr1: string;
+  addr2: string;
+  areacode: string;
+  booktour: string;
+  cat1: string;
+  cat2: string;
+  cat3: string;
+  contentid: string;
+  contenttypeid: string;
+  createdtime: string;
+  firstimage: string;
+  firstimage2: string;
+  cpyrhtDivCd: string;
+  mapx: number;
+  mapy: number;
+  mlevel: number;
+  modifiedtime: string;
+  sigungucode: string;
+  tel: string;
+  title: string;
+  zipcode: string;
+}
+const initHeaderSearch: HeaderSearch[] = [];
 let headerSearch = createSlice({
   name: 'headerSearch',
   initialState: initHeaderSearch,

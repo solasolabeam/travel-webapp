@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { key } from "../key"
-import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, changeRow, changeSido, changeSidoVal } from "../store";
+import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, changeKeyword, changeRow, changeSido, changeSidoVal, HeaderSearch } from "../store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import noIMG from '@/public/img/No_Image_Available.jpg'
 
 export default function Home() {
   interface CategoryItem {
@@ -149,7 +152,7 @@ export default function Home() {
     dispatch(changeSidoVal(e.target.value))
   }
 
-  function activeEnter(e: KeyboardEvent) {
+  function activeEnter(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') { // 'Enter' 키를 문자열로 비교
       addRow === 1 ? activeSearch() : dispatch(changeRow(1));
     }
@@ -241,7 +244,7 @@ export default function Home() {
     dispatch(changeRow(addRow + 1))
   }
 
-  function subCatClick(v: boolean, i: number) {
+  function subCatClick(v: string | undefined, i: number) {
     let newItem: boolean[] = []
 
     isClicked.forEach((val, idx) => {
@@ -261,17 +264,125 @@ export default function Home() {
     check ? dispatch(changeCat3CVal('')) : dispatch(changeCat3CVal(v))
   }
   return (
-    <div>
-      <p>{contentType[0].code}</p>
+    <>
+      {/* SIdo Parts */}
+      <div className='category-search-container'>
+        <select className="sido-select" name='sido' onChange={(e) => sidoChange(e)} value={sidoVal}>
+          <option value=''>시/도</option>
+          {
+            sido.map((v, i) => {
+              return (
+                <option value={v.code} key={v.code}>{v.name}</option>
+              )
+            })
+          }
+        </select>
+        <select className="gugun-select" name='gugun' value={gugunVal} onChange={(e) => { dispatch(changeGugunVal(e.target.value)) }}>
+          <option value='' >구/군</option>
+          {
+            gugun.map((v, i) => {
+              return (
+                <option value={v.code} key={v.code}>{v.name}</option>
+              )
+            })
+          }
+        </select>
+        <div>
+          <input type="text" value={keyword} onChange={(e) => dispatch(changeKeyword(e.target.value))} onKeyUp={(e) => activeEnter(e)} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" onClick={() => { addRow == 1 ? activeSearch() : dispatch(changeRow(1)) }} />
+        </div>
+      </div>
+
+      {/* SubCat Parts */}
+      <div className="subCat-line"></div>
+      <div className="subCat-container">
+        {
+          subCat.map((v, i) => {
+            return (
+              <div className={isClicked[i] ? 'subCat-selected' : ''} key={v.code} onClick={() => subCatClick(v.code, i)}><p>{v.name}</p></div>
+            )
+          })
+
+        }
+      </div>
+
+      {/* Cart Parts */}
       {
-        sido.map((v, i) => {
+        headerSearch.length != 0 ?
+          <Card headerSearch={headerSearch} addRow={addRow} />
+          :
+          <div className="no-item">
+            <p>"검색 결과가 존재하지 않습니다"</p>
+          </div>
+      }
+
+      <div className="card-btn">
+        <button className={`${(headerSearch.length == 0 || headerSearch.length % 6 != 0) && 'none'}`} onClick={() => { getRow() }}>더보기</button>
+      </div>
+    </>
+  );
+}
+
+interface HeaderSearchPlus extends HeaderSearch {
+  contentName?: string,
+  sidoName?: string
+}
+
+interface props {
+  headerSearch: HeaderSearchPlus[],
+  addRow: number
+}
+
+function Card(props: props): JSX.Element {
+  const [cardPixel, setCardPixel] = useState<string>('')
+  useEffect(() => {
+    getBrowerWidth()
+    function getBrowerWidth() {
+      //PC
+      if (1024 < window.innerWidth) {
+        setCardPixel('500px')
+      }
+      //TABLET
+      else if (480 < window.innerWidth) {
+        setCardPixel('350px')
+      }
+      //MOBILE
+      else {
+        setCardPixel('150px')
+      }
+    }
+
+    window.addEventListener('resize', getBrowerWidth)
+
+    return () => {
+      window.removeEventListener('resize', getBrowerWidth)
+    }
+  })
+  let navigate = useNavigate()
+  let location = useLocation()
+  return (
+    <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
+      {
+        props.headerSearch.map((v, i) => {
           return (
-            <>
-              <p>{v.name}</p>
-            </>
+            <div className='card-layout' key={i} onClick={() => {
+              console.log('test', `${location.pathname}/detail/${v.contentid}`)
+              navigate(`${location.pathname}/detail/${v.contentid}`, {
+                state: v
+              })
+            }}>
+              <div className='card-area'>
+                {v.firstimage == '' ? <img src={noIMG} /> : <img src={`${v.firstimage.substr(0, 4)}s${v.firstimage.substr(4)}`} />}
+              </div>
+              <div className='card-area'>
+                <p className='card-tag'>{v.contentName}</p>
+                <p className='card-title'>[{v.sidoName}] {v.title}</p>
+                <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
+              </div>
+            </div>
           )
         })
       }
     </div>
-  );
+  )
 }
