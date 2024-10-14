@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import getContentType from './pages/api/contentType';
 
 interface num {
@@ -22,14 +22,16 @@ let contentType = createSlice({
   }
 })
 
+type SidoState = { rnum: number, code: string, name: string }[];
+const initSidoState: SidoState = [];
 let sido = createSlice({
   name: 'sido', // state 이름
-  initialState: [], // 초기 상태값
+  initialState: initSidoState, // 초기 상태값
   reducers: {
-    changeSido(state, action) {
+    changeSido(state, action:PayloadAction<SidoState>) {
       // Immer가 상태 불변성을 관리하므로 상태를 직접 수정해도 됨
       // 또는 state.push(...action.payload) 처럼 작성 가능
-      return action.payload; 
+      return action.payload;
     }
   }
 });
@@ -44,9 +46,11 @@ let sidoVal = createSlice({
   }
 })
 
+type GugunState = string[];
+const initGugunState: GugunState = [];
 let gugun = createSlice({
   name: 'gugun', //state이름 ~
-  initialState: [], //값
+  initialState: initGugunState, //값
   reducers: {
     changeGugun(state, action) {
       return action.payload
@@ -104,9 +108,11 @@ let cat3Val = createSlice({
   }
 })
 
+type HeaderSearch = string[];
+const initHeaderSearch: HeaderSearch = [];
 let headerSearch = createSlice({
   name: 'headerSearch',
-  initialState: [],
+  initialState: initHeaderSearch,
   reducers: {
     changeHeaderSearch(state, action) {
       return action.payload
