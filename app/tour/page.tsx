@@ -7,6 +7,7 @@ import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, change
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import noIMG from '@/public/img/No_Image_Available.jpg'
+import Image from "next/image";
 
 export default function Home() {
   interface CategoryItem {
@@ -358,21 +359,31 @@ function Card(props: props): JSX.Element {
       window.removeEventListener('resize', getBrowerWidth)
     }
   })
-  let navigate = useNavigate()
-  let location = useLocation()
+  // let navigate = useNavigate()
+  // let location = useLocation()
   return (
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
       {
         props.headerSearch.map((v, i) => {
           return (
             <div className='card-layout' key={i} onClick={() => {
-              console.log('test', `${location.pathname}/detail/${v.contentid}`)
               navigate(`${location.pathname}/detail/${v.contentid}`, {
                 state: v
               })
             }}>
               <div className='card-area'>
-                {v.firstimage == '' ? <img src={noIMG} /> : <img src={`${v.firstimage.substr(0, 4)}s${v.firstimage.substr(4)}`} />}
+                {/* {v.firstimage == '' ? <Image src={noIMG} alt="no img"/> : <img src={`${v.firstimage.substr(0, 4)}s${v.firstimage.substr(4)}`} alt="관광명소 이미지"/>} */}
+                {
+                  v.firstimage == '' ?
+                    <Image src={noIMG} alt="no img" />
+                    :
+                    <Image
+                      src={`${v.firstimage.substr(0, 4)}s${v.firstimage.substr(4)}`}
+                      alt="관광명소 이미지"
+                      width={364}
+                      height={248}
+                    />
+                }
               </div>
               <div className='card-area'>
                 <p className='card-tag'>{v.contentName}</p>
