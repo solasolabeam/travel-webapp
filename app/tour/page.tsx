@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Home() {
   interface CategoryItem {
@@ -336,6 +338,8 @@ interface props {
 
 function Card(props: props): JSX.Element {
   const [cardPixel, setCardPixel] = useState<string>('')
+  let router = useRouter()
+  let Pathname = usePathname()
   useEffect(() => {
     getBrowerWidth()
     function getBrowerWidth() {
@@ -359,20 +363,42 @@ function Card(props: props): JSX.Element {
       window.removeEventListener('resize', getBrowerWidth)
     }
   })
-  // let navigate = useNavigate()
-  // let location = useLocation()
+
+
   return (
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
       {
         props.headerSearch.map((v, i) => {
+          let newParam = Object.fromEntries(
+            Object.entries(v).map(([key, value]) => [key, value !== undefined ? String(value) : ''])
+          );
+
+          // newParam에서 필요한 값만 사용 (중복 제거)
+          let filteredParam = {
+            addr1: newParam.addr1,
+            addr2: newParam.addr2,
+            areacode: newParam.areacode,
+            booktour: newParam.booktour,
+            cat1: newParam.cat1,
+            cat2: newParam.cat2,
+            cat3: newParam.cat3,
+            contentid: newParam.contentid,
+            contenttypeid: newParam.contenttypeid,
+            firstimage: newParam.firstimage,
+            mapx: newParam.mapx,
+            mapy: newParam.mapy,
+            sigungucode: newParam.sigungucode,
+            title: newParam.title,
+            contentName: newParam.contentName,  // undefined 시 빈 문자열로 처리
+            sidoName: newParam.sidoName         // undefined 시 빈 문자열로 처리
+          };
+
+          let url = new URLSearchParams(filteredParam)
           return (
             <div className='card-layout' key={i} onClick={() => {
-              navigate(`${location.pathname}/detail/${v.contentid}`, {
-                state: v
-              })
+              router.push(`${Pathname}/detail?${url}`)
             }}>
               <div className='card-area'>
-                {/* {v.firstimage == '' ? <Image src={noIMG} alt="no img"/> : <img src={`${v.firstimage.substr(0, 4)}s${v.firstimage.substr(4)}`} alt="관광명소 이미지"/>} */}
                 {
                   v.firstimage == '' ?
                     <Image src={noIMG} alt="no img" />

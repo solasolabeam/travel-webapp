@@ -7,8 +7,6 @@ export default function Home() {
   const cnt = useAppSelector((state)=> state.counter)
   const contentType = useAppSelector((state)=> state.contentType)
   const dispatch = useAppDispatch();
-  console.log('contentType', contentType)
-  console.log('cnt', cnt)
   return (
     <div>
       <h1>Counter: {cnt}</h1>
