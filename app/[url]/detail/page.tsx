@@ -63,7 +63,7 @@ interface IntroItem {
     reservationlodging: string,
 }
 export default function Detail(props: DetailProps) {
-    let detailData = props.searchParams
+    const detailData = props.searchParams
 
     const lat = parseFloat(detailData.mapy);
     const lng = parseFloat(detailData.mapx);
@@ -78,8 +78,8 @@ export default function Detail(props: DetailProps) {
     useEffect(() => {
         // 관광정보의 “기본정보" 조회
         async function detailCommon() {
-            var url = 'https://apis.data.go.kr/B551011/KorService1/detailCommon1';
-            var params = {
+            const url = 'https://apis.data.go.kr/B551011/KorService1/detailCommon1';
+            const params = {
                 serviceKey: key,
                 numOfRows: '10',
                 pageNo: '1',
@@ -99,8 +99,8 @@ export default function Detail(props: DetailProps) {
         }
         // 소개정보조회
         async function detailIntro() {
-            var url = 'https://apis.data.go.kr/B551011/KorService1/detailIntro1';
-            var params = {
+            const url = 'https://apis.data.go.kr/B551011/KorService1/detailIntro1';
+            const params = {
                 serviceKey: key,
                 numOfRows: '10',
                 pageNo: '1',
@@ -163,7 +163,7 @@ export default function Detail(props: DetailProps) {
                 </div>
                 <div className="botton-info-area">
                     {
-                        intro.map((v, i: number) => {
+                        intro.map((v) => {
                             console.log('v', v, typeof v.contenttypeid);
                             return (
                                 <>

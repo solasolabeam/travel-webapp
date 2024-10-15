@@ -1,4 +1,4 @@
-let getContentType: { code: number, name: string, url: string }[] = [
+const getContentType: { code: number, name: string, url: string }[] = [
     {
         code: 12,
         name: '관광지',

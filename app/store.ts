@@ -1,12 +1,7 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import getContentType from './pages/api/contentType';
+import getContentType from './contentType';
 
-interface num {
-  value: number;
-}
-
-
-let counter = createSlice({
+const counter = createSlice({
   name: 'counter',
   initialState: 0,
   reducers: {
@@ -15,7 +10,7 @@ let counter = createSlice({
   },
 });
 
-let contentType = createSlice({
+const contentType = createSlice({
   name: 'contentType', //state이름 ~
   initialState: getContentType, //값
   reducers: {
@@ -24,7 +19,7 @@ let contentType = createSlice({
 
 type SidoState = { rnum: number, code: string, name: string }[];
 const initSidoState: SidoState = [];
-let sido = createSlice({
+const sido = createSlice({
   name: 'sido', // state 이름
   initialState: initSidoState, // 초기 상태값
   reducers: {
@@ -36,7 +31,7 @@ let sido = createSlice({
   }
 });
 
-let sidoVal = createSlice({
+const sidoVal = createSlice({
   name: 'sidoVal', //state이름 ~
   initialState: '', //값
   reducers: {
@@ -48,7 +43,7 @@ let sidoVal = createSlice({
 
 type GugunState = { rnum: number, code: string, name: string }[];
 const initGugunState: GugunState = [];
-let gugun = createSlice({
+const gugun = createSlice({
   name: 'gugun', //state이름 ~
   initialState: initGugunState, //값
   reducers: {
@@ -58,7 +53,7 @@ let gugun = createSlice({
   }
 })
 
-let gugunVal = createSlice({
+const gugunVal = createSlice({
   name: 'gugunVal', //state이름 ~
   initialState: '', //값
   reducers: {
@@ -68,7 +63,7 @@ let gugunVal = createSlice({
   }
 })
 
-let contentTypeVal = createSlice({
+const contentTypeVal = createSlice({
   name: 'contentTypeVal',
   initialState: '',
   reducers: {
@@ -78,7 +73,7 @@ let contentTypeVal = createSlice({
   }
 })
 
-let cat1Val = createSlice({
+const cat1Val = createSlice({
   name: 'cat1Val',
   initialState: '',
   reducers: {
@@ -88,7 +83,7 @@ let cat1Val = createSlice({
   }
 })
 
-let cat2Val = createSlice({
+const cat2Val = createSlice({
   name: 'cat1Val',
   initialState: '',
   reducers: {
@@ -98,7 +93,7 @@ let cat2Val = createSlice({
   }
 })
 
-let cat3Val = createSlice({
+const cat3Val = createSlice({
   name: 'cat1Val',
   initialState: '',
   reducers: {
@@ -132,7 +127,7 @@ export interface HeaderSearch {
   zipcode: string;
 }
 const initHeaderSearch: HeaderSearch[] = [];
-let headerSearch = createSlice({
+const headerSearch = createSlice({
   name: 'headerSearch',
   initialState: initHeaderSearch,
   reducers: {
@@ -142,7 +137,7 @@ let headerSearch = createSlice({
   }
 })
 
-let keyword = createSlice({
+const keyword = createSlice({
   name: 'keyword',
   initialState: '',
   reducers: {
@@ -152,7 +147,7 @@ let keyword = createSlice({
   }
 })
 
-let addRow = createSlice({
+const addRow = createSlice({
   name: 'addRow',
   initialState: 1,
   reducers: {
@@ -162,7 +157,7 @@ let addRow = createSlice({
   }
 })
 
-let bannerIdx = createSlice({
+const bannerIdx = createSlice({
   name: 'bannerIdx',
   initialState: '0',
   reducers: {
@@ -172,23 +167,23 @@ let bannerIdx = createSlice({
   }
 })
 
-export let { changeSido } = sido.actions
-export let { changeSidoVal } = sidoVal.actions
-export let { changeGugun } = gugun.actions
-export let { changeGugunVal } = gugunVal.actions
+export const { changeSido } = sido.actions
+export const { changeSidoVal } = sidoVal.actions
+export const { changeGugun } = gugun.actions
+export const { changeGugunVal } = gugunVal.actions
 
-export let { changeContentTypeVal } = contentTypeVal.actions
-export let { changeCat1CVal } = cat1Val.actions
-export let { changeCat2CVal } = cat2Val.actions
-export let { changeCat3CVal } = cat3Val.actions
-export let { changeHeaderSearch } = headerSearch.actions
-export let { changeKeyword } = keyword.actions
+export const { changeContentTypeVal } = contentTypeVal.actions
+export const { changeCat1CVal } = cat1Val.actions
+export const { changeCat2CVal } = cat2Val.actions
+export const { changeCat3CVal } = cat3Val.actions
+export const { changeHeaderSearch } = headerSearch.actions
+export const { changeKeyword } = keyword.actions
 
-export let { changeRow } = addRow.actions
-export let { changeBanner } = bannerIdx.actions
+export const { changeRow } = addRow.actions
+export const { changeBanner } = bannerIdx.actions
 
 
-export let { increment, decrement } = counter.actions
+export const { increment, decrement } = counter.actions
 
 
 export const store = configureStore({

@@ -10,64 +10,38 @@ import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
+interface CategoryItem {
+  code: string,
+  name: string,
+  rnum: number
+}
+
+
 export default function Home() {
-  interface CategoryItem {
-    code: string,
-    name: string,
-    rnum: number
-  }
+  const dispatch = useAppDispatch()
 
+  const sido = useAppSelector(state => state.sido)
+  const sidoVal = useAppSelector(state => state.sidoVal)
+  const gugun = useAppSelector(state => state.gugun)
+  const gugunVal = useAppSelector(state => state.gugunVal)
+  const keyword = useAppSelector(state => state.keyword)
+  const contentType = useAppSelector(state => state.contentType)
 
-  let dispatch = useAppDispatch()
+  const contentTypeVal = useAppSelector(state => state.contentTypeVal)
+  const cat1Val = useAppSelector(state => state.cat1Val)
+  const cat2Val = useAppSelector(state => state.cat2Val)
+  const cat3Val = useAppSelector(state => state.cat3Val)
 
-  let sido = useAppSelector(state => state.sido)
-  let sidoVal = useAppSelector(state => state.sidoVal)
-  let gugun = useAppSelector(state => state.gugun)
-  let gugunVal = useAppSelector(state => state.gugunVal)
-  let keyword = useAppSelector(state => state.keyword)
-  let contentType = useAppSelector(state => state.contentType)
-
-  let contentTypeVal = useAppSelector(state => state.contentTypeVal)
-  let cat1Val = useAppSelector(state => state.cat1Val)
-  let cat2Val = useAppSelector(state => state.cat2Val)
-  let cat3Val = useAppSelector(state => state.cat3Val)
-
-  let headerSearch = useAppSelector(state => state.headerSearch)
-  let addRow = useAppSelector(state => state.addRow);
+  const headerSearch = useAppSelector(state => state.headerSearch)
+  const addRow = useAppSelector(state => state.addRow);
 
   const [subCat, setSubCat] = useState<CategoryItem[]>([]);
-  const [allCat1, setAllCat1] = useState<CategoryItem[]>([]);
   const [isClicked, setIsClicked] = useState<boolean[]>([])
 
   useEffect(() => {
-    //서비스분류코드조회
-    async function getCategory() {
-      var url = 'https://apis.data.go.kr/B551011/KorService1/categoryCode1';
-      var key = 'WNBEfQ1MXM62Fv6qETObrCjjwWv7ji1iNrMTCVWwk6ET3BB8YmqPhT/uX6boztyIRyPzD40LtfLBGQTcimcXQA==';
-      var params = {
-        serviceKey: key,
-        numOfRows: '10',
-        pageNo: '1',
-        MobileOS: 'ETC',
-        MobileApp: 'AppTest',
-      };
-
-      const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-      const requrl = `${url}?${queryString}&_type=json`;
-
-      const res = await fetch(requrl)
-      const data = await res.json()
-
-      //타입 가드 추가
-      if (data && data.response && data.response.body && data.response.body.items && Array.isArray(data.response.body.items.item)) {
-        setAllCat1([...data.response.body.items.item]);
-      } else {
-        console.error("Unexpected data structure:", data);
-      }
-    }
     async function getSido() {
-      var url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-      var params = {
+      const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
+      const params = {
         serviceKey: key,
         numOfRows: '20',
         pageNo: '1',
@@ -85,15 +59,14 @@ export default function Home() {
     }
 
     getSido()
-    getCategory()
   }, [])
   useEffect(() => {
     activeSearch()
   }, [addRow, contentTypeVal, cat3Val])
   useEffect(() => {
     async function tourAPI() {
-      var url = 'https://apis.data.go.kr/B551011/KorService1/categoryCode1';
-      var params = {
+      const url = 'https://apis.data.go.kr/B551011/KorService1/categoryCode1';
+      const params = {
         serviceKey: key,
         numOfRows: '20',
         pageNo: '1',
@@ -107,12 +80,12 @@ export default function Home() {
       const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
       const requrl = `${url}?${queryString}&_type=json`;
 
-      let response = await fetch(requrl)
-      let data = await response.json()
+      const response = await fetch(requrl)
+      const data = await response.json()
 
-      let newItem = data.response.body.items.item
-      let array: boolean[] = []
-      newItem.forEach((v: boolean) => { array.push(false) })
+      const newItem = data.response.body.items.item
+      const array: boolean[] = []
+      newItem.forEach(() => { array.push(false) })
 
       setIsClicked([...array])
       //타입 가드 추가
@@ -128,9 +101,9 @@ export default function Home() {
 
 
   function sidoChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    var url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-    var key = 'WNBEfQ1MXM62Fv6qETObrCjjwWv7ji1iNrMTCVWwk6ET3BB8YmqPhT/uX6boztyIRyPzD40LtfLBGQTcimcXQA==';
-    var params = {
+    const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
+    const key = 'WNBEfQ1MXM62Fv6qETObrCjjwWv7ji1iNrMTCVWwk6ET3BB8YmqPhT/uX6boztyIRyPzD40LtfLBGQTcimcXQA==';
+    const params = {
       serviceKey: key,
       areaCode: e.target.value,
       numOfRows: '80',
@@ -156,12 +129,16 @@ export default function Home() {
 
   function activeEnter(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') { // 'Enter' 키를 문자열로 비교
-      addRow === 1 ? activeSearch() : dispatch(changeRow(1));
+      if (addRow === 1) {
+        activeSearch()
+      } else {
+        dispatch(changeRow(1))
+      }
     }
   }
 
   async function activeSearch() {
-    var url = 'https://apis.data.go.kr/B551011/KorService1/';
+    let url = 'https://apis.data.go.kr/B551011/KorService1/';
 
     interface Params {
       serviceKey: string;
@@ -180,7 +157,7 @@ export default function Home() {
       keyword?: string; // 검색어 선택적 속성
     }
 
-    let params: Params = {
+    const params: Params = {
       serviceKey: key,
       numOfRows: String(6 * addRow),
       pageNo: '1',
@@ -205,21 +182,21 @@ export default function Home() {
 
     // params 객체에서 undefined인 값을 제거하여 새로운 객체를 생성
     const filteredParams = Object.fromEntries(
-      Object.entries(params).filter(([_, value]) => value !== undefined)
+      Object.entries(params).filter(([value]) => value !== undefined)
     );
 
     // URLSearchParams에 필터링된 params를 넘김
     const queryString = new URLSearchParams(filteredParams).toString();
     const requrl = `${url}?${queryString}&_type=json`;
 
-    let res = await fetch(requrl)
+    const res = await fetch(requrl)
     let data = await res.json()
 
     if (data.response.body.items.length == 0) {
       dispatch(changeHeaderSearch([]))
     } else {
       data = data.response.body.items.item
-      let newData = data.map((value: { contenttypeid: number, areacode: string }) => {
+      const newData = data.map((value: { contenttypeid: number, areacode: string }) => {
         let contentName = '';
         let sidoName = '';
 
@@ -247,7 +224,7 @@ export default function Home() {
   }
 
   function subCatClick(v: string | undefined, i: number) {
-    let newItem: boolean[] = []
+    const newItem: boolean[] = []
 
     isClicked.forEach((val, idx) => {
       if (i != idx) {
@@ -261,9 +238,13 @@ export default function Home() {
     setIsClicked([...newItem])
 
     // 서브카테고리 on/off 여부 판별
-    let check = newItem.every(el => el == false)
+    const check = newItem.every(el => el == false)
     // 클릭한 서브카테고리의 하위데이터 조회
-    check ? dispatch(changeCat3CVal('')) : dispatch(changeCat3CVal(v))
+    if (check) {
+      dispatch(changeCat3CVal(''))
+    } else {
+      dispatch(changeCat3CVal(v))
+    }
   }
   return (
     <>
@@ -272,7 +253,7 @@ export default function Home() {
         <select className="sido-select" name='sido' onChange={(e) => sidoChange(e)} value={sidoVal}>
           <option value=''>시/도</option>
           {
-            sido.map((v, i) => {
+            sido.map((v) => {
               return (
                 <option value={v.code} key={v.code}>{v.name}</option>
               )
@@ -282,7 +263,7 @@ export default function Home() {
         <select className="gugun-select" name='gugun' value={gugunVal} onChange={(e) => { dispatch(changeGugunVal(e.target.value)) }}>
           <option value='' >구/군</option>
           {
-            gugun.map((v, i) => {
+            gugun.map((v) => {
               return (
                 <option value={v.code} key={v.code}>{v.name}</option>
               )
@@ -290,8 +271,14 @@ export default function Home() {
           }
         </select>
         <div>
-          <input type="text" value={keyword} onChange={(e) => dispatch(changeKeyword(e.target.value))} onKeyUp={(e) => activeEnter(e)} />
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" onClick={() => { addRow == 1 ? activeSearch() : dispatch(changeRow(1)) }} />
+          <input type="text" value={keyword} onChange={(e) => { dispatch(changeKeyword(e.target.value)) }} onKeyUp={(e) => activeEnter(e)} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" onClick={() => {
+            if (addRow === 1) {
+              activeSearch()
+            } else {
+              dispatch(changeRow(1))
+            }
+          }} />
         </div>
       </div>
 
@@ -337,8 +324,8 @@ interface props {
 
 function Card(props: props): JSX.Element {
   const [cardPixel, setCardPixel] = useState<string>('')
-  let router = useRouter()
-  let Pathname = usePathname()
+  const router = useRouter()
+  const Pathname = usePathname()
   useEffect(() => {
     getBrowerWidth()
     function getBrowerWidth() {
@@ -368,12 +355,12 @@ function Card(props: props): JSX.Element {
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
       {
         props.headerSearch.map((v, i) => {
-          let newParam = Object.fromEntries(
+          const newParam = Object.fromEntries(
             Object.entries(v).map(([key, value]) => [key, value !== undefined ? String(value) : ''])
           );
 
           // newParam에서 필요한 값만 사용 (중복 제거)
-          let filteredParam = {
+          const filteredParam = {
             addr1: newParam.addr1,
             addr2: newParam.addr2,
             areacode: newParam.areacode,
@@ -392,7 +379,7 @@ function Card(props: props): JSX.Element {
             sidoName: newParam.sidoName         // undefined 시 빈 문자열로 처리
           };
 
-          let url = new URLSearchParams(filteredParam)
+          const url = new URLSearchParams(filteredParam)
           return (
             <div className='card-layout' key={i} onClick={() => {
               router.push(`${Pathname}/detail?${url}`)
