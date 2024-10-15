@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Home() {
