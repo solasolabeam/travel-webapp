@@ -1,6 +1,5 @@
 'use client'
 
-import { key } from "@/app/key";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import noIMG from '@/public/img/No_Image_Available.jpg'
@@ -80,7 +79,7 @@ export default function Detail(props: DetailProps) {
         async function detailCommon() {
             const url = 'https://apis.data.go.kr/B551011/KorService1/detailCommon1';
             const params = {
-                serviceKey: key,
+                serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
                 numOfRows: '10',
                 pageNo: '1',
                 MobileOS: 'ETC',
@@ -101,7 +100,7 @@ export default function Detail(props: DetailProps) {
         async function detailIntro() {
             const url = 'https://apis.data.go.kr/B551011/KorService1/detailIntro1';
             const params = {
-                serviceKey: key,
+                serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
                 numOfRows: '10',
                 pageNo: '1',
                 MobileOS: 'ETC',

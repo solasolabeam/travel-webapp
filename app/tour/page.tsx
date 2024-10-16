@@ -2,7 +2,6 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { key } from "../key"
 import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, changeKeyword, changeRow, changeSido, changeSidoVal, HeaderSearch } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -42,7 +41,7 @@ export default function Home() {
     async function getSido() {
       const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
       const params = {
-        serviceKey: key,
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
         numOfRows: '20',
         pageNo: '1',
         MobileOS: 'ETC',
@@ -67,7 +66,7 @@ export default function Home() {
     async function tourAPI() {
       const url = 'https://apis.data.go.kr/B551011/KorService1/categoryCode1';
       const params = {
-        serviceKey: key,
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
         numOfRows: '20',
         pageNo: '1',
         MobileOS: 'ETC',
@@ -102,9 +101,8 @@ export default function Home() {
 
   function sidoChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-    const key = 'WNBEfQ1MXM62Fv6qETObrCjjwWv7ji1iNrMTCVWwk6ET3BB8YmqPhT/uX6boztyIRyPzD40LtfLBGQTcimcXQA==';
     const params = {
-      serviceKey: key,
+      serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
       areaCode: e.target.value,
       numOfRows: '80',
       pageNo: '1',
@@ -158,7 +156,7 @@ export default function Home() {
     }
 
     const params: Params = {
-      serviceKey: key,
+      serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
       numOfRows: String(6 * addRow),
       pageNo: '1',
       MobileOS: 'ETC',
