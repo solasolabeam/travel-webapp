@@ -1,5 +1,5 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import getContentType from './contentType';
+import getContentType from './_data/contentType';
 
 const counter = createSlice({
   name: 'counter',
@@ -159,7 +159,7 @@ const addRow = createSlice({
 
 const bannerIdx = createSlice({
   name: 'bannerIdx',
-  initialState: '0',
+  initialState: 0,
   reducers: {
     changeBanner(state, action) {
       return action.payload
