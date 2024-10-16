@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.scss";
-import Footer from "./Footer";
+import Footer from "./_component/Footer";
 import { Providers } from "./providers";
 import Script from "next/script";
+import Header from "./_component/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +23,7 @@ export default function RootLayout({
             src={API} // 발급받은 카카오 API 키로 변경
             strategy="beforeInteractive"
           />
+          <Header />
           {children}
           <Footer />
         </Providers>
