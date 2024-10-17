@@ -1,4 +1,7 @@
-const recomEventData = [
+interface EventType {
+    [key:string]:string;
+}
+const recomEventData:EventType[] = [
     {
         fileName: 'event1.jpg',
         tag: 'event',
@@ -14,7 +17,7 @@ const recomEventData = [
         "contentid": "3360206",
         "contenttypeid": "15",
         "createdtime": "20240905172957",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/97/3360197_image2_1.jpg",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/3360197_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/97/3360197_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "128.6183256763",
@@ -40,7 +43,7 @@ const recomEventData = [
         "contentid": "3340125",
         "contenttypeid": "15",
         "createdtime": "20240730151202",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/3340111_image2_1.jpg",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/11/3340111_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/3340111_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.7194583721",
@@ -66,7 +69,7 @@ const recomEventData = [
         "contentid": "3362910",
         "contenttypeid": "15",
         "createdtime": "20240909170508",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/92/3362892_image2_1.jpg",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/92/3362892_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/92/3362892_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "127.0418131384",
@@ -93,7 +96,7 @@ const recomEventData = [
         "contentid": "3358179",
         "contenttypeid": "15",
         "createdtime": "20240903155239",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/78/3358178_image2_1.jpg",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/78/3358178_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/78/3358178_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.8243898827",
@@ -119,7 +122,7 @@ const recomEventData = [
         "contentid": "3343831",
         "contenttypeid": "15",
         "createdtime": "20240806163248",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/25/3343825_image2_1.jpg",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/25/3343825_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/25/3343825_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.7420787151",
@@ -145,7 +148,7 @@ const recomEventData = [
         "contentid": "3354906",
         "contenttypeid": "15",
         "createdtime": "20240827180335",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/97/3354897_image2_1.png",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/97/3354897_image2_1.png",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/97/3354897_image3_1.png",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.9730738387",
@@ -171,7 +174,7 @@ const recomEventData = [
         "contentid": "3110030",
         "contenttypeid": "15",
         "createdtime": "20240318153418",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/18/3110018_image2_1.jpg",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/18/3110018_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/18/3110018_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "129.0491742511",
