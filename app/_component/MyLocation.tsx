@@ -35,31 +35,12 @@ interface locationData {
     sidoName?: string,
 };
 export default function MyLocation() {
-
     const [list, setList] = useState<locationData[]>([])
     const [lat, setLat] = useState(0)       //위도 Y좌표
     const [lng, setLng] = useState(0)       //경도 X좌표
     const [isOpen, setIsOpen] = useState<boolean[]>([]) // 인포윈도우 Open 여부를 저장하는 state 입니다.
     const [currentLoc, setCurrentLoc] = useState<string>('')
     const [contentID, setContentID] = useState<string>('') // 컨텐츠 타입
-
-    // 위도경도를 받아서 주소로 변환
-    // const getAddress = useCallback((lat: number, lng: number) => {
-    //     const geocoder = new window.kakao.maps.services.Geocoder();
-    //     const coord = new window.kakao.maps.LatLng(lat, lng);
-    //     const callback = function (result, status: string) {
-    //         if (status === window.kakao.maps.services.Status.OK) {
-    //             setCurrentLoc(result[0].address.address_name)
-    //         }
-    //     };
-    //     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-    // }, []);
-
-
-    // useEffect(() => {
-    //         getAddress(lat, lng);
-    // }, []);
-
 
     useEffect(() => {
         // 주변장소 데이터
@@ -123,6 +104,27 @@ export default function MyLocation() {
         navigator.geolocation.getCurrentPosition(getLocation, showErrorMsg);
 
     }, [contentID])
+    
+    useEffect(() => {
+        kakao.maps.load(function () {
+            // v3가 모두 로드된 후, 이 콜백 함수가 실행됩니다.
+            const geocoder = new kakao.maps.services.Geocoder();
+            const coord = new window.kakao.maps.LatLng(lat, lng);
+            const callback = function (
+                result: Array<{
+                    address: kakao.maps.services.Address;
+                    road_address: kakao.maps.services.RoadAaddress | null;
+                }>,
+                status: kakao.maps.services.Status
+            ) {
+                if (status === window.kakao.maps.services.Status.OK) {
+                    setCurrentLoc(result[0].address.address_name)
+                }
+            };
+            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+        });
+
+    }, [lat, lng]); // lat과 lng이 변경될 때마다 다시 실행
 
     return (
         <div className="loc-container">
@@ -186,6 +188,7 @@ export default function MyLocation() {
                             return (
                                 <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
                                     position={{ lat: v.mapy, lng: v.mapx }}
+                                    key={i}
                                 >
                                     {/* 커스텀 오버레이에 표시할 내용입니다 */}
                                     {
