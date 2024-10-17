@@ -23,6 +23,7 @@ export default function RootLayout({
             src={API} // 발급받은 카카오 API 키로 변경
             strategy="beforeInteractive"
           />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
           <Header />
           {children}
           <Footer />

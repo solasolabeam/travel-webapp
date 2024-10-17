@@ -66,7 +66,7 @@ export default function Detail(props: DetailProps) {
 
     const lat = parseFloat(detailData.mapy);
     const lng = parseFloat(detailData.mapx);
-    
+
     interface CommonItem {
         overview: number;
     }
@@ -119,6 +119,7 @@ export default function Detail(props: DetailProps) {
 
         detailCommon()
         detailIntro()
+        console.log('detailData', detailData)
     }, [])
     return (
         <div className="detail-container">
@@ -138,7 +139,7 @@ export default function Detail(props: DetailProps) {
             </div>
             <div className="detail-img">
                 {
-                    detailData.firstimage == '' ?
+                    detailData.firstimage == '' && !detailData.firstimage ?
                         <Image src={noIMG} alt="no img" />
                         :
                         <Image
@@ -163,7 +164,6 @@ export default function Detail(props: DetailProps) {
                 <div className="botton-info-area">
                     {
                         intro.map((v) => {
-                            console.log('v', v, typeof v.contenttypeid);
                             return (
                                 <>
                                     {v.contenttypeid == 12 && <Tour value={v} />}
