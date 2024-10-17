@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import Image from "next/image";
 
 export default function Slide() {
+    const idx = [1, 2, 3, 4];
     const dispatch = useAppDispatch()
     return (
         <>
@@ -29,18 +30,15 @@ export default function Slide() {
                 className='header-slide-container'
                 onSlideChange={(e) => dispatch(changeBanner(e.activeIndex))}
             >
-                <SwiperSlide className='header-slide-area'>
-                    <Image src="/img/banner1.jpg" className='header-slide-img' alt="banner" />
-                </SwiperSlide>
-                <SwiperSlide className='header-slide-area'>
-                    <Image src="/img/banner2.jpg" className='header-slide-img' alt="banner" />
-                </SwiperSlide>
-                <SwiperSlide className='header-slide-area'>
-                    <Image src="/img/banner3.jpg" className='header-slide-img' alt="banner" />
-                </SwiperSlide>
-                <SwiperSlide className='header-slide-area'>
-                    <Image src="/img/banner4.jpg" className='header-slide-img' alt="banner" />
-                </SwiperSlide>
+                {
+                    idx.map((v, i) => {
+                        return (
+                            <SwiperSlide className='header-slide-area' key={i}>
+                                <Image src={`/img/banner${v}.jpg`} className='header-slide-img' alt="banner" width={1000} height={1000} />
+                            </SwiperSlide>
+                        )
+                    })
+                }
             </Swiper>
         </>
     )
