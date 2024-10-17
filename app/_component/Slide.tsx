@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Image from "next/image";
 
 export default function Slide() {
     const dispatch = useAppDispatch()
@@ -29,16 +30,16 @@ export default function Slide() {
                 onSlideChange={(e) => dispatch(changeBanner(e.activeIndex))}
             >
                 <SwiperSlide className='header-slide-area'>
-                    <img src="/img/banner1.jpg" className='header-slide-img' />
+                    <Image src="/img/banner1.jpg" className='header-slide-img' alt="banner" />
                 </SwiperSlide>
                 <SwiperSlide className='header-slide-area'>
-                    <img src="/img/banner2.jpg" className='header-slide-img' />
+                    <Image src="/img/banner2.jpg" className='header-slide-img' alt="banner" />
                 </SwiperSlide>
                 <SwiperSlide className='header-slide-area'>
-                    <img src="/img/banner3.jpg" className='header-slide-img' />
+                    <Image src="/img/banner3.jpg" className='header-slide-img' alt="banner" />
                 </SwiperSlide>
                 <SwiperSlide className='header-slide-area'>
-                    <img src="/img/banner4.jpg" className='header-slide-img' />
+                    <Image src="/img/banner4.jpg" className='header-slide-img' alt="banner" />
                 </SwiperSlide>
             </Swiper>
         </>

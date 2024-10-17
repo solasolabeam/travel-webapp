@@ -1,7 +1,7 @@
 'use client'
 import { faCrosshairs } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk"
 import { useAppSelector } from "../hooks"
 import noIMG from '@/public/img/No_Image_Available.jpg'
@@ -45,8 +45,8 @@ export default function MyLocation() {
     useEffect(() => {
         // 주변장소 데이터
         async function getLocation(pos: GeolocationPosition) {
-            var url = 'https://apis.data.go.kr/B551011/KorService1/locationBasedList1';
-            var params = {
+            const url = 'https://apis.data.go.kr/B551011/KorService1/locationBasedList1';
+            const params = {
                 serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
                 numOfRows: '100',
                 pageNo: '1',
@@ -77,8 +77,8 @@ export default function MyLocation() {
             })
             setList([...item])
 
-            let array: boolean[] = []
-            list.forEach(v => {
+            const array: boolean[] = []
+            list.forEach(() => {
                 array.push(false)
             })
             setIsOpen(array)
@@ -104,7 +104,7 @@ export default function MyLocation() {
         navigator.geolocation.getCurrentPosition(getLocation, showErrorMsg);
 
     }, [contentID])
-    
+
     useEffect(() => {
         kakao.maps.load(function () {
             // v3가 모두 로드된 후, 이 콜백 함수가 실행됩니다.

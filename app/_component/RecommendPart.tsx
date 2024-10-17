@@ -48,10 +48,10 @@ export default function RecommendPart() {
             >
 
                 {
-                    recomTourData.map((v) => {
+                    recomTourData.map((v, i) => {
                         return (
-                            <SwiperSlide>
-                                <div className="recommand-tour-area">
+                            <SwiperSlide key={i}>
+                                < div className="recommand-tour-area" >
                                     <img src={`${v.firstimage}`} onClick={
                                         () => {
                                             const url = new URLSearchParams(v).toString()
@@ -62,14 +62,14 @@ export default function RecommendPart() {
                                         <p>{v.title}</p>
                                         <p>{v.addr}</p></div>
                                 </div>
-                            </SwiperSlide>
+                            </SwiperSlide >
                         )
                     })
                 }
-            </Swiper>
+            </Swiper >
 
             {/* 행사 */}
-            <p className='comment'>한국 전역에서 다양한 문화와 즐거움을 한꺼번에 경험 🌟</p>
+            < p className='comment' > 한국 전역에서 다양한 문화와 즐거움을 한꺼번에 경험 🌟</p >
             <Swiper
                 effect={'coverflow'}
                 grabCursor={true}
@@ -87,9 +87,9 @@ export default function RecommendPart() {
                 className="recommand-event-container"
             >
                 {
-                    recomEventData.map((v) => {
+                    recomEventData.map((v, i) => {
                         return (
-                            <SwiperSlide className='recommand-event-area'>
+                            <SwiperSlide className='recommand-event-area' key={i}>
                                 <img src={`${v.firstimage}`} onClick={
                                     () => {
                                         const url = new URLSearchParams(v).toString()
@@ -137,9 +137,9 @@ export default function RecommendPart() {
                 className="recommand-common-container"
             >
                 {
-                    recomCulData.map((v) => {
+                    recomCulData.map((v, i) => {
                         return (
-                            <SwiperSlide>
+                            <SwiperSlide key={i}>
                                 <div className="recommand-common-area">
                                     <div>
                                         <img src={`${v.firstimage}`} onClick={
@@ -197,7 +197,7 @@ export default function RecommendPart() {
                 {
                     recomHotelData.map((v, i) => {
                         return (
-                            <SwiperSlide>
+                            <SwiperSlide key={i}>
                                 <div className="recommand-common-area">
                                     <div>
                                         <img src={`${v.firstimage}`} onClick={
@@ -217,6 +217,6 @@ export default function RecommendPart() {
                     })
                 }
             </Swiper>
-        </div>
+        </div >
     )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../hooks"
 import getBannerData from "../_data/bannerData"
 import { changeCat1CVal, changeCat2CVal, changeCat3CVal, changeContentTypeVal, changeGugunVal, changeKeyword, changeRow, changeSido, changeSidoVal } from "../store"
@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation"
 import Slide from "./Slide"
 
 export default function Header() {
-  const [banner, setBanner] = useState(getBannerData)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const contentType = useAppSelector(state => state.contentType)
@@ -39,8 +38,8 @@ export default function Header() {
 
   useEffect(() => {
     async function getSido() {
-      var url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-      var params = {
+      const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
+      const params = {
         serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
         numOfRows: '20',
         pageNo: '1',
@@ -77,7 +76,7 @@ export default function Header() {
         <ul>
           <li onClick={() => { router.push('/') }} >인기</li>
           {
-            contentType.map((v, i) => {
+            contentType.map((v) => {
               return (
                 <li key={v.code} onClick={() => {
                   getSubCat(v.code)
@@ -91,7 +90,7 @@ export default function Header() {
       </div>
 
       {/* 상단배너 */}
-      <Banner banner={banner} bannerIdx={bannerIdx} />
+      <Banner banner={getBannerData} bannerIdx={bannerIdx} />
     </>
   )
 }
