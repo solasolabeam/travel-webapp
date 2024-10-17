@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../hooks"
 import getBannerData from "../_data/bannerData"
 import { changeCat1CVal, changeCat2CVal, changeCat3CVal, changeContentTypeVal, changeGugunVal, changeKeyword, changeRow, changeSido, changeSidoVal } from "../store"
 import { useRouter } from "next/navigation"
+import Slide from "./Slide"
 
 export default function Header() {
   const [banner, setBanner] = useState(getBannerData)
@@ -111,7 +112,7 @@ function Banner({ banner, bannerIdx }: { banner: BannerProps[], bannerIdx: numbe
         </div>
         <div className="header-bg-right">
           {/* 배너 슬라이드 */}
-          {/* <Slide /> */}
+          <Slide />
         </div>
       </div>
     </div>
