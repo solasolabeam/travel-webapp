@@ -2,16 +2,15 @@
 
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../hooks"
-import getBannerData from "../_data/bannerData"
+
 import { changeCat1CVal, changeCat2CVal, changeCat3CVal, changeContentTypeVal, changeGugunVal, changeKeyword, changeRow, changeSido, changeSidoVal } from "../store"
 import { useRouter } from "next/navigation"
-import Slide from "./Slide"
 
 export default function Header() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const contentType = useAppSelector(state => state.contentType)
-  const bannerIdx = useAppSelector(state => state.bannerIdx)
+
 
   function getSubCat(code: number) {
     dispatch(changeContentTypeVal(code))
@@ -63,11 +62,21 @@ export default function Header() {
     <>
       {/* 로고 & 페이지 이름 */}
       <div className='header-container'>
-        <div>
-          <p style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>TripMate</p>
+        <div className="header-logo">
+          <div>
+            <p style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>TripMate</p>
+          </div>
+          <div>
+            <img src="/img/sopung.png" />
+          </div>
         </div>
-        <div>
-          <img src="/img/sopung.png" />
+        <div className='header-sign'>
+          <div>
+            <button onClick={()=>console.log('123222')}>로그인</button>
+          </div>
+          <div>
+            <button>회원가입</button>
+          </div>
         </div>
       </div>
 
@@ -88,32 +97,8 @@ export default function Header() {
           <li onClick={() => { router.push('/mylocation') }} >주변장소찾기</li>
         </ul>
       </div>
-
-      {/* 상단배너 */}
-      <Banner banner={getBannerData} bannerIdx={bannerIdx} />
     </>
   )
 }
 
-interface BannerProps {
-  bgColor: string;
-  title: string;
-  tag: string;
-}
 
-function Banner({ banner, bannerIdx }: { banner: BannerProps[], bannerIdx: number }) {
-  return (
-    <div className="header-bg-container" style={{ background: banner[bannerIdx].bgColor }}>
-      <div className="header-bg-area">
-        <div className="header-bg-left">
-          <p>{banner[bannerIdx].title}</p>
-          <p dangerouslySetInnerHTML={{ __html: banner[bannerIdx].tag }}></p>
-        </div>
-        <div className="header-bg-right">
-          {/* 배너 슬라이드 */}
-          <Slide />
-        </div>
-      </div>
-    </div>
-  )
-}

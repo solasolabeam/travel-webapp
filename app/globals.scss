@@ -57,32 +57,70 @@ body {
 .header-container {
   @extend %mt-20-wd-1200;
   display: flex;
+  justify-content: space-between;
 
-  >div {
-    height: 60px;
-  }
-
-  div:nth-child(1) {
+  .header-logo {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 200px;
 
-    p {
-      font-family: 'yangjin';
-      font-size: 40px;
-      color: $logo-color;
-      margin: 0;
+    >div {
+      height: 60px;
+    }
+
+    div:nth-child(1) {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 200px;
+
+      p {
+        font-family: 'yangjin';
+        font-size: 40px;
+        color: $logo-color;
+        margin: 0;
+      }
+    }
+
+    div:nth-child(2) {
+      width: 60px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        // object-fit: fill;
+      }
     }
   }
 
-  div:nth-child(2) {
-    width: 60px;
+  .header-sign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 
-    img {
-      width: 100%;
-      height: 100%;
-      // object-fit: fill;
+    button {
+      font-family: 'Nanum';
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 15px 20px 15px 20px;
+      border-radius: 5px;
+
+    }
+
+    div:nth-child(1) {
+      button {
+        border: 1px solid #bebebe;
+        background: #bebebe;
+        color: white;
+      }
+    }
+
+    div:nth-child(2) {
+      button {
+        border: 1px solid $logo-color;
+        background: $logo-color;
+        color: white;
+      }
     }
   }
 
