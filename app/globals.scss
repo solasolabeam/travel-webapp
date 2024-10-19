@@ -97,6 +97,10 @@ body {
     align-items: center;
     gap: 5px;
 
+    span {
+      font-family: 'Nanum';
+    }
+
     button {
       font-family: 'Nanum';
       cursor: pointer;
@@ -107,24 +111,34 @@ body {
 
     }
 
-    div:nth-child(1) {
+    .sign-mypage {
       button {
-        border: 1px solid #bebebe;
+        background: #7a7878a1;
+        color: white;
+      }
+    }
+
+    .sign-logout {
+      button {
+        background: #ff9457;
+        color: white;
+      }
+    }
+
+    .sign-login {
+      button {
         background: #bebebe;
         color: white;
       }
     }
 
-    div:nth-child(2) {
+    .sign-register {
       button {
-        border: 1px solid $logo-color;
         background: $logo-color;
         color: white;
       }
     }
   }
-
-
 }
 
 .category-container {

@@ -5,13 +5,17 @@ import { useAppDispatch, useAppSelector } from "../hooks"
 
 import { changeCat1CVal, changeCat2CVal, changeCat3CVal, changeContentTypeVal, changeGugunVal, changeKeyword, changeRow, changeSido, changeSidoVal } from "../store"
 import { useRouter } from "next/navigation"
+import { signIn, signOut, useSession } from "next-auth/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 
 export default function Header() {
+  const session = useSession()
   const dispatch = useAppDispatch()
   const router = useRouter()
   const contentType = useAppSelector(state => state.contentType)
 
-
+  console.log('sessionsession', session)
   function getSubCat(code: number) {
     dispatch(changeContentTypeVal(code))
     dispatch(changeSidoVal(''))
@@ -71,12 +75,30 @@ export default function Header() {
           </div>
         </div>
         <div className='header-sign'>
-          <div>
-            <button onClick={()=>console.log('123222')}>로그인</button>
-          </div>
-          <div>
-            <button>회원가입</button>
-          </div>
+          {
+            session.data ?
+              <>
+                <div className="sign-name">
+                  <span style={{ color: '#bebebe' }}>{session.data?.user?.name || "Loading"}</span>
+                  <span>님 안녕하세요!</span>
+                </div>
+                <div className="sign-logout">
+                  <button onClick={() => { signOut() }}>로그아웃 <FontAwesomeIcon icon={faRightFromBracket} /></button>
+                </div>
+                <div className="sign-mypage">
+                  <button onClick={() => { signOut() }}>마이페이지 <FontAwesomeIcon icon={faUser} /></button>
+                </div>
+              </>
+              :
+              <>
+                <div className="sign-login">
+                  <button onClick={() => { signIn() }}>로그인 <FontAwesomeIcon icon={faRightToBracket} /></button>
+                </div>
+                <div className="sign-register">
+                  <button>회원가입 <FontAwesomeIcon icon={faUserPlus} /></button>
+                </div>
+              </>
+          }
         </div>
       </div>
 
