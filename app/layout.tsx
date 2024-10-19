@@ -4,16 +4,19 @@ import Footer from "./_component/Footer";
 import { Providers } from "./providers";
 import Script from "next/script";
 import Header from "./_component/Header";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 export const metadata: Metadata = {
   title: "TripMate",
   description: "여행 동반자",
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions)
+  console.log('session', session)
   const API = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAORESTKEY}&libraries=services,clusterer&autoload=false`
   return (
     <html lang="en">
