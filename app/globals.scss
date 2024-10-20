@@ -44,7 +44,7 @@ $logo-color : rgb(54, 134, 171);
 
 body {
   margin: 0 auto;
-  
+
 }
 
 * {
@@ -358,9 +358,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: $border-grey;
   border: none;
+  // background-image: url("/img/tourBanner.jpg");
+  // background-repeat: no-repeat;
+  // background-size: none;
+  // background-position: 50% 50%;
 
   p {
+    color: white;
     font-size: 50px;
     // font-weight: bold;
     font-family: 'Nanum';
