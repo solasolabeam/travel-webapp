@@ -24,6 +24,8 @@
 }
 
 $border-grey : #979797;
+$common-grey : #dfdfdf;
+$footer-grey : #eee;
 $logo-color : rgb(54, 134, 171);
 
 %textOverflow {
@@ -42,6 +44,7 @@ $logo-color : rgb(54, 134, 171);
 
 body {
   margin: 0 auto;
+  
 }
 
 * {
@@ -106,7 +109,7 @@ body {
       cursor: pointer;
       border: none;
       background: transparent;
-      padding: 15px 20px 15px 20px;
+      padding: 10px;
       border-radius: 5px;
 
     }
@@ -115,6 +118,7 @@ body {
       button {
         background: #7a7878a1;
         color: white;
+        display: none;
       }
     }
 
@@ -136,6 +140,7 @@ body {
       button {
         background: $logo-color;
         color: white;
+        display: none;
       }
     }
   }
@@ -343,6 +348,22 @@ body {
       right: 15px;
       cursor: pointer;
     }
+  }
+}
+
+.header-bannerbar {
+  @extend %mt-20-wd-1200;
+  height: 200px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+
+  p {
+    font-size: 50px;
+    // font-weight: bold;
+    font-family: 'Nanum';
   }
 }
 

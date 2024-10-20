@@ -79,14 +79,14 @@ export default function Header() {
             session.data ?
               <>
                 <div className="sign-name">
-                  <span style={{ color: '#bebebe' }}>{session.data?.user?.name || "Loading"}</span>
+                  <span style={{ color: 'black', fontWeight: 'bold' }}>{session.data?.user?.name || "Loading"}</span>
                   <span>님 안녕하세요!</span>
                 </div>
                 <div className="sign-logout">
                   <button onClick={() => { signOut() }}>로그아웃 <FontAwesomeIcon icon={faRightFromBracket} /></button>
                 </div>
                 <div className="sign-mypage">
-                  <button onClick={() => { signOut() }}>마이페이지 <FontAwesomeIcon icon={faUser} /></button>
+                  <button onClick={() => { router.push('/mypage') }}>마이페이지 <FontAwesomeIcon icon={faUser} /></button>
                 </div>
               </>
               :
