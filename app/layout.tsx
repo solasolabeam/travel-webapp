@@ -7,6 +7,7 @@ import Header from "./_component/Header";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import AuthProvider from "./authprovider";
+import Banner from "./_component/Banner";
 
 export const metadata: Metadata = {
   title: "TripMate",
@@ -32,6 +33,7 @@ export default async function RootLayout({
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
             <link rel="icon" href="/img/sopung.png" type="image/png" />
             <Header />
+            <Banner />
             {children}
             <Footer />
           </Providers>
