@@ -17,6 +17,7 @@ const fetchUsers = async (): Promise<UserData[]> => {
 export default function User() {
     console.log('test env', process.env.NEXT_PUBLIC_TEST)
     console.log('env', process.env.NODE_ENV)
+    console.log('test vercel env', process.env.VERCEL_TEST)
     const { data, error, isLoading } = useQuery({
         queryKey: ["fetchUsers"],
         queryFn: () => fetchUsers()
