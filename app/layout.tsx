@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import AuthProvider from "./authprovider";
 import Banner from "./_component/Banner";
+import QueryProvider from "./QueryProvider";
 
 export const metadata: Metadata = {
   title: "TripMate",
@@ -25,18 +26,20 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <Providers>
-            <Script
-              src={API} // 발급받은 카카오 API 키로 변경
-              strategy="beforeInteractive"
-            />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-            <link rel="icon" href="/img/sopung.png" type="image/png" />
-            <Header />
-            <Banner />
-            {children}
-            <Footer />
-          </Providers>
+          <QueryProvider>
+            <Providers>
+              <Script
+                src={API} // 발급받은 카카오 API 키로 변경
+                strategy="beforeInteractive"
+              />
+              <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+              <link rel="icon" href="/img/sopung.png" type="image/png" />
+              <Header />
+              <Banner />
+              {children}
+              <Footer />
+            </Providers>
+          </QueryProvider>
         </AuthProvider>
       </body>
     </html>
