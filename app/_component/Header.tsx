@@ -126,8 +126,3 @@ export default function Header() {
     </>
   )
 }
-
-
-function Member() {
-
-}
