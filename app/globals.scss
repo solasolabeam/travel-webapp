@@ -176,10 +176,11 @@ body {
 .header-bg-container {
   width: 100%;
   background: #ffd9d9;
-  margin-bottom: 100px;
+  margin-bottom: 25px;
 
   .header-bg-area {
-    @extend %mt-20-wd-1200;
+    margin: 0px auto;
+    max-width: 1200px;
 
     height: 550px;
     display: flex;
