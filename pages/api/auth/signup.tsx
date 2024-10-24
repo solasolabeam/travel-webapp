@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const hash = await bcrypt.hash(data.password, 10)
         data.password = hash
         const db = (await connectDB).db('trip');
-        await db.collection('user_cred').insertOne(req.body)
+        await db.collection('user_cred').insertOne(data)
         res.status(200).json({ msg: 'success' })
     }
 }
