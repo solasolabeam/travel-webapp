@@ -96,7 +96,7 @@ export default function RegisterPage() {
 function ErrorAlert({ msg, setAlert }: { msg: string, setAlert: (alert: boolean) => void }) {
   return (
     <div className="modal-alert">
-      <p><FontAwesomeIcon icon={faTriangleExclamation} size="3x" /></p>
+      <p><FontAwesomeIcon icon={faTriangleExclamation} size="3x" color="orange" /></p>
       <p>{msg}</p>
       <div>
         <button onClick={() => setAlert(false)}>확인</button>

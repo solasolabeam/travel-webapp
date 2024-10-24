@@ -76,28 +76,32 @@ export default function Header() {
         </div>
         <div className='header-sign'>
           {
-            session.data ?
-              <>
-                <div className="sign-name">
-                  <span style={{ color: 'black', fontWeight: 'bold' }}>{session.data?.user?.name || "Loading"}</span>
-                  <span>님 안녕하세요!</span>
-                </div>
-                <div className="sign-logout">
-                  <button onClick={() => { signOut() }}>로그아웃 <FontAwesomeIcon icon={faRightFromBracket} /></button>
-                </div>
-                <div className="sign-mypage">
-                  <button onClick={() => { router.push('/mypage') }}>마이페이지 <FontAwesomeIcon icon={faUser} /></button>
-                </div>
-              </>
+            session.status == 'loading'
+              ?
+              <img src="/img/loading.gif" style={{ marginRight: '50px' }} />
               :
-              <>
-                <div className="sign-login">
-                  <button onClick={() => { signIn() }}>로그인 <FontAwesomeIcon icon={faRightToBracket} /></button>
-                </div>
-                <div className="sign-register">
-                  <button>회원가입 <FontAwesomeIcon icon={faUserPlus} /></button>
-                </div>
-              </>
+              session.data ?
+                <>
+                  <div className="sign-name">
+                    <span style={{ color: 'black', fontWeight: 'bold' }}>{session.data?.user?.name || "Loading"}</span>
+                    <span>님 안녕하세요!</span>
+                  </div>
+                  <div className="sign-logout">
+                    <button onClick={() => { signOut() }}>로그아웃 <FontAwesomeIcon icon={faRightFromBracket} /></button>
+                  </div>
+                  <div className="sign-mypage">
+                    <button onClick={() => { router.push('/mypage') }}>마이페이지 <FontAwesomeIcon icon={faUser} /></button>
+                  </div>
+                </>
+                :
+                <>
+                  <div className="sign-login">
+                    <button onClick={() => { signIn() }}>로그인 <FontAwesomeIcon icon={faRightToBracket} /></button>
+                  </div>
+                  <div className="sign-register">
+                    <button onClick={() => { router.push('/register') }}>회원가입 <FontAwesomeIcon icon={faUserPlus} /></button>
+                  </div>
+                </>
           }
         </div>
       </div>
@@ -124,3 +128,6 @@ export default function Header() {
 }
 
 
+function Member() {
+
+}
