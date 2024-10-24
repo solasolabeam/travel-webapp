@@ -34,6 +34,12 @@ $logo-color : rgb(54, 134, 171);
   text-overflow: ellipsis;
 }
 
+%textBreak {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+}
+
 // html {
 //     -ms-user-select: none;
 //     -moz-user-select: -moz-none;
@@ -355,19 +361,13 @@ body {
 .header-bannerbar {
   @extend %mt-20-wd-1200;
   height: 200px;
-  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $border-grey;
-  border: none;
-  // background-image: url("/img/tourBanner.jpg");
-  // background-repeat: no-repeat;
-  // background-size: none;
-  // background-position: 50% 50%;
+  // border-radius: 10px;
+  // border-top: 1px solid black;
 
   p {
-    color: white;
     font-size: 50px;
     // font-weight: bold;
     font-family: 'Nanum';
@@ -1053,6 +1053,107 @@ body {
   position: relative !important;
   top: 0px !important;
   z-index: 5 !important;
+}
+
+.user-register-container {
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  p {
+    margin: 0ox;
+    font-family: 'Nanum';
+    font-weight: bold;
+  }
+
+  input {
+    border: 2px solid black;
+    border-radius: 5px;
+    font-family: 'Nanum';
+    width: 500px;
+    height: 50px;
+
+
+    &:invalid {
+      animation: shake 300ms;
+      border: 2px solid red;
+      background: #fff3f3;
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Nanum';
+    width: 500px;
+    height: 50px;
+    color: white;
+    background: $logo-color;
+    cursor: pointer;
+
+    &:active {
+      background: rgb(43, 106, 136);
+    }
+  }
+}
+
+.modal-alert {
+  width: 400px;
+  height: 240px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background: white;
+  position: absolute;
+  transform: translateX(-50%);
+  top: 10%;
+  left: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    font-family: 'Nanum';
+    margin-bottom: 20px;
+    padding: 10px 25px;
+    border: none;
+    color: white;
+    background: $logo-color;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+
+  p {
+    margin: 5px;
+    font-family: 'Nanum';
+    color: gray;
+    text-align: center;
+  }
+
+  p:nth-child(2) {
+    width: 350px;
+    height: 100px;
+    @extend %textBreak;
+  }
+}
+
+@keyframes shake {
+  25% {
+    transform: translateX(4px);
+  }
+
+  50% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
 }
 
 @media all and (max-width:1024px) {

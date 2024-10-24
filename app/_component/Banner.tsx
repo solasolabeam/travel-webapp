@@ -11,7 +11,7 @@ export default function Banner() {
     return (
         <>
             {
-                pathname !== '/mypage'
+                pathname !== '/mypage' && pathname !== '/register'
                 &&
                 <div className="header-bg-container" style={{ background: getBannerData[bannerIdx].bgColor }}>
                     <div className="header-bg-area">
