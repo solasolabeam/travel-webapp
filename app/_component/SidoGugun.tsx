@@ -8,6 +8,7 @@ import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-ic
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 interface CategoryItem {
   code: string,
@@ -15,6 +16,23 @@ interface CategoryItem {
   rnum: number
 }
 
+async function getSido() {
+  const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
+  const params = {
+    serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
+    numOfRows: '20',
+    pageNo: '1',
+    MobileOS: 'ETC',
+    MobileApp: 'AppTest',
+  };
+
+  const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
+  const requrl = `${url}?${queryString}&_type=json`;
+
+  const res = await fetch(requrl)
+  return await res.json()
+}
+// dispatch(changeSido([...data.response.body.items.item]))
 
 export default function SidoGugun() {
   const dispatch = useAppDispatch()
@@ -37,28 +55,18 @@ export default function SidoGugun() {
   const [subCat, setSubCat] = useState<CategoryItem[]>([]);
   const [isClicked, setIsClicked] = useState<boolean[]>([])
 
+  const { data: sidoData, isLoading: sidoLoading } = useQuery({
+    queryKey: [],
+    queryFn: () => getSido()
+  })
+
   useEffect(() => {
-    async function getSido() {
-      const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-      const params = {
-        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-        numOfRows: '20',
-        pageNo: '1',
-        MobileOS: 'ETC',
-        MobileApp: 'AppTest',
-      };
-
-      const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-      const requrl = `${url}?${queryString}&_type=json`;
-
-      const res = await fetch(requrl)
-      const data = await res.json()
-
-      dispatch(changeSido([...data.response.body.items.item]))
+    if (sidoData) {
+      dispatch(changeSido([...sidoData.response.body.items.item]))
     }
-
-    getSido()
   }, [])
+
+
   useEffect(() => {
     activeSearch()
   }, [addRow, contentTypeVal, cat3Val])
@@ -98,7 +106,7 @@ export default function SidoGugun() {
     tourAPI()
   }, [contentTypeVal])
 
-
+  // 시/도를 설정 후 구/군 조회
   function sidoChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
     const params = {

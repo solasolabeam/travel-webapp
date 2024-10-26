@@ -15,7 +15,6 @@ export default function Header() {
   const router = useRouter()
   const contentType = useAppSelector(state => state.contentType)
 
-  console.log('sessionsession', session)
   function getSubCat(code: number) {
     dispatch(changeContentTypeVal(code))
     dispatch(changeSidoVal(''))

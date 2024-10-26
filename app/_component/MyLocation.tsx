@@ -7,6 +7,7 @@ import { useAppSelector } from "../hooks"
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useQuery } from "@tanstack/react-query"
 
 interface locationData {
     addr1: string,
@@ -34,97 +35,98 @@ interface locationData {
     contentUrl?: string,
     sidoName?: string,
 };
+
+async function getLocation(lat: number, lng: number, contentID: string) {
+    const url = 'https://apis.data.go.kr/B551011/KorService1/locationBasedList1';
+    const params = {
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
+        numOfRows: '100',
+        pageNo: '1',
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        contentTypeId: contentID,
+        arrange: 'A', //정렬구분
+        mapX: String(lng),     //경도
+        mapY: String(lat),     //위도
+        radius: '2000',   //거리반경
+        listYN: 'Y',   //목록구분
+    }
+    const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
+    const requrl = `${url}?${queryString}&_type=json`;
+
+    const res = await fetch(requrl)
+    return res.json()
+}
+
+
 export default function MyLocation() {
-    const [list, setList] = useState<locationData[]>([])
+    // const [list, setList] = useState<locationData[]>([])
     const [lat, setLat] = useState(0)       //위도 Y좌표
     const [lng, setLng] = useState(0)       //경도 X좌표
     const [isOpen, setIsOpen] = useState<boolean[]>([]) // 인포윈도우 Open 여부를 저장하는 state 입니다.
     const [currentLoc, setCurrentLoc] = useState<string>('')
     const [contentID, setContentID] = useState<string>('') // 컨텐츠 타입
+    const [isLocationReady, setIsLocationReady] = useState(false)
+
+    const { data: locationData, isLoading: locationLoading } = useQuery({
+        queryKey: ['location',contentID],
+        queryFn: () => getLocation(lat, lng, contentID),
+        enabled: isLocationReady
+    })
+
+    let list: locationData[] = [];
+
+    if (locationData) {
+        //관광지 문화시설 행사 숙박 건만 조회
+        list = locationData.response.body.items.item
+        list = list.filter((v: locationData) => {
+            return v.contenttypeid == 12 || v.contenttypeid == 14 || v.contenttypeid == 15 || v.contenttypeid == 32
+        })
+    }
 
     useEffect(() => {
-        // 주변장소 데이터
-        async function getLocation(pos: GeolocationPosition) {
-            const url = 'https://apis.data.go.kr/B551011/KorService1/locationBasedList1';
-            const params = {
-                serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-                numOfRows: '100',
-                pageNo: '1',
-                MobileOS: 'ETC',
-                MobileApp: 'AppTest',
-                contentTypeId: contentID,
-                arrange: 'A', //정렬구분
-                mapX: String(pos.coords.longitude),     //경도
-                mapY: String(pos.coords.latitude),     //위도
-                radius: '2000',   //거리반경
-                listYN: 'Y',   //목록구분
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                setLat(pos.coords.latitude)
+                setLng(pos.coords.longitude)
+                setIsLocationReady(true)
 
-            };
-
-            const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-            const requrl = `${url}?${queryString}&_type=json`;
-
-            setLat(pos.coords.latitude)
-            setLng(pos.coords.longitude)
-
-            const res = await fetch(requrl)
-            const data = await res.json()
-
-            let item = data.response.body.items.item
-            //관광지 문화시설 행사 숙박 건만
-            item = item.filter((v: locationData) => {
-                return v.contenttypeid == 12 || v.contenttypeid == 14 || v.contenttypeid == 15 || v.contenttypeid == 32
-            })
-            setList([...item])
-
-            const array: boolean[] = []
-            list.forEach(() => {
-                array.push(false)
-            })
-            setIsOpen(array)
-        }
-
-
-        function showErrorMsg(error: GeolocationPositionError) { // 실패했을때 실행
-            switch (error.code) {
-                case error.PERMISSION_DENIED: //Geolocation API의 사용 요청을 거부
-                    alert("위치 요청을 허용해 주세요!")
-                    break;
-
-                case error.POSITION_UNAVAILABLE:
-                    alert("가져온 위치 정보를 사용할 수 없습니다.")
-                    break;
-
-                case error.TIMEOUT:
-                    alert("위치 정보를 가져오기 위한 요청이 허용 시간을 초과했습니다.")
-                    break;
+                // v3가 모두 로드된 후, 이 콜백 함수가 실행됩니다.
+                kakao.maps.load(function () {
+                    const geocoder = new kakao.maps.services.Geocoder();
+                    const coord = new window.kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                    const callback = function (
+                        result: Array<{
+                            address: kakao.maps.services.Address;
+                            road_address: kakao.maps.services.RoadAaddress | null;
+                        }>,
+                        status: kakao.maps.services.Status
+                    ) {
+                        if (status === window.kakao.maps.services.Status.OK) {
+                            setCurrentLoc(result[0].address.address_name)
+                        }
+                    };
+                    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+                });
             }
-        }
+            ,
+            (error) => {
+                switch (error.code) {
+                    case error.PERMISSION_DENIED: //Geolocation API의 사용 요청을 거부
+                        alert("위치 요청을 허용해 주세요!")
+                        break;
 
-        navigator.geolocation.getCurrentPosition(getLocation, showErrorMsg);
+                    case error.POSITION_UNAVAILABLE:
+                        alert("가져온 위치 정보를 사용할 수 없습니다.")
+                        break;
 
-    }, [contentID])
-
-    useEffect(() => {
-        kakao.maps.load(function () {
-            // v3가 모두 로드된 후, 이 콜백 함수가 실행됩니다.
-            const geocoder = new kakao.maps.services.Geocoder();
-            const coord = new window.kakao.maps.LatLng(lat, lng);
-            const callback = function (
-                result: Array<{
-                    address: kakao.maps.services.Address;
-                    road_address: kakao.maps.services.RoadAaddress | null;
-                }>,
-                status: kakao.maps.services.Status
-            ) {
-                if (status === window.kakao.maps.services.Status.OK) {
-                    setCurrentLoc(result[0].address.address_name)
+                    case error.TIMEOUT:
+                        alert("위치 정보를 가져오기 위한 요청이 허용 시간을 초과했습니다.")
+                        break;
                 }
-            };
-            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-        });
-
-    }, [lat, lng]); // lat과 lng이 변경될 때마다 다시 실행
+            }
+        )
+    }, [])
 
     return (
         <div className="loc-container">
@@ -175,6 +177,8 @@ export default function MyLocation() {
                                         }, // 마커이미지의 크기입니다
                                     }}
                                     onClick={() => {
+                                        const array = list.map(() => false)
+                                        setIsOpen(array)
                                         isOpen[i] = !isOpen[i]
                                         setIsOpen([...isOpen])
                                     }}
