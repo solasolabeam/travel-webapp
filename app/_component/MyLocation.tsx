@@ -68,7 +68,7 @@ export default function MyLocation() {
     const [contentID, setContentID] = useState<string>('') // 컨텐츠 타입
     const [isLocationReady, setIsLocationReady] = useState(false)
 
-    const { data: locationData, isLoading: locationLoading } = useQuery({
+    const { data: locationData } = useQuery({
         queryKey: ['location',contentID],
         queryFn: () => getLocation(lat, lng, contentID),
         enabled: isLocationReady

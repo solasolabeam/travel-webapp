@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, changeKeyword, changeRow, changeSido, changeSidoVal, HeaderSearch } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark as faBookmarkNone } from "@fortawesome/free-regular-svg-icons";
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -32,7 +33,6 @@ async function getSido() {
   const res = await fetch(requrl)
   return await res.json()
 }
-// dispatch(changeSido([...data.response.body.items.item]))
 
 export default function SidoGugun() {
   const dispatch = useAppDispatch()
@@ -55,7 +55,7 @@ export default function SidoGugun() {
   const [subCat, setSubCat] = useState<CategoryItem[]>([]);
   const [isClicked, setIsClicked] = useState<boolean[]>([])
 
-  const { data: sidoData, isLoading: sidoLoading } = useQuery({
+  const { data: sidoData } = useQuery({
     queryKey: [],
     queryFn: () => getSido()
   })
@@ -64,6 +64,8 @@ export default function SidoGugun() {
     if (sidoData) {
       dispatch(changeSido([...sidoData.response.body.items.item]))
     }
+
+
   }, [])
 
 
@@ -328,10 +330,36 @@ interface props {
   addRow: number
 }
 
+async function bookMarkChk(value: HeaderSearchPlus) {
+  const postData = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(value)
+  }
+  const res = await fetch('api/post/bookmarkChk', postData)
+  return res.json()
+}
+
+async function getBookMarks() {
+  const res = await fetch('api/post/getBookMarks')
+  return res.json()
+}
+
 function Card(props: props): JSX.Element {
   const [cardPixel, setCardPixel] = useState<string>('')
   const router = useRouter()
   const Pathname = usePathname()
+
+  const { data: bookMarkData } = useQuery({
+    queryKey: ['getMarks'],
+    queryFn: getBookMarks
+  })
+  if (bookMarkData) {
+    console.log('bookMarkData', bookMarkData)
+  }
+
   useEffect(() => {
     getBrowerWidth()
     function getBrowerWidth() {
@@ -387,9 +415,7 @@ function Card(props: props): JSX.Element {
 
           const url = new URLSearchParams(filteredParam)
           return (
-            <div className='card-layout' key={i} onClick={() => {
-              router.push(`${Pathname}/detail?${url}`)
-            }}>
+            <div className='card-layout' key={i} >
               <div className='card-area'>
                 {
                   v.firstimage == '' ?
@@ -405,7 +431,11 @@ function Card(props: props): JSX.Element {
               </div>
               <div className='card-area'>
                 <p className='card-tag'>{v.contentName}</p>
-                <p className='card-title'>[{v.sidoName}] {v.title}</p>
+                <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark" onClick={() => bookMarkChk(v)} />
+                <p className='card-title'
+                  onClick={() => {
+                    router.push(`${Pathname}/detail?${url}`)
+                  }}>[{v.sidoName}] {v.title}</p>
                 <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
               </div>
             </div>
