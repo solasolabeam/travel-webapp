@@ -416,26 +416,26 @@ function Card(props: props): JSX.Element {
           const url = new URLSearchParams(filteredParam)
           return (
             <div className='card-layout' key={i} >
-              <div className='card-area'>
+              <div className='card-area-top'
+                onClick={() => {
+                  router.push(`${Pathname}/detail?${url}`)
+                }}>
                 {
                   v.firstimage == '' ?
                     <Image src={noIMG} alt="no img" />
                     :
                     <Image
-                      src={`${v.firstimage.substr(0, 4)}s${v.firstimage.substr(4)}`}
+                      src={`${v.firstimage.slice(0, 4)}s${v.firstimage.slice(4)}`}
                       alt="관광명소 이미지"
                       width={364}
                       height={248}
                     />
                 }
               </div>
-              <div className='card-area'>
+              <div className='card-area-bot'>
                 <p className='card-tag'>{v.contentName}</p>
                 <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark" onClick={() => bookMarkChk(v)} />
-                <p className='card-title'
-                  onClick={() => {
-                    router.push(`${Pathname}/detail?${url}`)
-                  }}>[{v.sidoName}] {v.title}</p>
+                <p className='card-title'>[{v.sidoName}] {v.title}</p>
                 <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
               </div>
             </div>
