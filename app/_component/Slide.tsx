@@ -34,7 +34,7 @@ export default function Slide() {
                     idx.map((v, i) => {
                         return (
                             <SwiperSlide className='header-slide-area' key={i}>
-                                <Image src={`/img/banner${v}.jpg`} className='header-slide-img' alt="banner" width={1000} height={1000} />
+                                <Image src={`/img/banner${v}.jpg`} className='header-slide-img' alt="banner" width={1000} height={1000} priority/>
                             </SwiperSlide>
                         )
                     })
