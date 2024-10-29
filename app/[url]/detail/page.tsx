@@ -119,7 +119,6 @@ export default function Detail(props: DetailProps) {
 
         detailCommon()
         detailIntro()
-        console.log('detailData', detailData)
     }, [])
     return (
         <div className="detail-container">
@@ -163,14 +162,14 @@ export default function Detail(props: DetailProps) {
                 </div>
                 <div className="botton-info-area">
                     {
-                        intro.map((v) => {
+                        intro.map((v, i) => {
                             return (
-                                <>
+                                <div key={i}>
                                     {v.contenttypeid == 12 && <Tour value={v} />}
                                     {v.contenttypeid == 14 && <Culture value={v} />}
                                     {v.contenttypeid == 15 && <Event value={v} />}
                                     {v.contenttypeid == 32 && <Hotel value={v} />}
-                                </>
+                                </div>
                             )
                         })
                     }

@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, changeKeyword, changeRow, changeSido, changeSidoVal, HeaderSearch } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as faBookmarkNone } from "@fortawesome/free-regular-svg-icons";
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 interface CategoryItem {
   code: string,
@@ -322,7 +324,11 @@ export default function SidoGugun() {
 
 interface HeaderSearchPlus extends HeaderSearch {
   contentName?: string,
-  sidoName?: string
+  sidoName?: string,
+}
+
+interface HeaderSearchWithChk extends HeaderSearchPlus {
+  isChk: boolean
 }
 
 interface props {
@@ -330,35 +336,68 @@ interface props {
   addRow: number
 }
 
-async function bookMarkChk(value: HeaderSearchPlus) {
-  const postData = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(value)
-  }
-  const res = await fetch('api/post/bookmarkChk', postData)
-  return res.json()
-}
-
-async function getBookMarks() {
-  const res = await fetch('api/post/getBookMarks')
-  return res.json()
+async function getBookMark() {
+  return (await fetch('/api/get/getbookmark')).json()
 }
 
 function Card(props: props): JSX.Element {
   const [cardPixel, setCardPixel] = useState<string>('')
   const router = useRouter()
   const Pathname = usePathname()
+  const [chkList, setChkList] = useState<boolean[]>([])
+  const [chkData, setChkData] = useState<HeaderSearchWithChk[]>([])
+  const { data: session }: { data: Session | null } = useSession()
 
-  const { data: bookMarkData } = useQuery({
-    queryKey: ['getMarks'],
-    queryFn: getBookMarks
+  const { data: bookmarkData } = useQuery({
+    queryKey: ['getBookMark'],
+    queryFn: getBookMark,
   })
-  if (bookMarkData) {
-    console.log('bookMarkData', bookMarkData)
+
+  const mutation = useMutation({
+    mutationFn: async (value: HeaderSearchPlus) => {
+      await fetch('api/put/bookmarkChk', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
+      })
+      return
+    },
+    onSuccess: () => {
+      console.log('success')
+    },
+    onError: (error) => {
+      console.log('error', error)
+    },
+  })
+
+  async function bookMarkChk(value: HeaderSearchPlus) {
+    if (!session) {
+      alert('no')
+      return;
+    }
+
+    mutation.mutate(value)
   }
+
+  useEffect(() => {
+    if (bookmarkData) {
+      const data:HeaderSearchWithChk[] = props.headerSearch.map((v) => {
+        return {
+          ...v,
+          isChk: bookmarkData?.some((value: HeaderSearchPlus) => value.contentid == v.contentid)
+        }
+      })
+      setChkData(data)
+      const clickData= chkData.map((v) => v.isChk);
+      if(session) {
+        setChkList(clickData)
+      } else {
+        setChkList([])
+      }
+    }
+  }, [props.headerSearch])
 
   useEffect(() => {
     getBrowerWidth()
@@ -384,11 +423,10 @@ function Card(props: props): JSX.Element {
     }
   })
 
-
   return (
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
       {
-        props.headerSearch.map((v, i) => {
+        chkData.map((v, i) => {
           const newParam = Object.fromEntries(
             Object.entries(v).map(([key, value]) => [key, value !== undefined ? String(value) : ''])
           );
@@ -415,11 +453,12 @@ function Card(props: props): JSX.Element {
 
           const url = new URLSearchParams(filteredParam)
           return (
-            <div className='card-layout' key={i} >
-              <div className='card-area-top'
-                onClick={() => {
-                  router.push(`${Pathname}/detail?${url}`)
-                }}>
+            <div className='card-layout' key={i}
+              onClick={() => {
+                router.push(`${Pathname}/detail?${url}`)
+              }}
+            >
+              <div className='card-area-top'>
                 {
                   v.firstimage == '' ?
                     <Image src={noIMG} alt="no img" />
@@ -434,7 +473,27 @@ function Card(props: props): JSX.Element {
               </div>
               <div className='card-area-bot'>
                 <p className='card-tag'>{v.contentName}</p>
-                <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark" onClick={() => bookMarkChk(v)} />
+                {
+                  chkList[i] ?
+                    <FontAwesomeIcon icon={faBookmark} color="gold" className="card-bookmark"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        bookMarkChk(v)
+                        chkList[i] = !chkList[i]
+                        setChkList([...chkList])
+                      }}
+                    />
+                    :
+                    <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        bookMarkChk(v)
+                        chkList[i] = !chkList[i]
+                        setChkList([...chkList])
+                      }}
+                    />
+                }
+
                 <p className='card-title'>[{v.sidoName}] {v.title}</p>
                 <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
               </div>
