@@ -58,16 +58,14 @@ export default function SidoGugun() {
   const [isClicked, setIsClicked] = useState<boolean[]>([])
 
   const { data: sidoData } = useQuery({
-    queryKey: [],
-    queryFn: () => getSido()
+    queryKey: ['getSido'],
+    queryFn: getSido
   })
 
   useEffect(() => {
     if (sidoData) {
       dispatch(changeSido([...sidoData.response.body.items.item]))
     }
-
-
   }, [])
 
 
@@ -383,15 +381,15 @@ function Card(props: props): JSX.Element {
 
   useEffect(() => {
     if (bookmarkData) {
-      const data:HeaderSearchWithChk[] = props.headerSearch.map((v) => {
+      const data: HeaderSearchWithChk[] = props.headerSearch.map((v) => {
         return {
           ...v,
           isChk: bookmarkData?.some((value: HeaderSearchPlus) => value.contentid == v.contentid)
         }
       })
       setChkData(data)
-      const clickData= chkData.map((v) => v.isChk);
-      if(session) {
+      const clickData = chkData.map((v) => v.isChk);
+      if (session) {
         setChkList(clickData)
       } else {
         setChkList([])
