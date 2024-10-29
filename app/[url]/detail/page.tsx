@@ -126,11 +126,6 @@ export default function Detail(props: DetailProps) {
                 <p>{detailData.contentName}</p>
                 <hr />
             </div>
-            <div className="detail-tag">
-                <div>
-                    <p>{detailData.sidoName}</p>
-                </div>
-            </div>
             <div className="detail-title">
                 <p>{detailData.title}</p>
                 <p><FontAwesomeIcon icon={faLocationDot} />  {detailData.addr1}</p>

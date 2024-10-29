@@ -1,8 +1,7 @@
 
 'use client'
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { changeCat3CVal, changeGugun, changeGugunVal, changeHeaderSearch, changeKeyword, changeRow, changeSido, changeSidoVal, HeaderSearch } from "../store";
+import { useAppSelector } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as faBookmarkNone } from "@fortawesome/free-regular-svg-icons";
@@ -12,6 +11,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { HeaderSearch } from "../store";
+import getContentType from "../_data/contentType";
 
 interface CategoryItem {
   code: string,
@@ -19,53 +20,47 @@ interface CategoryItem {
   rnum: number
 }
 
-async function getSido() {
-  const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-  const params = {
-    serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-    numOfRows: '20',
-    pageNo: '1',
-    MobileOS: 'ETC',
-    MobileApp: 'AppTest',
-  };
-
-  const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-  const requrl = `${url}?${queryString}&_type=json`;
-
-  const res = await fetch(requrl)
-  return await res.json()
-}
-
 export default function SidoGugun() {
-  const dispatch = useAppDispatch()
+  const [sido, setSido] = useState<CategoryItem[]>([])
+  const [sidoVal, setSidoVal] = useState<string>('')
+  const [gugun, setGugun] = useState<CategoryItem[]>([])
+  const [gugunVal, setGugunVal] = useState<string>('')
+  const [keyword, setKeyword] = useState<string>('')
+  const [cat3Val, setCat3Val] = useState<string>('')
+  const [headerSearch, setHeaderSearch] = useState<HeaderSearch[]>([])
+  const [addRow, setAddRow] = useState<number>(1)
 
-  const sido = useAppSelector(state => state.sido)
-  const sidoVal = useAppSelector(state => state.sidoVal)
-  const gugun = useAppSelector(state => state.gugun)
-  const gugunVal = useAppSelector(state => state.gugunVal)
-  const keyword = useAppSelector(state => state.keyword)
-  const contentType = useAppSelector(state => state.contentType)
+  const [subCat, setSubCat] = useState<CategoryItem[]>([]);
+  const [isClicked, setIsClicked] = useState<boolean[]>([])
+  const [contentName, setContentName] = useState<string>('')
+  const [isLoad, setIsLoad] = useState<boolean>(true)
 
   const contentTypeVal = useAppSelector(state => state.contentTypeVal)
   const cat1Val = useAppSelector(state => state.cat1Val)
   const cat2Val = useAppSelector(state => state.cat2Val)
-  const cat3Val = useAppSelector(state => state.cat3Val)
 
-  const headerSearch = useAppSelector(state => state.headerSearch)
-  const addRow = useAppSelector(state => state.addRow);
 
-  const [subCat, setSubCat] = useState<CategoryItem[]>([]);
-  const [isClicked, setIsClicked] = useState<boolean[]>([])
-
-  const { data: sidoData } = useQuery({
-    queryKey: ['getSido'],
-    queryFn: getSido
-  })
 
   useEffect(() => {
-    if (sidoData) {
-      dispatch(changeSido([...sidoData.response.body.items.item]))
+    async function getSido() {
+      const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
+      const params = {
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
+        numOfRows: '20',
+        pageNo: '1',
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+      };
+
+      const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
+      const requrl = `${url}?${queryString}&_type=json`;
+
+      const res = await fetch(requrl)
+      const data = await res.json()
+      setSido([...data.response.body.items.item])
     }
+
+    getSido()
   }, [])
 
 
@@ -92,20 +87,18 @@ export default function SidoGugun() {
       const response = await fetch(requrl)
       const data = await response.json()
 
-      const newItem = data.response.body.items.item
+      setSubCat([...data.response.body.items.item])
       const array: boolean[] = []
-      newItem.forEach(() => { array.push(false) })
+      data.response.body.items.item.forEach(() => { array.push(false) })
 
       setIsClicked([...array])
-      //타입 가드 추가
-      if (data && data.response && data.response.body && data.response.body.items && Array.isArray(data.response.body.items.item)) {
-        setSubCat([...newItem]);
-      } else {
-        console.error("Unexpected data structure:", data);
-      }
     }
 
     tourAPI()
+    const content = getContentType.find(v=> v.code === Number(contentTypeVal))
+    if(content) {
+      setContentName(content.name)
+    }
   }, [contentTypeVal])
 
   // 시/도를 설정 후 구/군 조회
@@ -126,13 +119,13 @@ export default function SidoGugun() {
       .then((response) => response.json())
       .then((data) => {
         if (e.target.value == '') {
-          dispatch(changeGugun([]))
+          setGugun([])
         } else {
-          dispatch(changeGugun([...data.response.body.items.item]))
+          setGugun([...data.response.body.items.item])
         }
       })
-    dispatch(changeGugunVal(''))
-    dispatch(changeSidoVal(e.target.value))
+    setGugunVal('')
+    setSidoVal(e.target.value)
   }
 
   function activeEnter(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -140,7 +133,7 @@ export default function SidoGugun() {
       if (addRow === 1) {
         activeSearch()
       } else {
-        dispatch(changeRow(1))
+        setAddRow(1)
       }
     }
   }
@@ -198,60 +191,35 @@ export default function SidoGugun() {
     const requrl = `${url}?${queryString}&_type=json`;
 
     const res = await fetch(requrl)
-    let data = await res.json()
+    const data = await res.json()
 
     if (data.response.body.items.length == 0) {
-      dispatch(changeHeaderSearch([]))
+      setHeaderSearch([])
     } else {
-      data = data.response.body.items.item
-      const newData = data.map((value: { contenttypeid: number, areacode: string }) => {
-        let contentName = '';
-        let sidoName = '';
-
-        // 콘텐츠 명 setting
-        contentType.forEach(item => {
-          if (value.contenttypeid == item.code) {
-            contentName = item.name
-          }
-        })
-        // 시/도 명 setting
-        sido.forEach(item => {
-          if (value.areacode == item.code) {
-            sidoName = item.name
-          }
-        })
-
-        return { ...value, contentName: contentName, sidoName: sidoName }
-      })
-      dispatch(changeHeaderSearch([...newData]))
+      setHeaderSearch([...data.response.body.items.item])
+      setIsLoad(false)
     }
   }
 
   function getRow() {
-    dispatch(changeRow(addRow + 1))
+    setAddRow(addRow + 1)
   }
 
-  function subCatClick(v: string | undefined, i: number) {
-    const newItem: boolean[] = []
-
-    isClicked.forEach((val, idx) => {
-      if (i != idx) {
-        newItem.push(false)
-      } else {
-        newItem.push(!val)
-      }
+  function subCatClick(v: string, i: number) {
+    const newItem = isClicked.map((value, idx) => {
+      return i == idx ? !value : false
     })
 
-    // 서브카테고리 on/off 감지
+    // // 서브카테고리 on/off 감지
     setIsClicked([...newItem])
 
-    // 서브카테고리 on/off 여부 판별
+    // // 서브카테고리 on/off 여부 판별
     const check = newItem.every(el => el == false)
     // 클릭한 서브카테고리의 하위데이터 조회
     if (check) {
-      dispatch(changeCat3CVal(''))
+      setCat3Val('')
     } else {
-      dispatch(changeCat3CVal(v))
+      setCat3Val(v)
     }
   }
   return (
@@ -268,7 +236,7 @@ export default function SidoGugun() {
             })
           }
         </select>
-        <select className="gugun-select" name='gugun' value={gugunVal} onChange={(e) => { dispatch(changeGugunVal(e.target.value)) }}>
+        <select className="gugun-select" name='gugun' value={gugunVal} onChange={(e) => setGugunVal(e.target.value)}>
           <option value='' >구/군</option>
           {
             gugun.map((v) => {
@@ -279,12 +247,12 @@ export default function SidoGugun() {
           }
         </select>
         <div>
-          <input type="text" value={keyword} onChange={(e) => { dispatch(changeKeyword(e.target.value)) }} onKeyUp={(e) => activeEnter(e)} />
+          <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyUp={(e) => activeEnter(e)} />
           <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" onClick={() => {
             if (addRow === 1) {
               activeSearch()
             } else {
-              dispatch(changeRow(1))
+              setAddRow(1)
             }
           }} />
         </div>
@@ -296,7 +264,11 @@ export default function SidoGugun() {
         {
           subCat.map((v, i) => {
             return (
-              <div className={isClicked[i] ? 'subCat-selected' : ''} key={v.code} onClick={() => subCatClick(v.code, i)}><p>{v.name}</p></div>
+              <div className={isClicked[i] ? 'subCat-selected' : ''} key={v.code}
+                onClick={() => subCatClick(v.code, i)}
+              >
+                <p>{v.name}</p>
+              </div>
             )
           })
 
@@ -305,12 +277,13 @@ export default function SidoGugun() {
 
       {/* Cart Parts */}
       {
-        headerSearch.length != 0 ?
-          <Card headerSearch={headerSearch} addRow={addRow} />
-          :
-          <div className="no-item">
-            <p>"검색 결과가 존재하지 않습니다"</p>
-          </div>
+        isLoad ? <div>1111</div> :
+          headerSearch.length != 0 ?
+            <Card headerSearch={headerSearch} addRow={addRow} contentName={contentName}/>
+            :
+            <div className="no-item">
+              <p>"검색 결과가 존재하지 않습니다"</p>
+            </div>
       }
 
       <div className="card-btn">
@@ -321,17 +294,17 @@ export default function SidoGugun() {
 }
 
 interface HeaderSearchPlus extends HeaderSearch {
-  contentName?: string,
-  sidoName?: string,
+  contentName?:string
 }
 
-interface HeaderSearchWithChk extends HeaderSearchPlus {
+interface HeaderSearchWithChk extends HeaderSearch {
   isChk: boolean
 }
 
 interface props {
-  headerSearch: HeaderSearchPlus[],
-  addRow: number
+  headerSearch: HeaderSearch[],
+  addRow: number,
+  contentName: string
 }
 
 async function getBookMark() {
@@ -343,7 +316,6 @@ function Card(props: props): JSX.Element {
   const router = useRouter()
   const Pathname = usePathname()
   const [chkList, setChkList] = useState<boolean[]>([])
-  const [chkData, setChkData] = useState<HeaderSearchWithChk[]>([])
   const { data: session }: { data: Session | null } = useSession()
 
   const { data: bookmarkData } = useQuery({
@@ -352,7 +324,7 @@ function Card(props: props): JSX.Element {
   })
 
   const mutation = useMutation({
-    mutationFn: async (value: HeaderSearchPlus) => {
+    mutationFn: async (value: HeaderSearch) => {
       await fetch('api/put/bookmarkChk', {
         method: 'PUT',
         headers: {
@@ -370,7 +342,7 @@ function Card(props: props): JSX.Element {
     },
   })
 
-  async function bookMarkChk(value: HeaderSearchPlus) {
+  async function bookMarkChk(value: HeaderSearch) {
     if (!session) {
       alert('no')
       return;
@@ -384,11 +356,10 @@ function Card(props: props): JSX.Element {
       const data: HeaderSearchWithChk[] = props.headerSearch.map((v) => {
         return {
           ...v,
-          isChk: bookmarkData?.some((value: HeaderSearchPlus) => value.contentid == v.contentid)
+          isChk: bookmarkData?.some((value: HeaderSearch) => value.contentid == v.contentid)
         }
       })
-      setChkData(data)
-      const clickData = chkData.map((v) => v.isChk);
+      const clickData = data.map((v) => v.isChk);
       if (session) {
         setChkList(clickData)
       } else {
@@ -424,32 +395,11 @@ function Card(props: props): JSX.Element {
   return (
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
       {
-        chkData.map((v, i) => {
-          const newParam = Object.fromEntries(
-            Object.entries(v).map(([key, value]) => [key, value !== undefined ? String(value) : ''])
+        props.headerSearch.map((v:HeaderSearchPlus, i) => {
+          v['contentName'] = props.contentName
+          const url = new URLSearchParams(
+            Object.entries(v).filter(([, v]) => v !== undefined)
           );
-
-          // newParam에서 필요한 값만 사용 (중복 제거)
-          const filteredParam = {
-            addr1: newParam.addr1,
-            addr2: newParam.addr2,
-            areacode: newParam.areacode,
-            booktour: newParam.booktour,
-            cat1: newParam.cat1,
-            cat2: newParam.cat2,
-            cat3: newParam.cat3,
-            contentid: newParam.contentid,
-            contenttypeid: newParam.contenttypeid,
-            firstimage: newParam.firstimage,
-            mapx: newParam.mapx,
-            mapy: newParam.mapy,
-            sigungucode: newParam.sigungucode,
-            title: newParam.title,
-            contentName: newParam.contentName,  // undefined 시 빈 문자열로 처리
-            sidoName: newParam.sidoName         // undefined 시 빈 문자열로 처리
-          };
-
-          const url = new URLSearchParams(filteredParam)
           return (
             <div className='card-layout' key={i}
               onClick={() => {
@@ -466,11 +416,12 @@ function Card(props: props): JSX.Element {
                       alt="관광명소 이미지"
                       width={364}
                       height={248}
+                      style={{ width: '100%', height: '100%' }} // 스타일로 비율 유지
                     />
                 }
               </div>
               <div className='card-area-bot'>
-                <p className='card-tag'>{v.contentName}</p>
+                <p className='card-tag'>{props.contentName}</p>
                 {
                   chkList[i] ?
                     <FontAwesomeIcon icon={faBookmark} color="gold" className="card-bookmark"
@@ -492,7 +443,7 @@ function Card(props: props): JSX.Element {
                     />
                 }
 
-                <p className='card-title'>[{v.sidoName}] {v.title}</p>
+                <p className='card-title'> {v.title}</p>
                 <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
               </div>
             </div>

@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../hooks"
 
-import { changeCat1CVal, changeCat2CVal, changeCat3CVal, changeContentTypeVal, changeGugunVal, changeKeyword, changeRow, changeSido, changeSidoVal } from "../store"
+import { changeCat1CVal, changeCat2CVal, changeContentTypeVal } from "../store"
 import { useRouter } from "next/navigation"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -17,11 +16,6 @@ export default function Header() {
 
   function getSubCat(code: number) {
     dispatch(changeContentTypeVal(code))
-    dispatch(changeSidoVal(''))
-    dispatch(changeGugunVal(''))
-    dispatch(changeCat3CVal(''))
-    dispatch(changeKeyword(''))
-    dispatch(changeRow(1))
 
     if (code == 12) {     //관광지
       dispatch(changeCat1CVal('A01'))
@@ -37,29 +31,6 @@ export default function Header() {
       dispatch(changeCat2CVal('B0201'))
     }
   }
-
-  useEffect(() => {
-    async function getSido() {
-      const url = 'https://apis.data.go.kr/B551011/KorService1/areaCode1';
-      const params = {
-        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-        numOfRows: '20',
-        pageNo: '1',
-        MobileOS: 'ETC',
-        MobileApp: 'AppTest',
-      };
-
-      const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-      const requrl = `${url}?${queryString}&_type=json`;
-
-      const res = await fetch(requrl)
-      const data = await res.json()
-
-      dispatch(changeSido([...data.response.body.items.item]))
-    }
-
-    getSido()
-  }, [])
 
   return (
     <>

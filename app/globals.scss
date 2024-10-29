@@ -548,20 +548,6 @@ body {
     }
   }
 
-  .detail-tag {
-    display: flex;
-
-    div {
-      background-color: rgb(149, 189, 138);
-      border-radius: 25px;
-      padding: 0px 15px;
-
-      p {
-        color: rgb(255, 255, 255);
-      }
-    }
-  }
-
   .detail-title {
     p {
       margin: 20px 0 0 0;
@@ -1323,11 +1309,12 @@ body {
     gap: 15px;
 
     .card-layout {
-      .card-area {
+      .card-area-bot {
+        padding-left: 20px;
+        padding-right: 20px;
+
         @mixin card-item($fs, $pt) {
           margin: 0px;
-          padding-left: 20px;
-          padding-right: 20px;
           padding-top: $pt;
           font-size: $fs;
         }
@@ -1335,6 +1322,10 @@ body {
         .card-tag {
           @include card-item(20px, 20px);
           color: #5b86af;
+        }
+
+        .card-bookmark {
+          @include card-item(15px, 5px);
         }
 
         .card-title {
@@ -1813,13 +1804,6 @@ body {
       }
     }
 
-    .detail-tag {
-      div {
-        p {
-          font-size: 10px;
-        }
-      }
-    }
 
     .detail-title {
       p {
