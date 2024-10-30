@@ -62,6 +62,8 @@ body {
 
   .header-logo {
     display: flex;
+    justify-content: center;
+    align-items: center;
 
     >div {
       height: 60px;
@@ -94,8 +96,9 @@ body {
 
   .header-sign {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    padding-right: 10px;
     gap: 5px;
 
     span {
@@ -369,8 +372,9 @@ body {
   @extend %mt-20-wd-1200;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-rows: 500px 500px;
-  // grid-template-rows: repeat(2,500px) ;
+  grid-template-rows: repeat(2, 500px); //로딩 스타일
+  justify-content: center;
+  align-content: center;
   gap: 50px;
 
 
@@ -1109,6 +1113,7 @@ body {
   transform: translateX(-50%);
   top: 10%;
   left: 50%;
+  z-index: 5;
 
   display: flex;
   flex-direction: column;
@@ -1305,8 +1310,10 @@ body {
   // ---카테고리 검색---
 
   .card-container {
-    padding: 15px;
-    gap: 15px;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: repeat(2, 350px); //로딩 스타일
+
+    gap: 20px;
 
     .card-layout {
       .card-area-bot {
@@ -1425,21 +1432,32 @@ body {
   }
 }
 
+
 @media all and (max-width:480px) {
 
   // ---메인 페이지---
   .header-container {
-    div:nth-child(1) {
-      margin-left: 10px;
-      width: 130px;
+    .header-logo {
+      div:nth-child(1) {
+        margin-left: 10px;
+        width: 130px;
 
-      p {
-        font-size: 25px;
+        p {
+          font-size: 25px;
+        }
+      }
+
+      div:nth-child(2) {
+        width: 50px;
+        height: 50px;
       }
     }
 
-    div:nth-child(2) {
-      width: 60px;
+    .header-sign {
+      button {
+        padding: 8px;
+        font-size: 6px;
+      }
     }
   }
 
@@ -1455,8 +1473,6 @@ body {
   }
 
   .header-bg-container {
-    margin-bottom: 50px;
-
     .header-bg-area {
       height: 270px;
       flex-direction: column;
@@ -1628,6 +1644,8 @@ body {
   // ---카테고리 검색---
 
   .card-container {
+    grid-template-columns: repeat(3, 130px);
+    grid-template-rows: repeat(2, 150px); //로딩 스타일
     padding: 15px;
     gap: 15px;
 
@@ -1723,6 +1741,7 @@ body {
   }
 
   .loc-container {
+    margin-top: 10px;
     padding: 0 15px;
     flex-direction: column;
     gap: 50px;
@@ -1876,6 +1895,15 @@ body {
     .detail-map {
       margin: 50px 0;
       height: 200px;
+    }
+  }
+
+  .user-register-container {
+    input {
+      width: 280px;
+    }
+    button {
+      width: 280px;
     }
   }
 }

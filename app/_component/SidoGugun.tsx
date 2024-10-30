@@ -461,108 +461,35 @@ function Card(props: props): JSX.Element {
 }
 
 function CardLoading() {
-  const [cardPixel, setCardPixel] = useState<string>('')
-  useEffect(() => {
-    getBrowerWidth()
-    function getBrowerWidth() {
-      //PC
-      if (1024 < window.innerWidth) {
-        setCardPixel('500px')
-      }
-      //TABLET
-      else if (480 < window.innerWidth) {
-        setCardPixel('350px')
-      }
-      //MOBILE
-      else {
-        setCardPixel('150px')
-      }
-    }
-
-    window.addEventListener('resize', getBrowerWidth)
-
-    return () => {
-      window.removeEventListener('resize', getBrowerWidth)
-    }
-  })
+  const item = Array.from({ length: 6 })
   return (
-    <div className='card-container' style={{ gridTemplateRows: `repeat(2,${cardPixel})` }}>
-      <div className="card-layout">
-        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
-        </div>
-        <div className="card-area-bot">
-          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-        </div>
-      </div>
-      <div className="card-layout">
-        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
-        </div>
-        <div className="card-area-bot">
-          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-        </div>
-      </div>
-      <div className="card-layout">
-        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
-        </div>
-        <div className="card-area-bot">
-          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-        </div>
-      </div>
-      <div className="card-layout">
-        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
-        </div>
-        <div className="card-area-bot">
-          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-        </div>
-      </div>
-      <div className="card-layout">
-        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
-        </div>
-        <div className="card-area-bot">
-          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-        </div>
-      </div>
-      <div className="card-layout">
-        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
-        </div>
-        <div className="card-area-bot">
-          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
-        </div>
-      </div>
+    <div className='card-container'>
+      {
+        item.map((_, i) => (
+          <div className="card-layout" key={i}>
+            <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+            </div>
+            <div className="card-area-bot">
+              <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+              <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+              <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+            </div>
+          </div>
+        ))
+      }
     </div>
   )
 }
 
 function CateLoading() {
+  const item = Array.from({ length: 9 })
   return (
     <>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
-      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      {
+        item.map((_, i) => (
+          <div key={i} style={{ border: '1px solid #eee' }}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center' }}></span></div>
+        ))
+      }
     </>
   )
 }

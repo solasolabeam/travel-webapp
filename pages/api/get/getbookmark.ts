@@ -12,7 +12,7 @@ export default async function getbookmarkHandler(req: NextApiRequest, res: NextA
             const result = await db.collection('bookmark').find({ user_id: session.user?.email }).toArray()
             res.status(200).json(result)
         } else {
-            res.status(500).json({ msg: 'not found bookmark' })
+            res.status(200).json({ msg: 'not found session' })
         }
     }
 }
