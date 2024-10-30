@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faLocationDot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faLocationDot, faMagnifyingGlass, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as faBookmarkNone } from "@fortawesome/free-regular-svg-icons";
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
@@ -319,10 +319,12 @@ async function getBookMark() {
 }
 
 function Card(props: props): JSX.Element {
-  const [cardPixel, setCardPixel] = useState<string>('')
   const router = useRouter()
   const Pathname = usePathname()
   const [chkList, setChkList] = useState<boolean[]>([])
+  const [warnAlert, setWarnAlert] = useState(false)
+  const [msg, setMsg] = useState('')
+
   const { data: session }: { data: Session | null } = useSession()
   const { data: bookmarkData } = useQuery({
     queryKey: ['getBookMark'],
@@ -348,9 +350,12 @@ function Card(props: props): JSX.Element {
     },
   })
 
+  const closeMoadl = () => setWarnAlert(false);
+
   async function bookMarkChk(value: HeaderSearch, i: number) {
     if (!session) {
-      alert('no')
+      setMsg('로그인 후 이용 가능합니다.')
+      setWarnAlert(true)
       return;
     }
     chkList[i] = !chkList[i]
@@ -378,61 +383,64 @@ function Card(props: props): JSX.Element {
   }, [props.headerSearch])
 
   return (
-    <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
-      {
-        props.headerSearch.map((v: HeaderSearchPlus, i) => {
-          v['contentName'] = props.contentName
-          const url = new URLSearchParams(
-            Object.entries(v).filter(([, v]) => v !== undefined)
-          );
-          return (
-            <div className='card-layout' key={i}
-              onClick={() => {
-                router.push(`${Pathname}/detail?${url}`)
-              }}
-            >
-              <div className='card-area-top'>
-                {
-                  v.firstimage == '' ?
-                    <Image src={noIMG} alt="no img" />
-                    :
-                    <Image
-                      src={`${v.firstimage.slice(0, 4)}s${v.firstimage.slice(4)}`}
-                      alt="관광명소 이미지"
-                      width={364}
-                      height={248}
-                      style={{ width: '100%', height: '100%' }} // 스타일로 비율 유지
-                    />
-                }
-              </div>
-              <div className='card-area-bot'>
-                <p className='card-tag'>{props.contentName}</p>
-                {
-                  chkList[i] ?
-                    <FontAwesomeIcon icon={faBookmark} color="gold" className="card-bookmark"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        bookMarkChk(v, i)
+    <>
+      <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2}, 500px})` }}>
+        {
+          props.headerSearch.map((v: HeaderSearchPlus, i) => {
+            v['contentName'] = props.contentName
+            const url = new URLSearchParams(
+              Object.entries(v).filter(([, v]) => v !== undefined)
+            );
+            return (
+              <div className='card-layout' key={i}
+                onClick={() => {
+                  router.push(`${Pathname}/detail?${url}`)
+                }}
+              >
+                <div className='card-area-top'>
+                  {
+                    v.firstimage == '' ?
+                      <Image src={noIMG} alt="no img" />
+                      :
+                      <Image
+                        src={`${v.firstimage.slice(0, 4)}s${v.firstimage.slice(4)}`}
+                        alt="관광명소 이미지"
+                        width={364}
+                        height={248}
+                        style={{ width: '100%', height: '100%' }} // 스타일로 비율 유지
+                      />
+                  }
+                </div>
+                <div className='card-area-bot'>
+                  <p className='card-tag'>{props.contentName}</p>
+                  {
+                    chkList[i] ?
+                      <FontAwesomeIcon icon={faBookmark} color="gold" className="card-bookmark"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          bookMarkChk(v, i)
 
-                      }}
-                    />
-                    :
-                    <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        bookMarkChk(v, i)
-                      }}
-                    />
-                }
+                        }}
+                      />
+                      :
+                      <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          bookMarkChk(v, i)
+                        }}
+                      />
+                  }
 
-                <p className='card-title'> {v.title}</p>
-                <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
+                  <p className='card-title'> {v.title}</p>
+                  <p className='card-addr'><FontAwesomeIcon icon={faLocationDot} /> {v.addr1}</p>
+                </div>
               </div>
-            </div>
-          )
-        })
-      }
-    </div>
+            )
+          })
+        }
+      </div>
+      {warnAlert && <ErrorAlert msg={msg} onClose={closeMoadl} />}
+    </>
   )
 }
 
@@ -467,5 +475,17 @@ function CateLoading() {
         ))
       }
     </>
+  )
+}
+
+function ErrorAlert({ msg, onClose }: { msg: string, onClose: () => void }) {
+  return (
+    <div className="modal-alert">
+      <p><FontAwesomeIcon icon={faTriangleExclamation} size="3x" color="orange" /></p>
+      <p>{msg}</p>
+      <div>
+        <button onClick={onClose}>확인</button>
+      </div>
+    </div>
   )
 }
