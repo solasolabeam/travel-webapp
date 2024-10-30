@@ -33,7 +33,8 @@ export default function SidoGugun() {
   const [subCat, setSubCat] = useState<CategoryItem[]>([]);
   const [isClicked, setIsClicked] = useState<boolean[]>([])
   const [contentName, setContentName] = useState<string>('')
-  const [isLoad, setIsLoad] = useState<boolean>(true)
+  const [isCardLoad, setIsCardLoad] = useState<boolean>(true)
+  const [isCateLoad, setIsCateLoad] = useState<boolean>(true)
 
   const contentTypeVal = useAppSelector(state => state.contentTypeVal)
   const cat1Val = useAppSelector(state => state.cat1Val)
@@ -88,6 +89,7 @@ export default function SidoGugun() {
       const data = await response.json()
 
       setSubCat([...data.response.body.items.item])
+      setIsCateLoad(false)
       const array: boolean[] = []
       data.response.body.items.item.forEach(() => { array.push(false) })
 
@@ -95,8 +97,8 @@ export default function SidoGugun() {
     }
 
     tourAPI()
-    const content = getContentType.find(v=> v.code === Number(contentTypeVal))
-    if(content) {
+    const content = getContentType.find(v => v.code === Number(contentTypeVal))
+    if (content) {
       setContentName(content.name)
     }
   }, [contentTypeVal])
@@ -197,7 +199,7 @@ export default function SidoGugun() {
       setHeaderSearch([])
     } else {
       setHeaderSearch([...data.response.body.items.item])
-      setIsLoad(false)
+      setIsCardLoad(false)
     }
   }
 
@@ -262,24 +264,29 @@ export default function SidoGugun() {
       <div className="subCat-line"></div>
       <div className="subCat-container">
         {
-          subCat.map((v, i) => {
-            return (
-              <div className={isClicked[i] ? 'subCat-selected' : ''} key={v.code}
-                onClick={() => subCatClick(v.code, i)}
-              >
-                <p>{v.name}</p>
-              </div>
-            )
-          })
+          isCateLoad ?
+            <CateLoading />
+            :
+            subCat.map((v, i) => {
+              return (
+                <div className={isClicked[i] ? 'subCat-selected' : ''} key={v.code}
+                  onClick={() => subCatClick(v.code, i)}
+                >
+                  <p>{v.name}</p>
+                </div>
+              )
+            })
 
         }
       </div>
 
       {/* Cart Parts */}
       {
-        isLoad ? <div>1111</div> :
+        isCardLoad ?
+          <CardLoading />
+          :
           headerSearch.length != 0 ?
-            <Card headerSearch={headerSearch} addRow={addRow} contentName={contentName}/>
+            <Card headerSearch={headerSearch} addRow={addRow} contentName={contentName} />
             :
             <div className="no-item">
               <p>"검색 결과가 존재하지 않습니다"</p>
@@ -294,7 +301,7 @@ export default function SidoGugun() {
 }
 
 interface HeaderSearchPlus extends HeaderSearch {
-  contentName?:string
+  contentName?: string
 }
 
 interface HeaderSearchWithChk extends HeaderSearch {
@@ -395,7 +402,7 @@ function Card(props: props): JSX.Element {
   return (
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
       {
-        props.headerSearch.map((v:HeaderSearchPlus, i) => {
+        props.headerSearch.map((v: HeaderSearchPlus, i) => {
           v['contentName'] = props.contentName
           const url = new URLSearchParams(
             Object.entries(v).filter(([, v]) => v !== undefined)
@@ -451,5 +458,112 @@ function Card(props: props): JSX.Element {
         })
       }
     </div>
+  )
+}
+
+function CardLoading() {
+  const [cardPixel, setCardPixel] = useState<string>('')
+  useEffect(() => {
+    getBrowerWidth()
+    function getBrowerWidth() {
+      //PC
+      if (1024 < window.innerWidth) {
+        setCardPixel('500px')
+      }
+      //TABLET
+      else if (480 < window.innerWidth) {
+        setCardPixel('350px')
+      }
+      //MOBILE
+      else {
+        setCardPixel('150px')
+      }
+    }
+
+    window.addEventListener('resize', getBrowerWidth)
+
+    return () => {
+      window.removeEventListener('resize', getBrowerWidth)
+    }
+  })
+  return (
+    <div className='card-container' style={{ gridTemplateRows: `repeat(2,${cardPixel})` }}>
+      <div className="card-layout">
+        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+        </div>
+        <div className="card-area-bot">
+          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+        </div>
+      </div>
+      <div className="card-layout">
+        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+        </div>
+        <div className="card-area-bot">
+          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+        </div>
+      </div>
+      <div className="card-layout">
+        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+        </div>
+        <div className="card-area-bot">
+          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+        </div>
+      </div>
+      <div className="card-layout">
+        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+        </div>
+        <div className="card-area-bot">
+          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+        </div>
+      </div>
+      <div className="card-layout">
+        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+        </div>
+        <div className="card-area-bot">
+          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+        </div>
+      </div>
+      <div className="card-layout">
+        <div className="card-area-top" style={{ background: '#eee', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
+        </div>
+        <div className="card-area-bot">
+          <p className="card-tag"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-title"><span style={{ width: '150px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+          <p className="card-addr"><span style={{ width: '300px', height: '20px', background: '#eee', display: 'inline-block' }}></span></p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CateLoading() {
+  return (
+    <>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+      <div style={{border: '1px solid #eee'}}><span style={{ width: '100px', height: '20px', background: '#eee', display: 'inline-block', borderRadius: '25px', textAlign: 'center'}}></span></div>
+    </>
   )
 }
