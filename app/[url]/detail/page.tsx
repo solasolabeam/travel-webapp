@@ -4,12 +4,11 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { useQuery } from "@tanstack/react-query";
+import { HeaderSearchPlus } from "@/app/_component/SidoGugun";
+import { HeaderSearch } from "@/app/store";
 
-interface DetailProps {
-    searchParams: Record<string, string>;
-}
 interface IntroItem {
     //tour
     contenttypeid: number;
@@ -61,65 +60,77 @@ interface IntroItem {
     infocenterlodging: string,
     reservationlodging: string,
 }
-export default function Detail(props: DetailProps) {
-    const detailData = props.searchParams
 
-    const lat = parseFloat(detailData.mapy);
-    const lng = parseFloat(detailData.mapx);
+interface CommonItem {
+    contentid: string,
+    contenttypeid: string,
+    title: string,
+    createdtime: string,
+    modifiedtime: string,
+    tel: string,
+    telname: string,
+    homepage: string,
+    booktour: string,
+    overview: string,
+}
 
-    interface CommonItem {
-        overview: number;
-    }
+async function detailCommon(detailData: HeaderSearchPlus) {
+    const url = 'https://apis.data.go.kr/B551011/KorService1/detailCommon1';
+    const params = {
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
+        numOfRows: '10',
+        pageNo: '1',
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        contentId: detailData.contentid,
+        defaultYN: 'Y',
+        overviewYN: 'Y',
+    };
 
-    const [common, setCommon] = useState<CommonItem[]>([])
-    const [intro, setIntro] = useState<IntroItem[]>([])
+    const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
+    const requrl = `${url}?${queryString}&_type=json`;
 
-    useEffect(() => {
-        // 관광정보의 “기본정보" 조회
-        async function detailCommon() {
-            const url = 'https://apis.data.go.kr/B551011/KorService1/detailCommon1';
-            const params = {
-                serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-                numOfRows: '10',
-                pageNo: '1',
-                MobileOS: 'ETC',
-                MobileApp: 'AppTest',
-                contentId: detailData.contentid,
-                defaultYN: 'Y',
-                overviewYN: 'Y',
-            };
+    const res = await fetch(requrl)
+    const data = await res.json();
+    return data.response.body.items.item
+}
 
-            const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-            const requrl = `${url}?${queryString}&_type=json`;
+async function detailIntro(detailData: HeaderSearch) {
+    const url = 'https://apis.data.go.kr/B551011/KorService1/detailIntro1';
+    const params = {
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
+        numOfRows: '10',
+        pageNo: '1',
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        contentId: detailData.contentid,
+        contentTypeId: detailData.contenttypeid,
+    };
 
-            const res = await fetch(requrl)
-            const data = await res.json();
-            setCommon([...data.response.body.items.item])
-        }
-        // 소개정보조회
-        async function detailIntro() {
-            const url = 'https://apis.data.go.kr/B551011/KorService1/detailIntro1';
-            const params = {
-                serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-                numOfRows: '10',
-                pageNo: '1',
-                MobileOS: 'ETC',
-                MobileApp: 'AppTest',
-                contentId: detailData.contentid,
-                contentTypeId: detailData.contenttypeid,
-            };
+    const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
+    const requrl = `${url}?${queryString}&_type=json`;
 
-            const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
-            const requrl = `${url}?${queryString}&_type=json`;
+    const res = await fetch(requrl)
+    const data = await res.json();
+    return data.response.body.items.item
+}
 
-            const res = await fetch(requrl)
-            const data = await res.json();
-            setIntro([...data.response.body.items.item])
-        }
+export default function Detail({ searchParams }: { searchParams: HeaderSearchPlus }) {
+    const detailData = searchParams
+    const lat = Number(detailData.mapy)
+    const lng = Number(detailData.mapx)
 
-        detailCommon()
-        detailIntro()
-    }, [])
+
+
+    const { data: common } = useQuery<CommonItem[]>({
+        queryKey: ['detailCommon'],
+        queryFn: () => detailCommon(detailData)
+    })
+    const { data: intro } = useQuery<IntroItem[]>({
+        queryKey: ['detailIntro'],
+        queryFn: () => detailIntro(detailData)
+    })
+
     return (
         <div className="detail-container">
             <div className="detail-content">
@@ -146,7 +157,7 @@ export default function Detail(props: DetailProps) {
             </div>
             <div className="detail-desc">
                 {
-                    common.length != 0 && <p dangerouslySetInnerHTML={{ __html: common[0].overview }}></p>
+                    common && <p dangerouslySetInnerHTML={{ __html: common[0].overview }}></p>
                 }
             </div>
             <div className="detail-info">
@@ -157,7 +168,7 @@ export default function Detail(props: DetailProps) {
                 </div>
                 <div className="botton-info-area">
                     {
-                        intro.map((v, i) => {
+                        intro?.map((v, i) => {
                             return (
                                 <div key={i}>
                                     {v.contenttypeid == 12 && <Tour value={v} />}

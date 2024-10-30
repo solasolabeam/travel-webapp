@@ -267,7 +267,6 @@ function Around({ value }: { value: locationData }) {
             mapy: String(value.mapy),
         }).toString()
         router.push(`${value.contentUrl}/detail?${url}`)
-        console.log('url', url)
     }
     return (
         <div onClick={() => listClick(value)}>

@@ -300,7 +300,7 @@ export default function SidoGugun() {
   );
 }
 
-interface HeaderSearchPlus extends HeaderSearch {
+export interface HeaderSearchPlus extends HeaderSearch {
   contentName?: string
 }
 

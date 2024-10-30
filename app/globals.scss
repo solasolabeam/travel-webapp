@@ -1644,10 +1644,10 @@ body {
   // ---카테고리 검색---
 
   .card-container {
-    grid-template-columns: repeat(3, 120px);
+    grid-template-columns: repeat(3, 115px);
     grid-template-rows: repeat(2, 150px); //로딩 스타일
     padding: 15px;
-    gap: 15px;
+    gap: 10px;
 
     .card-layout {
       border-radius: 10px;
