@@ -348,11 +348,13 @@ function Card(props: props): JSX.Element {
     },
   })
 
-  async function bookMarkChk(value: HeaderSearch) {
+  async function bookMarkChk(value: HeaderSearch, i: number) {
     if (!session) {
       alert('no')
       return;
     }
+    chkList[i] = !chkList[i]
+    setChkList([...chkList])
 
     mutation.mutate(value)
   }
@@ -433,18 +435,15 @@ function Card(props: props): JSX.Element {
                     <FontAwesomeIcon icon={faBookmark} color="gold" className="card-bookmark"
                       onClick={(e) => {
                         e.stopPropagation()
-                        bookMarkChk(v)
-                        chkList[i] = !chkList[i]
-                        setChkList([...chkList])
+                        bookMarkChk(v, i)
+
                       }}
                     />
                     :
                     <FontAwesomeIcon icon={faBookmarkNone} className="card-bookmark"
                       onClick={(e) => {
                         e.stopPropagation()
-                        bookMarkChk(v)
-                        chkList[i] = !chkList[i]
-                        setChkList([...chkList])
+                        bookMarkChk(v, i)
                       }}
                     />
                 }
