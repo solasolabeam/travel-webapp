@@ -1644,7 +1644,7 @@ body {
   // ---카테고리 검색---
 
   .card-container {
-    grid-template-columns: repeat(3, 130px);
+    grid-template-columns: repeat(3, 120px);
     grid-template-rows: repeat(2, 150px); //로딩 스타일
     padding: 15px;
     gap: 15px;
@@ -1652,12 +1652,14 @@ body {
     .card-layout {
       border-radius: 10px;
 
-      .card-area {
+      .card-area-top {
         img {
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
         }
+      }
 
+      .card-area-bot {
         @mixin card-item($fs, $pt) {
           padding-top: $pt;
           font-size: $fs;
@@ -1668,14 +1670,18 @@ body {
           color: #5b86af;
         }
 
+        .card-bookmark {
+          @include card-item(10px, 0px);
+        }
+
         .card-title {
           @include card-item(6px, 8px);
-          height: 10px;
+          height: 25px;
 
         }
 
         .card-addr {
-          @include card-item(4px, 25px);
+          @include card-item(4px, 5px);
         }
       }
     }
@@ -1902,6 +1908,7 @@ body {
     input {
       width: 280px;
     }
+
     button {
       width: 280px;
     }
