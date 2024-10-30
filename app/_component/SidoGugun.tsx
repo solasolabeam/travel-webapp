@@ -360,45 +360,22 @@ function Card(props: props): JSX.Element {
   }
 
   useEffect(() => {
-    if (bookmarkData) {
-      const data: HeaderSearchWithChk[] = props.headerSearch.map((v) => {
-        return {
-          ...v,
-          isChk: bookmarkData?.some((value: HeaderSearch) => value.contentid == v.contentid)
-        }
-      })
-      const clickData = data.map((v) => v.isChk);
-      if (session) {
+    //로그인 시 북마크 가능
+    if (session) {
+      if (bookmarkData) {
+        const data: HeaderSearchWithChk[] = props.headerSearch.map((v) => {
+          return {
+            ...v,
+            isChk: bookmarkData?.some((value: HeaderSearch) => value.contentid == v.contentid)
+          }
+        })
+        const clickData = data.map((v) => v.isChk);
         setChkList(clickData)
-      } else {
-        setChkList([])
       }
+    } else {
+      setChkList([])
     }
   }, [props.headerSearch])
-
-  useEffect(() => {
-    getBrowerWidth()
-    function getBrowerWidth() {
-      //PC
-      if (1024 < window.innerWidth) {
-        setCardPixel('500px')
-      }
-      //TABLET
-      else if (480 < window.innerWidth) {
-        setCardPixel('350px')
-      }
-      //MOBILE
-      else {
-        setCardPixel('150px')
-      }
-    }
-
-    window.addEventListener('resize', getBrowerWidth)
-
-    return () => {
-      window.removeEventListener('resize', getBrowerWidth)
-    }
-  })
 
   return (
     <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2},${cardPixel})` }}>
