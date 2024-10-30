@@ -324,7 +324,6 @@ function Card(props: props): JSX.Element {
   const Pathname = usePathname()
   const [chkList, setChkList] = useState<boolean[]>([])
   const { data: session }: { data: Session | null } = useSession()
-
   const { data: bookmarkData } = useQuery({
     queryKey: ['getBookMark'],
     queryFn: getBookMark,
