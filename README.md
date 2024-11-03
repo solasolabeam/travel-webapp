@@ -52,10 +52,22 @@ MongoDB 및 React-Query와의 비동기 데이터 처리 경험을 통해 확장
 
 
 ## 프로젝트 구성
-
+기존 TripMate와 동일
 🔗 [프로젝트 구성](https://github.com/solasolabeam/travel-web/blob/main/README.md)
 
-- 일반로그인, OAuth 로그인 구현 완료
-- 북마크 기능 개발중...
+###  로그인 / 로그오프 / 회원가입
+![image.jpg1](https://velog.velcdn.com/images/so2i/post/3cf2d0ae-6f73-4ee9-81a6-e4f8e02993ae/image.PNG) |![image.jpg2](https://velog.velcdn.com/images/so2i/post/9bb98593-30b3-4450-aa78-f59552c79b45/image.PNG) | ![image.jpg3](https://velog.velcdn.com/images/so2i/post/e7d83354-3437-4375-964b-b125682c3bf3/image.PNG)
+--- | --- | --- |
+
+
+Credentials Provider를 사용해 만든 로그인 페이지는 이메일, 사용자 이름, 비밀번호 등 사용자 제공 데이터를 사용해 서버 측에서 인증을 수행하는 방식입니다. 
+Google, Github, Kakao로 OAuth 인증을 통한 로그인도 가능합니다.
+
+
+
+###  북마크 기능
+![](https://velog.velcdn.com/images/so2i/post/4c333217-06f7-45f8-9d8d-d37b3f1d19c2/image.PNG)
+
+MongoDB를 사용한 북마크 기능은 사용자가 특정 콘텐츠를 북마크할 수 있게 하고, 이 정보를 MongoDB에 저장하여 필요한 시점에 다시 불러오는 기능입니다. MongoDB의 문서 기반 구조 덕분에 북마크 데이터를 유연하게 저장하고 관리할 수 있습니다.
 
 
