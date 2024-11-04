@@ -8,6 +8,7 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { HeaderSearchPlus } from "@/app/_component/SidoGugun";
 import { HeaderSearch } from "@/app/store";
+import { useEffect } from "react";
 
 interface IntroItem {
     //tour
@@ -119,6 +120,21 @@ export default function Detail({ searchParams }: { searchParams: HeaderSearchPlu
     const detailData = searchParams
     const lat = Number(detailData.mapy)
     const lng = Number(detailData.mapx)
+
+    useEffect(() => {
+        const storedData = sessionStorage.getItem('tourSpot');
+        const sessionData: HeaderSearch[] = storedData ? JSON.parse(storedData) : []
+        sessionData.push(searchParams)
+
+        const uniqueArray = sessionData.filter((item, index, self) =>
+            index === self.findIndex((t) => (
+                t.contentid === item.contentid
+            ))
+        );
+        sessionStorage.setItem('tourSpot', JSON.stringify(uniqueArray))
+
+
+    }, [])
 
 
 
