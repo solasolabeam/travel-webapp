@@ -286,7 +286,7 @@ export default function SidoGugun() {
           <CardLoading />
           :
           headerSearch.length != 0 ?
-            <Card headerSearch={headerSearch} addRow={addRow} contentName={contentName} />
+            <Card headerSearch={headerSearch} contentName={contentName} />
             :
             <div className="no-item">
               <p>"검색 결과가 존재하지 않습니다"</p>
@@ -310,7 +310,6 @@ interface HeaderSearchWithChk extends HeaderSearch {
 
 interface props {
   headerSearch: HeaderSearch[],
-  addRow: number,
   contentName: string
 }
 
@@ -318,7 +317,7 @@ async function getBookMark() {
   return (await fetch('/api/get/getbookmark')).json()
 }
 
-function Card(props: props): JSX.Element {
+export function Card(props: props): JSX.Element {
   const router = useRouter()
   const Pathname = usePathname()
   const [chkList, setChkList] = useState<boolean[]>([])
@@ -380,11 +379,11 @@ function Card(props: props): JSX.Element {
     } else {
       setChkList([])
     }
-  }, [props.headerSearch])
+  }, [props.headerSearch, bookmarkData])
 
   return (
     <>
-      <div className='card-container' style={{ gridTemplateRows: `repeat(${props.addRow * 2}, 500px})` }}>
+      <div className='card-container' style={{ gridTemplateRows: `repeat(${props.headerSearch.length % 3 == 0 ? (props.headerSearch.length / 3) : (props.headerSearch.length / 3) + 1}, 500px)` }}>
         {
           props.headerSearch.map((v: HeaderSearchPlus, i) => {
             v['contentName'] = props.contentName
@@ -447,7 +446,7 @@ function Card(props: props): JSX.Element {
 function CardLoading() {
   const item = Array.from({ length: 6 })
   return (
-    <div className='card-container'>
+    <div className='card-container'style={{ gridTemplateRows: `repeat(2, 500px)` }}>
       {
         item.map((_, i) => (
           <div className="card-layout" key={i}>
