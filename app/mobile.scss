@@ -1,494 +1,524 @@
 @use './globals';
 @media (max-width: 479px) {
-    :root {
-      --row-size: 150px;
-      /* 모바일 환경에서 y 값 조정 */
-    }
-  
-    // ---메인 페이지---
-    .header-container {
-      .header-logo {
-        div:nth-child(1) {
-          margin-left: 10px;
-          width: 130px;
-  
-          p {
-            font-size: 25px;
-          }
-        }
-  
-        div:nth-child(2) {
-          width: 50px;
-          height: 50px;
+  :root {
+    --row-size: 150px;
+    /* 모바일 환경에서 y 값 조정 */
+  }
+
+  // ---메인 페이지---
+  .header-container {
+    .header-logo {
+      div:nth-child(1) {
+        margin-left: 10px;
+        width: 130px;
+
+        p {
+          font-size: 25px;
         }
       }
-  
-      .header-sign {
-        button {
-          padding: 8px;
-          font-size: 6px;
-        }
 
-        .sign-name {
-          text-align: end;
-          width: 100%;
-          span {
-            font-size: 13px;
-          }
-        }
+      div:nth-child(2) {
+        width: 50px;
+        height: 50px;
       }
     }
 
-    .category-container {
-      ul {
-        margin-left: 20px;
-        gap: 20px;
-  
-        li {
-          font-size: 10px;
-        }
-      }
-    }
-  
-    .header-bg-container {
-      .header-bg-area {
-        height: 270px;
-        flex-direction: column;
-  
-        .header-bg-left {
-          width: 80%;
-          flex-direction: column;
-          justify-content: center;
-          gap: 15px;
-  
-          p:nth-child(1) {
-            font-size: 14px;
-          }
-  
-          p:nth-child(2) {
-            font-size: 10px;
-          }
-        }
-  
-        .header-bg-right {
-          width: 80%;
-        }
-  
-        .header-slide-container {
-          .header-slide-area {
-            img {
-              height: 140px;
-            }
-          }
-        }
-      }
-    }
-  
-    .recommand-wrap {
-      .comment {
-        margin-left: 15px;
-        font-size: 10px;
-      }
-  
-      .recommand-tour-container {
-        margin-bottom: 30px;
-  
-        >div:first-child {
-          margin-left: 5px;
-        }
-  
-        >div:last-child {
-          margin-right: 5px;
-        }
-  
-        .recommand-tour-area {
-          height: 130px;
-  
-          img {
-            border-radius: 5px;
-          }
-  
-          >div {
-            position: absolute;
-            top: 70%;
-            left: 10%;
-  
-            p:nth-child(1) {
-              font-size: 10px;
-            }
-  
-            p:nth-child(2) {
-              font-size: 7px;
-            }
-          }
-        }
-  
-      }
-  
-      .recommand-event-container {
-        margin-bottom: 30px;
-  
-        .recommand-event-area {
-          padding: 5px;
-          height: 200px;
-          width: 150px;
-          padding: 10px;
-  
-          img {
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            object-fit: fill;
-          }
-  
-        }
-      }
-  
-      .recommand-common-container {
-        margin-top: 0;
-  
-        >div:first-child {
-          margin-left: 5px;
-        }
-  
-        >div:last-child {
-          margin-right: 5px;
-        }
-  
-        .recommand-common-area {
-          height: 220px;
-  
-          >div:nth-child(1) {
-            height: 65%;
-          }
-  
-          >div:nth-child(2) {
-            height: 30%;
-  
-            p {
-              line-height: 12px;
-            }
-  
-            p:nth-child(1) {
-              font-size: 11px;
-            }
-  
-            p:nth-child(2) {
-              font-size: 7px;
-            }
-          }
-        }
-      }
-    }
-  
-    // ---푸터---
-    .footer-container {
-      padding: 0 20px;
-      height: 120px;
-  
-      .footer-top {
-        padding-top: 25px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-  
-        div {
-          text-align: start;
-  
-          &:nth-child(1) {
-  
-            font-size: 20px;
-            font-family: 'yangjin';
-          }
-  
-          ul {
-            padding: 0;
-            gap: 10px;
-  
-            li {
-              font-size: 7px;
-            }
-          }
-        }
-      }
-  
-      .footer-bottom {
-        p {
-          font-size: 7px;
-        }
-      }
-    }
-  
-    // ---카테고리 검색---
-  
-    .card-container {
-      grid-template-columns: repeat(3, 115px);
-      // grid-template-rows: repeat(2, 150px); //로딩 스타일
-      padding: 15px;
-      gap: 10px;
-  
-      .card-layout {
-        border-radius: 10px;
-  
-        .card-area-top {
-          img {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-          }
-        }
-  
-        .card-area-bot {
-          @mixin card-item($fs, $pt) {
-            padding-top: $pt;
-            font-size: $fs;
-          }
-  
-          .card-tag {
-            @include card-item(7px, 8px);
-            color: #5b86af;
-          }
-  
-          .card-bookmark {
-            @include card-item(10px, 0px);
-          }
-  
-          .card-title {
-            @include card-item(6px, 8px);
-            height: 25px;
-  
-          }
-  
-          .card-addr {
-            @include card-item(4px, 5px);
-          }
-        }
-      }
-    }
-  
-    .card-btn {
+    .header-sign {
       button {
-        padding: 14px;
-        width: 80px;
-        border-radius: 10px;
-        font-size: 10px;
+        padding: 8px;
+        font-size: 6px;
       }
-    }
-  
-    .category-search-container {
-      margin: 10px auto;
-  
-      select {
-        padding: 7px;
-        width: 30%;
-        font-size: 10px;
-      }
-  
-      div {
-        position: relative;
-  
-        input {
-          padding: 7px;
-          width: 200px;
-          border: 1px solid globals.$border-grey;
-          font-size: 10px;
-  
-          &:focus {
-            // box-shadow: 0px 0px 5px #444
-            border: 1px solid black;
-          }
-  
-        }
-  
-        .search-icon {
-          position: absolute;
-          top: 8px;
-          right: 8px;
-          transform: scale(0.8);
-        }
-      }
-    }
-  
-    .subCat-container {
-      margin: 10px auto;
-      gap: 5px;
-      padding: 15px;
-  
-      div {
-        border: 1px solid rgb(167, 167, 167);
-        padding: 4px;
-  
-        p {
-          padding: 3px 12px;
-          font-size: 7px;
-        }
-      }
-    }
-  
-    .loc-container {
-      margin-top: 10px;
-      padding: 0 15px;
-      flex-direction: column;
-      gap: 50px;
-  
-      >div {
-        border: 1px solid rgb(201, 200, 200);
-      }
-  
-      .loc-list {
+
+      .sign-name {
+        text-align: end;
         width: 100%;
-        height: 400px;
-  
-        .loc-list-search {
-          >div:nth-child(1) {
-            span {
-              font-size: 10px;
-            }
-          }
-  
-          ul {
-            li {
-              font-size: 10px;
-            }
-          }
+
+        span {
+          font-size: 13px;
         }
-  
-        .loc-list-result {
-          >div {
-            height: 150px;
-  
-            .list-img {
-              width: 30%;
-            }
-  
-            .list-item {
-              ul {
-                padding: 0;
-                margin: 0;
-                height: 100%;
-  
-                li:nth-child(1) {
-                  font-size: 15px;
-                  padding: 0;
-                  padding-top: 3px;
-                }
-  
-                li {
-                  font-size: 10px;
-  
-                  span {
-                    transform: scale(0.7);
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-  
-      .loc-map {
-        width: 100%; //지도크기
-        height: 250px;
-      }
-    }
-  
-    //---상세---
-    .detail-container {
-      padding: 0 15px;
-  
-      .detail-content {
-        margin: 20px 0;
-  
-        p {
-          font-size: 20px;
-        }
-  
-        hr {
-          border: 1px solid black;
-        }
-      }
-  
-  
-      .detail-title {
-        p {
-          margin-top: 10px;
-          font-size: 20px;
-        }
-  
-        p:nth-child(2) {
-          margin-top: 10px;
-          font-size: 10px;
-        }
-  
-        hr {
-          margin: 20px 0;
-        }
-      }
-  
-      .detail-img {
-        width: 100%;
-        height: 200px;
-      }
-  
-      .detail-desc {
-        margin: 70px 0;
-        letter-spacing: 0.8px;
-  
-        p {
-          padding: 0 30px;
-          line-height: 18px;
-          font-size: 10px;
-          margin: 0;
-        }
-      }
-  
-      .detail-info {
-        .botton-info-title {
-          margin: 0 0 50px 0;
-  
-          div {
-            width: 150px;
-            border-bottom: 1px solid black;
-            border-top: 1px solid black;
-  
-            p {
-              margin: 10px 0;
-              font-size: 20px;
-            }
-          }
-        }
-  
-        .botton-info-area {
-          padding: 10px;
-  
-          .botton-info-flex {
-            .botton-info-area-tag {
-              p {
-                font-size: 10px;
-              }
-            }
-  
-            .botton-info-area-content {
-              p {
-                font-size: 10px;
-              }
-            }
-          }
-        }
-      }
-  
-      .detail-map {
-        margin: 50px 0;
-        height: 200px;
-      }
-    }
-  
-    .user-register-container {
-      input {
-        width: 280px;
-      }
-  
-      button {
-        width: 280px;
       }
     }
   }
+
+  .category-container {
+    ul {
+      margin-left: 20px;
+      gap: 20px;
+
+      li {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .header-bg-container {
+    .header-bg-area {
+      height: 270px;
+      flex-direction: column;
+
+      .header-bg-left {
+        width: 80%;
+        flex-direction: column;
+        justify-content: center;
+        gap: 15px;
+
+        p:nth-child(1) {
+          font-size: 14px;
+        }
+
+        p:nth-child(2) {
+          font-size: 10px;
+        }
+      }
+
+      .header-bg-right {
+        width: 80%;
+      }
+
+      .header-slide-container {
+        .header-slide-area {
+          img {
+            height: 140px;
+          }
+        }
+      }
+    }
+  }
+
+  .recommand-wrap {
+    .comment {
+      margin-left: 15px;
+      font-size: 10px;
+    }
+
+    .recommand-tour-container {
+      margin-bottom: 30px;
+
+      >div:first-child {
+        margin-left: 5px;
+      }
+
+      >div:last-child {
+        margin-right: 5px;
+      }
+
+      .recommand-tour-area {
+        height: 130px;
+
+        img {
+          border-radius: 5px;
+        }
+
+        >div {
+          position: absolute;
+          top: 70%;
+          left: 10%;
+
+          p:nth-child(1) {
+            font-size: 10px;
+          }
+
+          p:nth-child(2) {
+            font-size: 7px;
+          }
+        }
+      }
+
+    }
+
+    .recommand-event-container {
+      margin-bottom: 30px;
+
+      .recommand-event-area {
+        padding: 5px;
+        height: 200px;
+        width: 150px;
+        padding: 10px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 15px;
+          object-fit: fill;
+        }
+
+      }
+    }
+
+    .recommand-common-container {
+      margin-top: 0;
+
+      >div:first-child {
+        margin-left: 5px;
+      }
+
+      >div:last-child {
+        margin-right: 5px;
+      }
+
+      .recommand-common-area {
+        height: 220px;
+
+        >div:nth-child(1) {
+          height: 65%;
+        }
+
+        >div:nth-child(2) {
+          height: 30%;
+
+          p {
+            line-height: 12px;
+          }
+
+          p:nth-child(1) {
+            font-size: 11px;
+          }
+
+          p:nth-child(2) {
+            font-size: 7px;
+          }
+        }
+      }
+    }
+  }
+
+  // ---푸터---
+  .footer-container {
+    padding: 0 20px;
+    height: 120px;
+
+    .footer-top {
+      padding-top: 25px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      div {
+        text-align: start;
+
+        &:nth-child(1) {
+
+          font-size: 20px;
+          font-family: 'yangjin';
+        }
+
+        ul {
+          padding: 0;
+          gap: 10px;
+
+          li {
+            font-size: 7px;
+          }
+        }
+      }
+    }
+
+    .footer-bottom {
+      p {
+        font-size: 7px;
+      }
+    }
+  }
+
+  // ---카테고리 검색---
+
+  .card-container {
+    grid-template-columns: repeat(3, 115px);
+    // grid-template-rows: repeat(2, 150px); //로딩 스타일
+    padding: 15px;
+    gap: 10px;
+
+    .card-layout {
+      border-radius: 10px;
+
+      .card-area-top {
+        img {
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+      }
+
+      .card-area-bot {
+        @mixin card-item($fs, $pt) {
+          padding-top: $pt;
+          font-size: $fs;
+        }
+
+        .card-tag {
+          @include card-item(7px, 8px);
+          color: #5b86af;
+        }
+
+        .card-bookmark {
+          @include card-item(10px, 0px);
+        }
+
+        .card-title {
+          @include card-item(6px, 8px);
+          height: 25px;
+
+        }
+
+        .card-addr {
+          @include card-item(4px, 5px);
+        }
+      }
+    }
+  }
+
+  .card-btn {
+    button {
+      padding: 14px;
+      width: 80px;
+      border-radius: 10px;
+      font-size: 10px;
+    }
+  }
+
+  .category-search-container {
+    margin: 10px auto;
+
+    select {
+      padding: 7px;
+      width: 30%;
+      font-size: 10px;
+    }
+
+    div {
+      position: relative;
+
+      input {
+        padding: 7px;
+        width: 200px;
+        border: 1px solid globals.$border-grey;
+        font-size: 10px;
+
+        &:focus {
+          // box-shadow: 0px 0px 5px #444
+          border: 1px solid black;
+        }
+
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        transform: scale(0.8);
+      }
+    }
+  }
+
+  .subCat-container {
+    margin: 10px auto;
+    gap: 5px;
+    padding: 15px;
+
+    div {
+      border: 1px solid rgb(167, 167, 167);
+      padding: 4px;
+
+      p {
+        padding: 3px 12px;
+        font-size: 7px;
+      }
+    }
+  }
+
+  .loc-container {
+    margin-top: 10px;
+    padding: 0 15px;
+    flex-direction: column;
+    gap: 50px;
+
+    >div {
+      border: 1px solid rgb(201, 200, 200);
+    }
+
+    .loc-list {
+      width: 100%;
+      height: 400px;
+
+      .loc-list-search {
+        >div:nth-child(1) {
+          span {
+            font-size: 10px;
+          }
+        }
+
+        ul {
+          li {
+            font-size: 10px;
+          }
+        }
+      }
+
+      .loc-list-result {
+        >div {
+          height: 150px;
+
+          .list-img {
+            width: 30%;
+          }
+
+          .list-item {
+            ul {
+              padding: 0;
+              margin: 0;
+              height: 100%;
+
+              li:nth-child(1) {
+                font-size: 15px;
+                padding: 0;
+                padding-top: 3px;
+              }
+
+              li {
+                font-size: 10px;
+
+                span {
+                  transform: scale(0.7);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .loc-map {
+      width: 100%; //지도크기
+      height: 250px;
+    }
+  }
+
+  //---상세---
+  .detail-container {
+    padding: 0 15px;
+
+    .detail-content {
+      margin: 20px 0;
+
+      p {
+        font-size: 20px;
+      }
+
+      hr {
+        border: 1px solid black;
+      }
+    }
+
+
+    .detail-title {
+      p {
+        margin-top: 10px;
+        font-size: 20px;
+      }
+
+      p:nth-child(2) {
+        margin-top: 10px;
+        font-size: 10px;
+      }
+
+      hr {
+        margin: 20px 0;
+      }
+    }
+
+    .detail-img {
+      width: 100%;
+      height: 200px;
+    }
+
+    .detail-desc {
+      margin: 70px 0;
+      letter-spacing: 0.8px;
+
+      p {
+        padding: 0 30px;
+        line-height: 18px;
+        font-size: 10px;
+        margin: 0;
+      }
+    }
+
+    .detail-info {
+      .botton-info-title {
+        margin: 0 0 50px 0;
+
+        div {
+          width: 150px;
+          border-bottom: 1px solid black;
+          border-top: 1px solid black;
+
+          p {
+            margin: 10px 0;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .botton-info-area {
+        padding: 10px;
+
+        .botton-info-flex {
+          .botton-info-area-tag {
+            p {
+              font-size: 10px;
+            }
+          }
+
+          .botton-info-area-content {
+            p {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    .detail-map {
+      margin: 50px 0;
+      height: 200px;
+    }
+  }
+
+  .user-register-container {
+    input {
+      width: 280px;
+    }
+
+    button {
+      width: 280px;
+    }
+  }
+
+  .mypage-myinfo-area {
+    margin: 0px;
+    height: 200px;
+
+    .mypage-myinfo-container {
+      .mypage-myinfo-list {
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+  }
+
+  .mypage-container {
+    margin: 0px;
+
+    .mypage-selectbar {
+      margin-bottom: 25px;
+      li {
+        font-size: 10px;
+        height: 25px;
+      }
+    }
+  }
+
+  .icon-size {
+    font-size: 5rem;
+  }
+}

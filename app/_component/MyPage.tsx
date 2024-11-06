@@ -40,7 +40,7 @@ export default function MyPage() {
             <div className="mypage-myinfo-area">
                 <div className="mypage-myinfo-container">
                     <div className="mypage-myinfo-img">
-                        <FontAwesomeIcon icon={faUser} size="10x" color="#dfdfdf" />
+                        <FontAwesomeIcon icon={faUser} className="icon-size" color="#dfdfdf" />
                     </div>
                     <div className="mypage-myinfo-list">
                         <p>{session.data?.user?.name}</p>
@@ -48,7 +48,7 @@ export default function MyPage() {
                 </div>
                 <div className="mypage-myinfo-container">
                     <div className="mypage-myinfo-img">
-                        <FontAwesomeIcon icon={faEnvelope} size="10x" color="#dfdfdf" />
+                        <FontAwesomeIcon icon={faEnvelope} className="icon-size" color="#dfdfdf" />
                     </div>
                     <div className="mypage-myinfo-list">
                         {
