@@ -28,6 +28,11 @@ $common-grey : #dfdfdf;
 $footer-grey : #eee;
 $logo-color : rgb(54, 134, 171);
 
+:root {
+  --row-count: 2;
+  --row-size: 500px;
+}
+
 %textOverflow {
   overflow: hidden;
   white-space: nowrap;
@@ -385,11 +390,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .mypage-myinfo-img {
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
     .mypage-myinfo-list {
       p {
         font-family: 'GmarketSansLight';
@@ -403,9 +410,11 @@ body {
   margin: 0 auto;
   margin-top: 100px;
   max-width: 1200px;
+
   .mypage-selectbar {
     margin-bottom: 100px;
     text-align: center;
+
     ul {
       margin: 0;
       padding: 0;
@@ -415,17 +424,20 @@ body {
       gap: 100px;
       border-bottom: 2px solid $footer-grey;
     }
+
     li {
       list-style: none;
       font-family: 'GmarketSansLight';
       font-size: 30px;
       height: 50px;
+
       &:hover {
         cursor: pointer;
       }
     }
   }
 }
+
 .list-acitve {
   border-bottom: 3px solid $logo-color;
 }
@@ -433,8 +445,8 @@ body {
 .card-container {
   @extend %mt-20-wd-1200;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-rows: repeat(2, 500px); //로딩 스타일
+  grid-template-columns: repeat(3, 1fr) ;
+  grid-template-rows: repeat(var(--row-count), var(--row-size)); //로딩 스타일
   justify-content: center;
   align-content: center;
   gap: 50px;
@@ -1222,6 +1234,10 @@ body {
 }
 
 @media all and (max-width:1024px) {
+  :root {
+    --row-size: 350px;
+    /* 모바일 환경에서 y 값 조정 */
+  }
 
   // ---메인 페이지---
   .header-bg-container {
@@ -1372,8 +1388,8 @@ body {
   // ---카테고리 검색---
 
   .card-container {
-    grid-template-columns: 300px 300px 300px;
-    grid-template-rows: repeat(2, 350px); //로딩 스타일
+    grid-template-columns: repeat(3, 300px);
+    // grid-template-rows: repeat(2, 350px); //로딩 스타일
 
     gap: 20px;
 
@@ -1496,6 +1512,10 @@ body {
 
 
 @media all and (max-width:480px) {
+  :root {
+    --row-size: 150px;
+    /* 모바일 환경에서 y 값 조정 */
+  }
 
   // ---메인 페이지---
   .header-container {
@@ -1707,7 +1727,7 @@ body {
 
   .card-container {
     grid-template-columns: repeat(3, 115px);
-    grid-template-rows: repeat(2, 150px); //로딩 스타일
+    // grid-template-rows: repeat(2, 150px); //로딩 스타일
     padding: 15px;
     gap: 10px;
 

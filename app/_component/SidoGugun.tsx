@@ -381,9 +381,14 @@ export function Card(props: props): JSX.Element {
     }
   }, [props.headerSearch, bookmarkData])
 
+  useEffect(() => {
+    const rowCount:number = props.headerSearch.length % 3 == 0 ? (props.headerSearch.length / 3) : (props.headerSearch.length / 3) + 1
+    document.documentElement.style.setProperty('--row-count', String(rowCount));
+  }, [props.headerSearch])
+
   return (
     <>
-      <div className='card-container' style={{ gridTemplateRows: `repeat(${props.headerSearch.length % 3 == 0 ? (props.headerSearch.length / 3) : (props.headerSearch.length / 3) + 1}, 500px)` }}>
+      <div className='card-container' >
         {
           props.headerSearch.map((v: HeaderSearchPlus, i) => {
             v['contentName'] = props.contentName
@@ -446,7 +451,7 @@ export function Card(props: props): JSX.Element {
 function CardLoading() {
   const item = Array.from({ length: 6 })
   return (
-    <div className='card-container'style={{ gridTemplateRows: `repeat(2, 500px)` }}>
+    <div className='card-container'>
       {
         item.map((_, i) => (
           <div className="card-layout" key={i}>
