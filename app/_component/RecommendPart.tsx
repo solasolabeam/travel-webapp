@@ -52,12 +52,14 @@ export default function RecommendPart() {
                         return (
                             <SwiperSlide key={i}>
                                 < div className="recommand-tour-area" >
-                                    <img src={`${v.firstimage}`} onClick={
+                                    <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
                                         () => {
                                             const url = new URLSearchParams(v).toString()
                                             router.push(`/${v.tag}/detail/?${url}`)
                                         }
-                                    } />
+                                    }
+                                        alt='추천 관광지'
+                                    />
                                     <div>
                                         <p>{v.title}</p>
                                         <p>{v.addr}</p></div>
@@ -90,12 +92,14 @@ export default function RecommendPart() {
                     recomEventData.map((v, i) => {
                         return (
                             <SwiperSlide className='recommand-event-area' key={i}>
-                                <img src={`${v.firstimage}`} onClick={
+                                <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
                                     () => {
                                         const url = new URLSearchParams(v).toString()
                                         router.push(`/${v.tag}/detail/?${url}`)
                                     }
-                                } />
+                                }
+                                    alt='추천 행사'
+                                />
                             </SwiperSlide>
                         )
                     })
@@ -142,12 +146,14 @@ export default function RecommendPart() {
                             <SwiperSlide key={i}>
                                 <div className="recommand-common-area">
                                     <div>
-                                        <img src={`${v.firstimage}`} onClick={
+                                        <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
                                             () => {
                                                 const url = new URLSearchParams(v).toString()
                                                 router.push(`/${v.tag}/detail/?${url}`)
                                             }
-                                        } />
+                                        }
+                                            alt='추천 문화시설 '
+                                        />
                                     </div>
                                     <div>
                                         <p>{v.title}</p>
@@ -200,12 +206,16 @@ export default function RecommendPart() {
                             <SwiperSlide key={i}>
                                 <div className="recommand-common-area">
                                     <div>
-                                        <img src={`${v.firstimage}`} onClick={
+                                        <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
                                             () => {
                                                 const url = new URLSearchParams(v).toString()
+                                                console.log('url', url)
+                                                console.log('v', v)
                                                 router.push(`/${v.tag}/detail/?${url}`)
                                             }
-                                        } />
+                                        }
+                                            alt='추천 숙박시설 '
+                                        />
                                     </div>
                                     <div>
                                         <p>{v.title}</p>

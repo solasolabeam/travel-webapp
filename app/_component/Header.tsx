@@ -41,7 +41,7 @@ export default function Header() {
             <p style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>TripMate</p>
           </div>
           <div>
-            <img src="/img/sopung.png" />
+            <img src="/img/sopung.png" alt="여행동반자 로고 이미지"/>
           </div>
         </div>
         <div className='header-sign'>

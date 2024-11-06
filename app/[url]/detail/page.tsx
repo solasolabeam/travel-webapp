@@ -164,7 +164,7 @@ export default function Detail({ searchParams }: { searchParams: HeaderSearchPlu
                         <Image src={noIMG} alt="no img" />
                         :
                         <Image
-                            src={`${detailData.firstimage.substr(0, 4)}s${detailData.firstimage.substr(4)}`}
+                            src={`${detailData.firstimage.slice(0, 4)}s${detailData.firstimage.slice(4)}`}
                             alt="관광명소 이미지"
                             width={2000}
                             height={2000}

@@ -23,7 +23,7 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions)
   console.log('session', session)
-  const API = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAORESTKEY}&libraries=services,clusterer&autoload=false`
+  const API = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAORESTKEY}&libraries=services,clusterer&autoload=false`
   return (
     <html lang="en">
       <body>

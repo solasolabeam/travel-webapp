@@ -250,7 +250,7 @@ export default function SidoGugun() {
         </select>
         <div>
           <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyUp={(e) => activeEnter(e)} />
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" onClick={() => {
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" size="1x" onClick={() => {
             if (addRow === 1) {
               activeSearch()
             } else {
