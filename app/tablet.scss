@@ -1,0 +1,276 @@
+@media (min-width: 480px) and (max-width: 1024px) {
+    :root {
+      --row-size: 350px;
+      /* 모바일 환경에서 y 값 조정 */
+    }
+  
+    // ---메인 페이지---
+    .header-bg-container {
+      .header-bg-area {
+        height: 600px;
+        flex-direction: column;
+  
+        .header-bg-left {
+          width: 80%;
+          flex-direction: column;
+          justify-content: center;
+          gap: 50px;
+        }
+  
+        .header-bg-right {
+          width: 80%;
+        }
+  
+        .header-slide-container {
+          .header-slide-area {
+            img {
+              height: 320px;
+            }
+          }
+        }
+      }
+    }
+  
+    .header-container {
+      div:nth-child(1) {
+        margin-left: 10px;
+      }
+    }
+  
+    .category-container {
+      ul {
+        margin-left: 20px;
+        gap: 40px;
+      }
+    }
+  
+    .recommand-wrap {
+      .comment {
+        margin-left: 15px;
+        font-size: 20px;
+      }
+  
+      .recommand-tour-container {
+        >div:first-child {
+          margin-left: 15px;
+        }
+  
+        >div:last-child {
+          margin-right: 15px;
+        }
+  
+        .recommand-tour-area {
+          height: 280px;
+  
+          >div {
+            position: absolute;
+            top: 77%;
+            left: 15%;
+  
+            p:nth-child(1) {
+              font-size: 15px;
+            }
+          }
+        }
+  
+      }
+  
+      .recommand-event-container {
+        .recommand-event-area {
+          padding: 5px;
+          height: 300px;
+          width: 200px;
+          padding: 10px;
+  
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            object-fit: fill;
+          }
+  
+        }
+      }
+  
+      .recommand-common-container {
+        margin-top: 0;
+  
+        >div:first-child {
+          margin-left: 15px;
+        }
+  
+        >div:last-child {
+          margin-right: 15px;
+        }
+  
+        .recommand-common-area {
+          >div:nth-child(1) {
+            height: 65%;
+          }
+  
+          >div:nth-child(2) {
+            height: 30%;
+  
+            p:nth-child(1) {
+              font-size: 18px;
+            }
+  
+            p:nth-child(2) {
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  
+    // ---푸터---
+    .footer-container {
+      padding: 0 20px;
+      height: 150px;
+  
+      .footer-top {
+        div {
+          &:nth-child(1) {
+            font-size: 25px;
+            font-family: 'yangjin';
+          }
+  
+          ul {
+            li {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+  
+      .footer-bottom {
+        p {
+          font-size: 11px;
+        }
+      }
+    }
+  
+    // ---카테고리 검색---
+  
+    .card-container {
+      grid-template-columns: repeat(3, 300px);
+      // grid-template-rows: repeat(2, 350px); //로딩 스타일
+  
+      gap: 20px;
+  
+      .card-layout {
+        .card-area-bot {
+          padding-left: 20px;
+          padding-right: 20px;
+  
+          @mixin card-item($fs, $pt) {
+            margin: 0px;
+            padding-top: $pt;
+            font-size: $fs;
+          }
+  
+          .card-tag {
+            @include card-item(20px, 20px);
+            color: #5b86af;
+          }
+  
+          .card-bookmark {
+            @include card-item(15px, 5px);
+          }
+  
+          .card-title {
+            @include card-item(15px, 10px);
+            height: 50px;
+  
+          }
+  
+          .card-addr {
+            @include card-item(10px, 20px);
+          }
+        }
+      }
+    }
+  
+    .category-search-container {
+      padding: 15px;
+    }
+  
+    .subCat-container {
+      gap: 10px;
+      padding: 15px;
+    }
+  
+    .loc-container {
+      padding: 0 15px;
+      flex-direction: column;
+      gap: 50px;
+  
+      >div {
+        border: 1px solid rgb(201, 200, 200);
+      }
+  
+      .loc-list {
+        width: 100%;
+        height: 600px;
+  
+        .loc-list-result {
+          div {
+            .list-img {
+              width: 30%;
+            }
+          }
+        }
+      }
+  
+      .loc-map {
+        width: 100%; //지도크기
+        height: 500px;
+      }
+    }
+  
+    //---상세---
+    .detail-container {
+      padding: 0 50px;
+  
+      .detail-img {
+        width: 100%;
+        height: 500px;
+      }
+  
+      .detail-desc {
+        letter-spacing: 2.5px;
+        border-radius: 15px;
+        margin: 70px 0;
+  
+        p {
+          font-family: 'GmarketSansLight';
+          line-height: 30px;
+          font-size: 20px;
+          margin: 0;
+        }
+      }
+  
+      .detail-info {
+        .botton-info-area {
+          .botton-info-flex {
+            .botton-info-area-tag {
+              p {
+                font-size: 15px;
+              }
+            }
+  
+            .botton-info-area-content {
+              p {
+                font-size: 15px;
+              }
+            }
+          }
+        }
+      }
+  
+      .detail-map {
+        margin: 50px 0;
+        height: 400px;
+      }
+    }
+  }

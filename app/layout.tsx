@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.scss";
+import "./mobile.scss";
+import "./tablet.scss";
 import Footer from "./_component/Footer";
 import { Providers } from "./providers";
 import Script from "next/script";

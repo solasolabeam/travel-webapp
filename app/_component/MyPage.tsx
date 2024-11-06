@@ -40,7 +40,7 @@ export default function MyPage() {
             <div className="mypage-myinfo-area">
                 <div className="mypage-myinfo-container">
                     <div className="mypage-myinfo-img">
-                        <FontAwesomeIcon icon={faUser} size="10x" color="#dfdfdf"/>
+                        <FontAwesomeIcon icon={faUser} size="10x" color="#dfdfdf" />
                     </div>
                     <div className="mypage-myinfo-list">
                         <p>{session.data?.user?.name}</p>
@@ -48,10 +48,17 @@ export default function MyPage() {
                 </div>
                 <div className="mypage-myinfo-container">
                     <div className="mypage-myinfo-img">
-                    <FontAwesomeIcon icon={faEnvelope} size="10x" color="#dfdfdf"/>
+                        <FontAwesomeIcon icon={faEnvelope} size="10x" color="#dfdfdf" />
                     </div>
                     <div className="mypage-myinfo-list">
-                        <p>{session.data?.user?.email}</p>
+                        {
+                            session.data?.user?.email
+                                ?
+                                <p>{session.data?.user?.email}</p>
+                                :
+                                <p>이메일이 존재하지않습니다</p>
+                        }
+
                     </div>
                 </div>
             </div>
