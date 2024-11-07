@@ -3,7 +3,6 @@ import { faCrosshairs } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk"
-import { useAppSelector } from "../hooks"
 import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image"
 import { useRouter } from "next/navigation"
