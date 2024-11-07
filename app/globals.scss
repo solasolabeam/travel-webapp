@@ -1,26 +1,31 @@
 @font-face {
   font-family: 'yangjin';
-  src: url(/font/yangjin.otf);
+  src: url(/font/yangjin.otf) format('opentype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'GmarketSansBold';
-  src: url(/font/GmarketSansBold.otf);
+  src: url(/font/GmarketSansBold.otf) format('opentype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'GmarketSansLight';
-  src: url(/font/GmarketSansLight.otf);
+  src: url(/font/GmarketSansLight.otf) format('opentype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'GmarketSansMedium';
-  src: url(/font/GmarketSansMedium.otf);
+  src: url(/font/GmarketSansMedium.otf) format('opentype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Nanum';
-  src: url(/font/NanumSquareR.ttf);
+  src: url(/font/NanumSquareR.ttf) format('truetype');;
+  font-display: swap;
 }
 
 $border-grey : #979797;

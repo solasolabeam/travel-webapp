@@ -1,18 +1,18 @@
 'use client'
 
-import { useAppDispatch, useAppSelector } from "../hooks"
+import { useAppDispatch } from "../hooks"
 
 import { changeCat1CVal, changeCat2CVal, changeContentTypeVal } from "../store"
 import { useRouter } from "next/navigation"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons"
+import getContentType from "../_data/contentType"
 
 export default function Header() {
   const session = useSession()
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const contentType = useAppSelector(state => state.contentType)
 
   function getSubCat(code: number) {
     dispatch(changeContentTypeVal(code))
@@ -81,7 +81,7 @@ export default function Header() {
         <ul>
           <li onClick={() => { router.push('/') }} >인기</li>
           {
-            contentType.map((v) => {
+            getContentType.map((v) => {
               return (
                 <li key={v.code} onClick={() => {
                   getSubCat(v.code)

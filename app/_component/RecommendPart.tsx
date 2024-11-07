@@ -209,8 +209,6 @@ export default function RecommendPart() {
                                         <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
                                             () => {
                                                 const url = new URLSearchParams(v).toString()
-                                                console.log('url', url)
-                                                console.log('v', v)
                                                 router.push(`/${v.tag}/detail/?${url}`)
                                             }
                                         }
