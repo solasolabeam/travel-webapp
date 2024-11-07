@@ -8,6 +8,7 @@ import noIMG from '@/public/img/No_Image_Available.jpg'
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
+import getContentType from "../_data/contentType"
 
 interface locationData {
     addr1: string,
@@ -69,7 +70,7 @@ export default function MyLocation() {
     const [isLocationReady, setIsLocationReady] = useState(false)
 
     const { data: locationData } = useQuery({
-        queryKey: ['location',contentID],
+        queryKey: ['location', contentID],
         queryFn: () => getLocation(lat, lng, contentID),
         enabled: isLocationReady
     })
@@ -241,22 +242,14 @@ export default function MyLocation() {
 
 function Around({ value }: { value: locationData }) {
     const router = useRouter()
-    const contentType = useAppSelector(state => state.contentType)
-    const sido = useAppSelector(state => state.sido)
 
     function listClick(value: locationData) {
 
         // 콘텐츠 명 setting
-        contentType.forEach(item => {
+        getContentType.forEach(item => {
             if (value.contenttypeid == item.code) {
                 value['contentName'] = item.name
                 value['contentUrl'] = item.url
-            }
-        })
-        // 시/도 명 setting
-        sido.forEach(item => {
-            if (value.areacode == item.code) {
-                value['sidoName'] = item.name
             }
         })
 
