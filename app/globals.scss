@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: 'Nanum';
-  src: url(/font/NanumSquareR.ttf) format('truetype');;
+  src: url(/font/NanumSquareR.ttf) format('truetype');
   font-display: swap;
 }
 
@@ -452,7 +452,7 @@ body {
 .card-container {
   @extend %mt-20-wd-1200;
   display: grid;
-  grid-template-columns: repeat(3, 1fr) ;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(var(--row-count), var(--row-size)); //로딩 스타일
   justify-content: center;
   align-content: center;
@@ -1006,8 +1006,11 @@ body {
     position: relative;
 
     .recommand-tour-area {
+      position: relative;
+      /* 부모 요소에 position 설정 */
       padding: 5px;
       height: 350px;
+      width: 350px;
       overflow: hidden;
       border-radius: 15px;
 
@@ -1069,7 +1072,7 @@ body {
         width: 100%;
         height: 100%;
         border-radius: 15px;
-        object-fit: fill;
+        object-fit: contain;
       }
 
     }
@@ -1079,8 +1082,10 @@ body {
     margin: 20px 0 50px 0;
 
     .recommand-common-area {
+      // position: relative;
       padding: 5px;
       height: 450px;
+      width: 450px;
       display: flex;
       flex-direction: column;
       // align-items: flex-start;

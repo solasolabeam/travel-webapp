@@ -6,6 +6,7 @@ import recomHotelData from '../_data/recomHotelData'
 import { useRouter } from 'next/navigation'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, EffectCoverflow, Pagination, Scrollbar } from 'swiper/modules'
+import Image from 'next/image'
 
 export default function RecommendPart() {
     const router = useRouter()
@@ -50,19 +51,21 @@ export default function RecommendPart() {
                 {
                     recomTourData.map((v, i) => {
                         return (
-                            <SwiperSlide key={i}>
-                                < div className="recommand-tour-area" >
-                                    <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
-                                        () => {
-                                            const url = new URLSearchParams(v).toString()
-                                            router.push(`/${v.tag}/detail/?${url}`)
-                                        }
+                            <SwiperSlide key={i} className="recommand-tour-area">
+                                <Image src={v.firstimage.slice(0, 4) + 's' + v.firstimage.slice(4)} onClick={
+                                    () => {
+                                        const url = new URLSearchParams(v).toString()
+                                        router.push(`/${v.tag}/detail/?${url}`)
                                     }
-                                        alt='추천 관광지'
-                                    />
-                                    <div>
-                                        <p>{v.title}</p>
-                                        <p>{v.addr}</p></div>
+                                }
+                                    alt='추천 관광지'
+                                    width={350}
+                                    height={350}
+                                    loading="lazy"
+                                />
+                                <div>
+                                    <p>{v.title}</p>
+                                    <p>{v.addr}</p>
                                 </div>
                             </SwiperSlide >
                         )
@@ -92,13 +95,15 @@ export default function RecommendPart() {
                     recomEventData.map((v, i) => {
                         return (
                             <SwiperSlide className='recommand-event-area' key={i}>
-                                <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
+                                <Image src={v.firstimage.slice(0, 4) + 's' + v.firstimage.slice(4)} onClick={
                                     () => {
                                         const url = new URLSearchParams(v).toString()
                                         router.push(`/${v.tag}/detail/?${url}`)
                                     }
                                 }
                                     alt='추천 행사'
+                                    width={350}
+                                    height={350}
                                 />
                             </SwiperSlide>
                         )
@@ -143,22 +148,23 @@ export default function RecommendPart() {
                 {
                     recomCulData.map((v, i) => {
                         return (
-                            <SwiperSlide key={i}>
-                                <div className="recommand-common-area">
-                                    <div>
-                                        <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
-                                            () => {
-                                                const url = new URLSearchParams(v).toString()
-                                                router.push(`/${v.tag}/detail/?${url}`)
-                                            }
+                            <SwiperSlide key={i} className="recommand-common-area">
+                                <div>
+                                    <Image src={v.firstimage.slice(0, 4) + 's' + v.firstimage.slice(4)} onClick={
+                                        () => {
+                                            const url = new URLSearchParams(v).toString()
+                                            router.push(`/${v.tag}/detail/?${url}`)
                                         }
-                                            alt='추천 문화시설 '
-                                        />
-                                    </div>
-                                    <div>
-                                        <p>{v.title}</p>
-                                        <p>{v.addr}</p>
-                                    </div>
+                                    }
+                                        alt='추천 문화시설 '
+                                        width={350}
+                                        height={350}
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div>
+                                    <p>{v.title}</p>
+                                    <p>{v.addr}</p>
                                 </div>
                             </SwiperSlide>
                         )
@@ -203,22 +209,23 @@ export default function RecommendPart() {
                 {
                     recomHotelData.map((v, i) => {
                         return (
-                            <SwiperSlide key={i}>
-                                <div className="recommand-common-area">
-                                    <div>
-                                        <img src={v.firstimage.slice(0,4)+'s'+v.firstimage.slice(4)} onClick={
-                                            () => {
-                                                const url = new URLSearchParams(v).toString()
-                                                router.push(`/${v.tag}/detail/?${url}`)
-                                            }
+                            <SwiperSlide key={i} className="recommand-common-area">
+                                <div>
+                                    <Image src={v.firstimage.slice(0, 4) + 's' + v.firstimage.slice(4)} onClick={
+                                        () => {
+                                            const url = new URLSearchParams(v).toString()
+                                            router.push(`/${v.tag}/detail/?${url}`)
                                         }
-                                            alt='추천 숙박시설 '
-                                        />
-                                    </div>
-                                    <div>
-                                        <p>{v.title}</p>
-                                        <p>{v.addr}</p>
-                                    </div>
+                                    }
+                                        alt='추천 숙박시설 '
+                                        width={350}
+                                        height={350}
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <div>
+                                    <p>{v.title}</p>
+                                    <p>{v.addr}</p>
                                 </div>
                             </SwiperSlide>
                         )
