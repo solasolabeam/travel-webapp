@@ -1,5 +1,5 @@
 'use client'
-import { faCrosshairs } from "@fortawesome/free-solid-svg-icons"
+import { faBuilding, faCrosshairs, faPhone } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk"
@@ -280,8 +280,8 @@ function Around({ value }: { value: locationData }) {
             <div className="list-item">
                 <ul>
                     <li>{value.title}</li>
-                    <li><span className="material-symbols-outlined">apartment</span>{value.addr1}</li>
-                    <li><span className="material-symbols-outlined">call</span>{value.tel}</li>
+                    <li><FontAwesomeIcon icon={faBuilding} /> {value.addr1}</li>
+                    <li><FontAwesomeIcon icon={faPhone} /> {value.tel}</li>
                 </ul>
             </div>
         </div>
