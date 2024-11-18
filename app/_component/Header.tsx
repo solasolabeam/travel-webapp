@@ -8,6 +8,7 @@ import { signIn, signOut, useSession } from "next-auth/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons"
 import getContentType from "../_data/contentType"
+import Image from "next/image"
 
 export default function Header() {
   const session = useSession()
@@ -41,14 +42,14 @@ export default function Header() {
             <p style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>TripMate</p>
           </div>
           <div>
-            <img src="/img/sopung.png" alt="여행동반자 로고 이미지"/>
+            <Image src="/img/sopung.png" alt="여행동반자 로고 이미지" width={70} height={70}/>
           </div>
         </div>
         <div className='header-sign'>
           {
             session.status == 'loading'
               ?
-              <img src="/img/loading.gif" style={{ marginRight: '50px' }} />
+              <Image src="/img/loading.gif" style={{ marginRight: '50px' }} alt="로딩바" width={30} height={30}/>
               :
               session.data ?
                 <>

@@ -134,7 +134,7 @@ export default function Detail({ searchParams }: { searchParams: HeaderSearchPlu
         sessionStorage.setItem('tourSpot', JSON.stringify(uniqueArray))
 
 
-    }, [])
+    }, [searchParams])
 
 
 

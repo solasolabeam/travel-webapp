@@ -20,12 +20,32 @@ interface CategoryItem {
   rnum: number
 }
 
+interface Params {
+  serviceKey: string;
+  numOfRows: string;
+  pageNo: string;
+  MobileOS: string;
+  MobileApp: string;
+  listYN: string;
+  arrange: string;
+  contentTypeId: string;
+  areaCode: string; // 시/도
+  sigunguCode: string; // 구/군
+  cat1?: string; // 선택적 속성
+  cat2?: string; // 선택적 속성
+  cat3?: string; // 선택적 속성
+  keyword?: string; // 검색어 선택적 속성
+}
+
 export default function SidoGugun() {
   const [sido, setSido] = useState<CategoryItem[]>([])
   const [sidoVal, setSidoVal] = useState<string>('')
+  const [sidoSelect, setSidoSelect] = useState<string>('')
   const [gugun, setGugun] = useState<CategoryItem[]>([])
   const [gugunVal, setGugunVal] = useState<string>('')
+  const [gugunSelect, setGugunSelect] = useState<string>('')
   const [keyword, setKeyword] = useState<string>('')
+  const [keywordVal, setKeywordVal] = useState<string>('')
   const [cat3Val, setCat3Val] = useState<string>('')
   const [headerSearch, setHeaderSearch] = useState<HeaderSearch[]>([])
   const [addRow, setAddRow] = useState<number>(1)
@@ -64,10 +84,6 @@ export default function SidoGugun() {
     getSido()
   }, [])
 
-
-  useEffect(() => {
-    activeSearch()
-  }, [addRow, contentTypeVal, cat3Val])
   useEffect(() => {
     async function tourAPI() {
       const url = 'https://apis.data.go.kr/B551011/KorService1/categoryCode1';
@@ -80,7 +96,6 @@ export default function SidoGugun() {
         contentTypeId: contentTypeVal,
         cat1: cat1Val,
         cat2: cat2Val,
-        cat3: cat3Val,
       };
       const queryString = new URLSearchParams(params).toString();  // url에 쓰기 적합한 querySting으로 return 해준다. 
       const requrl = `${url}?${queryString}&_type=json`;
@@ -101,7 +116,57 @@ export default function SidoGugun() {
     if (content) {
       setContentName(content.name)
     }
-  }, [contentTypeVal])
+  }, [contentTypeVal, cat1Val, cat2Val])
+
+  useEffect(() => {
+    async function activeSearch() {
+      let url = 'https://apis.data.go.kr/B551011/KorService1/';
+
+      const params: Params = {
+        serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
+        numOfRows: String(6 * addRow),
+        pageNo: '1',
+        MobileOS: 'ETC',
+        MobileApp: 'AppTest',
+        listYN: 'Y',
+        arrange: 'R',
+        contentTypeId: contentTypeVal,
+        areaCode: sidoSelect,
+        sigunguCode: gugunSelect,
+        cat1: cat1Val,
+        cat2: cat2Val,
+        cat3: cat3Val,
+      };
+
+      if (keywordVal === '') {
+        url += 'areaBasedList1';
+      } else {
+        url += 'searchKeyword1';
+        params.keyword = keywordVal; // 검색어 필수!
+      }
+
+      // params 객체에서 undefined인 값을 제거하여 새로운 객체를 생성
+      const filteredParams = Object.fromEntries(
+        Object.entries(params).filter(([value]) => value !== undefined)
+      );
+
+      // URLSearchParams에 필터링된 params를 넘김
+      const queryString = new URLSearchParams(filteredParams).toString();
+      const requrl = `${url}?${queryString}&_type=json`;
+
+      const res = await fetch(requrl)
+      const data = await res.json()
+
+      if (data.response.body.items.length == 0) {
+        setHeaderSearch([])
+      } else {
+        setHeaderSearch([...data.response.body.items.item])
+        setIsCardLoad(false)
+      }
+    }
+
+    activeSearch()
+  }, [addRow, contentTypeVal, cat1Val, cat2Val, cat3Val, keywordVal, sidoSelect, gugunSelect])
 
   // 시/도를 설정 후 구/군 조회
   function sidoChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -130,79 +195,6 @@ export default function SidoGugun() {
     setSidoVal(e.target.value)
   }
 
-  function activeEnter(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter') { // 'Enter' 키를 문자열로 비교
-      if (addRow === 1) {
-        activeSearch()
-      } else {
-        setAddRow(1)
-      }
-    }
-  }
-
-  async function activeSearch() {
-    let url = 'https://apis.data.go.kr/B551011/KorService1/';
-
-    interface Params {
-      serviceKey: string;
-      numOfRows: string;
-      pageNo: string;
-      MobileOS: string;
-      MobileApp: string;
-      listYN: string;
-      arrange: string;
-      contentTypeId: string;
-      areaCode: string; // 시/도
-      sigunguCode: string; // 구/군
-      cat1?: string; // 선택적 속성
-      cat2?: string; // 선택적 속성
-      cat3?: string; // 선택적 속성
-      keyword?: string; // 검색어 선택적 속성
-    }
-
-    const params: Params = {
-      serviceKey: process.env.NEXT_PUBLIC_TOUR_API_KEY!,
-      numOfRows: String(6 * addRow),
-      pageNo: '1',
-      MobileOS: 'ETC',
-      MobileApp: 'AppTest',
-      listYN: 'Y',
-      arrange: 'R',
-      contentTypeId: contentTypeVal,
-      areaCode: sidoVal,
-      sigunguCode: gugunVal,
-      cat1: cat1Val,
-      cat2: cat2Val,
-      cat3: cat3Val,
-    };
-
-    if (keyword === '') {
-      url += 'areaBasedList1';
-    } else {
-      url += 'searchKeyword1';
-      params.keyword = keyword; // 검색어 필수!
-    }
-
-    // params 객체에서 undefined인 값을 제거하여 새로운 객체를 생성
-    const filteredParams = Object.fromEntries(
-      Object.entries(params).filter(([value]) => value !== undefined)
-    );
-
-    // URLSearchParams에 필터링된 params를 넘김
-    const queryString = new URLSearchParams(filteredParams).toString();
-    const requrl = `${url}?${queryString}&_type=json`;
-
-    const res = await fetch(requrl)
-    const data = await res.json()
-
-    if (data.response.body.items.length == 0) {
-      setHeaderSearch([])
-    } else {
-      setHeaderSearch([...data.response.body.items.item])
-      setIsCardLoad(false)
-    }
-  }
-
   function getRow() {
     setAddRow(addRow + 1)
   }
@@ -224,6 +216,15 @@ export default function SidoGugun() {
       setCat3Val(v)
     }
   }
+
+  function changeKeyWord(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key == 'Enter') {
+      setKeywordVal(keyword)
+      setSidoSelect(sidoVal)
+      setGugunSelect(gugunVal)
+    }
+  }
+
   return (
     <>
       {/* SIdo Parts */}
@@ -249,14 +250,8 @@ export default function SidoGugun() {
           }
         </select>
         <div>
-          <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyUp={(e) => activeEnter(e)} />
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" size="1x" onClick={() => {
-            if (addRow === 1) {
-              activeSearch()
-            } else {
-              setAddRow(1)
-            }
-          }} />
+          <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyUp={changeKeyWord} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" size="1x" onClick={() => setAddRow(1)} />
         </div>
       </div>
 
@@ -379,10 +374,10 @@ export function Card(props: props): JSX.Element {
     } else {
       setChkList([])
     }
-  }, [props.headerSearch, bookmarkData])
+  }, [props.headerSearch, bookmarkData, session])
 
   useEffect(() => {
-    const rowCount:number = props.headerSearch.length % 3 == 0 ? (props.headerSearch.length / 3) : (props.headerSearch.length / 3) + 1
+    const rowCount: number = props.headerSearch.length % 3 == 0 ? (props.headerSearch.length / 3) : (props.headerSearch.length / 3) + 1
     document.documentElement.style.setProperty('--row-count', String(rowCount));
   }, [props.headerSearch])
 
