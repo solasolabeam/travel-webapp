@@ -13,8 +13,22 @@ import Banner from "./_component/Banner";
 import QueryProvider from "./QueryProvider";
 
 export const metadata: Metadata = {
-  title: "TripMate",
-  description: "여행 동반자",
+  title: "TripMate: 나만의 여행 동반자 | TripMate",
+  description: "TripMate는 여행지 정보와 추천 여행지를 한 곳에서 제공하는 플랫폼입니다.",
+  openGraph: {
+    title: "TripMate: 나만의 여행 동반자 | TripMate",
+    description: "TripMate는 여행지 정보와 추천 여행지를 한 곳에서 제공하는 플랫폼입니다.",
+    url: 'https://example.com',
+    // images
+  },
+  verification: {
+    google: 'KvU3qBv3ITMNr0j6HjSXtnuQ8GUIU0narVvjfSU0ZH0',
+  },
+  keywords: "여행, 여행지 추천, 관광지 추천, 이벤트 추천, 문화 추천, 호텔 추천, 주변 관광지 추천, TripMate, 여행 웹사이트",
+  robots: {
+    index: true,
+    follow: true
+  }
 };
 export default async function RootLayout({
   children,
