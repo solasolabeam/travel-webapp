@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: /
+Sitemap: https://travel-webapp-eta.vercel.app/sitemap.xml
