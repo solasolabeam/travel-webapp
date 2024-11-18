@@ -18,8 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TripMate: 나만의 여행 동반자 | TripMate",
     description: "TripMate는 여행지 정보와 추천 여행지를 한 곳에서 제공하는 플랫폼입니다.",
-    url: 'https://example.com',
-    // images
+    url: 'https://travel-webapp-eta.vercel.app',
   },
   verification: {
     google: 'KvU3qBv3ITMNr0j6HjSXtnuQ8GUIU0narVvjfSU0ZH0',
